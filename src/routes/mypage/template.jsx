@@ -25,7 +25,7 @@ export default function Template() {
 
   return (
     <div>
-      <div className="text-white mt-8">
+      <div className="mt-8">
         {tempList?.map((element, index) => {
           return (
             <div className="flex justify-between flex-row text-center items-center rounded-lg h-20 m-5 bg-tuatara-900">
