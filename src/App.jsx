@@ -3,7 +3,11 @@ import "./App.css";
 import MainRouter from "~/routers/main-router.jsx";
 
 function App() {
-  return <RouterProvider router={MainRouter}></RouterProvider>;
+  return (
+    <div className="w-full h-full">
+      <RouterProvider router={MainRouter}></RouterProvider>
+    </div>
+  );
 }
 
 export default App;
