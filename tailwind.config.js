@@ -10,12 +10,12 @@ export default {
       fontSize: {
         mini: "0.75rem",
         caption: "1rem",
-        body2: "1.5rem",
-        body1: "1.75rem",
-        subheading: "2rem",
-        heading3: "2.5rem",
-        heading2: "3.75rem",
-        heading1: "5rem",
+        body2: "1.125rem",
+        body1: "1.25rem",
+        subheading: "1.5rem",
+        heading3: "1.75rem",
+        heading2: "2rem",
+        heading1: "2.5rem",
         hero: "12.5rem",
       },
       colors: {
