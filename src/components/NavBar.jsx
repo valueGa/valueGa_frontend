@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { URI_PATH } from "~/routers/main-router";
 import logo from "~/assets/icons/logo.svg";
 import search from "~/assets/icons/search.svg";
 
 export default function NavBar() {
-  // 추후에 router 위치 정해지면, Link to에 링크 추가하기
   return (
-    <div className="flex flex-row w-screen text-caption text-tuatara-50 font-apple items-center p-5 px-14 justify-between">
+    <div className="flex flex-row w-full text-caption text-tuatara-50 font-apple items-center p-5 px-14 justify-between">
       <ul className="flex flex-row text-center items-center space-x-7">
         <li>
           <Link to="/">
@@ -14,13 +14,13 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link to="#">Home</Link>
+          <Link to={`${URI_PATH.consensusPage}`}>Home</Link>
         </li>
         <li>
-          <Link to="#">Valuation</Link>
+          <Link to={`${URI_PATH.valuationPage}`}>Valuation</Link>
         </li>
         <li>
-          <Link to="#">My Page</Link>
+          <Link to={`${URI_PATH.myPage}`}>My Page</Link>
         </li>
       </ul>
       <ul className="flex flex-row text-center items-center space-x-7">

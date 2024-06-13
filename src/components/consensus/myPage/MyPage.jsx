@@ -1,9 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import Template from "./template";
-import Valuation from "./valuation";
-import NavBar from "~/components/NavBar";
-import Profile from "./profile";
+import Template from "~/components/consensus/myPage/Template";
+import Valuation from "~/components/consensus/myPage/Valuation";
+import Profile from "~/components/consensus/myPage/Profile";
 
 export default function MyPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -46,8 +45,7 @@ export default function MyPage() {
   };
 
   return (
-    <div className="bg-tuatara-800 text-tuatara-50 h-screen">
-      <NavBar />
+    <div className="text-tuatara-50">
       <Profile name={user.name} email={user.email} />
       <div className="font-apple mx-16">
         <ul className="text-caption columns-2 text-center flex flex-row">

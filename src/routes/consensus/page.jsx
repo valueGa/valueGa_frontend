@@ -1,9 +1,12 @@
+import React from "react";
+import { Outlet } from "react-router-dom";
+import NavBar from "~/components/NavBar";
 
-
-export default function ConsensusPage(){
-    return (
-        <div>
-            consensus
-        </div>
-    )
+export default function ConsensusPage() {
+  return (
+    <div className="flex flex-col w-screen min-h-screen bg-tuatara-800">
+      <NavBar />
+      <Outlet />
+    </div>
+  );
 }

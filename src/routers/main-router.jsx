@@ -1,22 +1,45 @@
 import { createBrowserRouter } from "react-router-dom";
+import MainPage from "~/routes/main/page";
+import ConsensusPage from "~/routes/consensus/page";
+import ConsensusHome from "~/components/consensus/home/ConsensusHome";
+import Valuation from "~/components/consensus/valuation/Valuation";
+import ConsensusDetail from "~/components/consensus/home/detail/ConsensusDetail";
+import MyPage from "~/components/consensus/myPage/MyPage";
 
-import MainPage from "../routes/main/page";
-import ConsensusPage from "../routes/consensus/page";
-import MyPage from "../routes/mypage/page";
+export const URI_PATH = {
+  mainPage: "/",
+  consensusPage: "/consensus",
+  valuationPage: "/consensus/valuation",
+  myPage: "/consensus/my",
+};
 
 export const routerObj = [
   {
-    path: "/",
-    element: <MainPage/>,
+    path: URI_PATH.mainPage,
+    element: <MainPage />,
   },
   {
-    path: "/consensus",
-    element: <ConsensusPage/>,
+    path: URI_PATH.consensusPage,
+    element: <ConsensusPage />,
+    children: [
+      {
+        path: "",
+        element: <ConsensusHome />,
+      },
+      {
+        path: ":id",
+        element: <ConsensusDetail />,
+      },
+      {
+        path: "valuation",
+        element: <Valuation />,
+      },
+      {
+        path: "my",
+        element: <MyPage />,
+      },
+    ],
   },
-  {
-    path: "/mypage",
-    element: <MyPage/>
-  }
 ];
 const router = createBrowserRouter(routerObj);
 export default router;
