@@ -1,3 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* @font-face {
+    font-family: "Abril Fatface", serif;
+    src: url(https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap);
+  } */
+  @font-face {
+    font-family: "AppleSDGothicNeo";
+    src: url("/assets/font/AppleSDGothicNeo/AppleSDGothicNeoM.ttf")
+      format("truetype");
+  }
+}
+
 /* 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
