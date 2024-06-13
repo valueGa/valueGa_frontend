@@ -2,11 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import MainPage from "~/routes/main/page";
 import ConsensusPage from "~/routes/consensus/page";
 import ConsensusHome from "~/components/consensus/home/ConsensusHome";
-import ConsensusDetail from "~/components/consensus/detail/ConsensusDetail";
+import Valuation from "~/components/consensus/valuation/Valuation";
+import ConsensusDetail from "~/components/consensus/home/detail/ConsensusDetail";
+import MyPage from "~/components/consensus/myPage/MyPage";
 
 export const URI_PATH = {
   mainPage: "/",
   consensusPage: "/consensus",
+  valuationPage: "/consensus/valuation",
+  myPage: "/consensus/my",
 };
 
 export const routerObj = [
@@ -25,6 +29,14 @@ export const routerObj = [
       {
         path: ":id",
         element: <ConsensusDetail />,
+      },
+      {
+        path: "valuation",
+        element: <Valuation />,
+      },
+      {
+        path: "my",
+        element: <MyPage />,
       },
     ],
   },

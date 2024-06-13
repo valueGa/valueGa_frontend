@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { URI_PATH } from "../../../routers/main-router";
+import { URI_PATH } from "~/routers/main-router";
 
 export default function ConsensusDetail() {
   const params = useParams();
