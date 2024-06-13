@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Template from "./template";
 import Valuation from "./valuation";
+import NavBar from "~/components/NavBar";
 
 export default function MyPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,17 +41,16 @@ export default function MyPage() {
   };
 
   return (
-    <>
-      <div>MyPage</div>
-      <div>Profile</div>
-      <div className="mx-16">
-        <ul className="columns-2 text-center flex flex-row">
+    <div className="bg-tuatara-800 h-screen">
+      <NavBar />
+      <div className="font-apple mx-16">
+        <ul className="text-body2 columns-2 text-center flex flex-row">
           {tabContArr.map((element, index) => {
             return element.tabTitle;
           })}
         </ul>
         <div>{activeIndex == 0 ? <Template /> : <Valuation />}</div>
       </div>
-    </>
+    </div>
   );
 }
