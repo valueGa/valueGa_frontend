@@ -1,18 +1,98 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {
-        'yellow' : 'FFEF63',
-        'tuatara-900': '#3B3B3B',
-
+      fontFamily: {
+        abril: ["Abril Fatface", "serif"],
+        apple: ["AppleSDGothicNeo", "sans-serif"],
       },
-
+      fontSize: {
+        mini: "0.75rem",
+        caption: "1rem",
+        body2: "1.5rem",
+        body1: "1.75rem",
+        subheading: "2rem",
+        heading3: "2.5rem",
+        heading2: "3.75rem",
+        heading1: "5rem",
+        hero: "12.5rem",
+      },
+      colors: {
+        tuatara: {
+          50: "#f6f6f6",
+          100: "#e7e7e7",
+          200: "#d1d1d1",
+          300: "#b0b0b0",
+          400: "#888888",
+          500: "#6d6d6d",
+          600: "#5d5d5d",
+          700: "#4f4f4f",
+          800: "#454545",
+          900: "#3b3b3b",
+          950: "#262626",
+        },
+        chart: {
+          red: {
+            50: "#FF7B51",
+            100: "#FF725E",
+            200: "#FF6262",
+            300: "#FF5757",
+            400: "#FF3D3D",
+          },
+          blue: {
+            50: "#FF7B51",
+            100: "#FF725E",
+            200: "#FF6262",
+            300: "#FF5757",
+            400: "#FF3D3D",
+          },
+        },
+        magenta: {
+          50: "#fff3ff",
+          100: "#fee6ff",
+          200: "#fcccff",
+          300: "#ffa4ff",
+          400: "#ff6ffe",
+          500: "#f94bfd",
+          600: "#e118e1",
+          700: "#bb10b8",
+          800: "#990f95",
+          900: "#7c1376",
+          950: "#540050",
+        },
+        spray: {
+          50: "#ebffff",
+          100: "#cdfcff",
+          200: "#a1f5ff",
+          300: "#4be9ff",
+          400: "#1ad8f6",
+          500: "#00bbdc",
+          600: "#0194b9",
+          700: "#097695",
+          800: "#115f79",
+          900: "#134f66",
+          950: "#063446",
+        },
+        blue: {
+          50: "#eef4ff",
+          100: "#dae6ff",
+          200: "#bdd4ff",
+          300: "#90b9ff",
+          400: "#6398ff",
+          500: "#356bfc",
+          600: "#1f4af1",
+          700: "#1735de",
+          800: "#192db4",
+          900: "#1a2b8e",
+          950: "#151d56",
+        },
+        yellow: "#FFEF63",
+        black: "#191919",
+        white: "#FFFFFF",
+      },
     },
   },
   plugins: [],
 }
+
