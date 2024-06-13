@@ -1,17 +1,9 @@
-import { useState } from "react";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import MainRouter from "./routers/main-router.jsx";
+import MainRouter from "~/routers/main-router.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <RouterProvider router={MainRouter}></RouterProvider>
-
-    // <h1 className="text-3xl font-bold underline ">
-    //   Hello world!11111
-    // </h1>
-  );
+  return <RouterProvider router={MainRouter}></RouterProvider>;
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { URI_PATH } from "../../routers/main-router";
 
 export default function MainPage() {
