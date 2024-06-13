@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import InputDataList from "./InputDataList";
 
-export default function InputStock() {
-  const [stockInput, setStockInput] = useState("");
+export default function InputStock({ value, setValue }) {
+  const [stockName, setStockName] = useState("");
+  const [stockId, setStockId] = useState("");
   const [stockNameList, setStockNameList] = useState([]);
-
-  useEffect(() => {
-    console.log(stockInput);
-  }, [stockInput]);
 
   useEffect(() => {
     setStockNameList([
@@ -42,22 +38,38 @@ export default function InputStock() {
     ]);
   }, []);
 
+  const handleSelect = (e) => {
+    const selectedStock = stockNameList.find(
+      (stock) => stock.name === e.target.value
+    );
+    if (selectedStock) {
+      setValue(selectedStock.id);
+      console.log(selectedStock.id);
+    }
+  };
+
   return (
-    <InputDataList
-      label="종목"
-      placeholder="종목명을 입력하세요"
-      value={stockInput}
-      setInput={setStockInput}
-    >
-      {stockNameList.map((stock) => {
-        return (
-          <option
-            key={stock.id}
-            value={stock.name}
-            className="text-tuatara-100 bg-tuatara-900"
-          ></option>
-        );
-      })}
-    </InputDataList>
+    <div className="w-full flex flex-col items-start gap-1">
+      <input
+        list="input-list"
+        placeholder="종목명을 입력하세요"
+        value={stockName}
+        onChange={(e) => setStockName(e.target.value)}
+        onBlur={handleSelect}
+        className="w-72 p-2 px-3 text-tuatara-100 bg-tuatara-900 focus:border-none"
+      />
+
+      <datalist id="input-list" className="bg-tuatara-900">
+        {stockNameList.map((stock) => {
+          return (
+            <option
+              key={stock.id}
+              value={stock.name}
+              className="text-tuatara-100 bg-tuatara-900"
+            ></option>
+          );
+        })}
+      </datalist>
+    </div>
   );
 }
