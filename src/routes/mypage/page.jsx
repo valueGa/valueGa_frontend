@@ -3,9 +3,14 @@ import { useState } from "react";
 import Template from "./template";
 import Valuation from "./valuation";
 import NavBar from "~/components/NavBar";
+import Profile from "./profile";
 
 export default function MyPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [user, setUser] = useState({
+    name: "우채윤",
+    email: "heeni1004@gmail.com",
+  });
   const tabContArr = [
     {
       tabTitle: (
@@ -13,7 +18,7 @@ export default function MyPage() {
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 0
               ? "border-b-2 border-yellow text-yellow"
-              : "border-b-2 border-tuatara-50"
+              : "border-b-2 border-tuatara-300 text-tuatara-300"
           }`}
           onClick={() => tabClickHandler(0)}
         >
@@ -27,7 +32,7 @@ export default function MyPage() {
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 1
               ? "border-b-2 border-yellow text-yellow"
-              : "border-b-2 border-gray-300 border-tuatara-50"
+              : "border-b-2 border-gray-300 border-tuatara-300 text-tuatara-300"
           }`}
           onClick={() => tabClickHandler(1)}
         >
@@ -43,6 +48,7 @@ export default function MyPage() {
   return (
     <div className="bg-tuatara-800 text-tuatara-50 h-screen">
       <NavBar />
+      <Profile name={user.name} email={user.email} />
       <div className="font-apple mx-16">
         <ul className="text-caption columns-2 text-center flex flex-row">
           {tabContArr.map((element, index) => {

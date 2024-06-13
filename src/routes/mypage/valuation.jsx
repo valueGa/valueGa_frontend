@@ -34,9 +34,9 @@ export default function Valuation() {
   return (
     <div>
       <div className="flex flex-row text-center items-center w-3/5 h-8 mt-6">
-        <div className="basis-1/3">종목</div>
-        <div className="basis-1/3">목표 주가</div>
-        <div className="basis-1/3">상승 여력</div>
+        <div className="basis-1/3 text-tuatara-300">종목</div>
+        <div className="basis-1/3 text-tuatara-300">목표 주가</div>
+        <div className="basis-1/3 text-tuatara-300">상승 여력</div>
       </div>
       <div>
         {valList?.map((element, index) => {
@@ -48,9 +48,11 @@ export default function Valuation() {
                 <div className="basis-1/3">{element.valuePotential * 100}%</div>
               </div>
               <div className="flex justify-end flex-row basis-2/5 mr-8">
-                <div className="basis-1/5 mr-2">
-                  {element.isTemp ? "임시 저장" : "저장 완료"}
-                </div>
+                  {element.isTemp ? (
+                    <div className="basis-1/5 mr-2 text-yellow">임시 저장</div>
+                  ) : (
+                    <div className="basis-1/5 mr-2">저장 완료</div>
+                  )}
                 <div className="basis-1/5 mr-2">{element.date}</div>
                 <div className="basis-1/7 mr-2">
                   <img src={moreIcon} alt="moreIcon" className="w-6 h-6" />
