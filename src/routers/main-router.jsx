@@ -5,11 +5,13 @@ import ConsensusHome from "~/components/consensus/home/ConsensusHome";
 import ValuationCreate from "~/components/consensus/valuation/ValuationCreate";
 import ConsensusDetail from "~/components/consensus/home/detail/ConsensusDetail";
 import MyPage from "~/components/consensus/myPage/MyPage";
+import ValuationCreateExcel from "~/routes/valuationCreateExcel/page";
 
 export const URI_PATH = {
   mainPage: "/",
   consensusPage: "/consensus",
   valuationPage: "/consensus/valuation",
+  valuationCreatePage: "/consensus/valuation/create",
   myPage: "/consensus/my",
 };
 
@@ -33,6 +35,10 @@ export const routerObj = [
       {
         path: "valuation",
         element: <ValuationCreate />,
+      },
+      {
+        path: "valuation/create",
+        element: <ValuationCreateExcel />,
       },
       {
         path: "my",
