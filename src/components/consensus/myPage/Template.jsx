@@ -28,7 +28,7 @@ export default function Template() {
       <div className="mt-8">
         {tempList?.map((element, index) => {
           return (
-            <div className="flex justify-between flex-row text-center items-center rounded-lg h-20 m-5 bg-tuatara-900">
+            <div className="flex justify-between text-body2 flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900">
               <div className="flex flex-row basis-3/5">
                 <div className="basis-1/3">{element.tempName}</div>
               </div>

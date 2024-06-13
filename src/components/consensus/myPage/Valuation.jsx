@@ -33,7 +33,7 @@ export default function Valuation() {
   }, []);
   return (
     <div>
-      <div className="flex flex-row text-center items-center w-3/5 h-8 mt-6">
+      <div className="flex flex-row text-body1 text-center items-center w-3/5 h-7 mt-6">
         <div className="basis-1/3 text-tuatara-300">종목</div>
         <div className="basis-1/3 text-tuatara-300">목표 주가</div>
         <div className="basis-1/3 text-tuatara-300">상승 여력</div>
@@ -41,7 +41,7 @@ export default function Valuation() {
       <div>
         {valList?.map((element, index) => {
           return (
-            <div className="text-white flex justify-between flex-row text-center items-center rounded-lg h-20 m-5 bg-tuatara-900">
+            <div className="text-tuatara-50 text-body2 flex justify-between flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900">
               <div className="flex flex-row basis-3/5">
                 <div className="basis-1/3">{element.stockName}</div>
                 <div className="basis-1/3">{element.targetPrice}원</div>

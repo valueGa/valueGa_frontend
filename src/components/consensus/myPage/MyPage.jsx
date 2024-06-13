@@ -48,7 +48,7 @@ export default function MyPage() {
     <div className="text-tuatara-50">
       <Profile name={user.name} email={user.email} />
       <div className="font-apple mx-16">
-        <ul className="text-caption columns-2 text-center flex flex-row">
+        <ul className="text-body2 columns-2 text-center flex flex-row">
           {tabContArr.map((element, index) => {
             return element.tabTitle;
           })}
