@@ -6,7 +6,7 @@ export default function MainPage() {
   return (
     <div>
       <button
-        className="text-body2 bg-tuatara-200 p-2 px-4 rounded-lg"
+        className="text-body2 bg-tuatara-200 p-1 px-4 rounded-lg"
         onClick={() => navigate(URI_PATH.consensusPage)}
       >
         Let's Start
