@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import MainPage from "../routes/main/page";
 import ConsensusPage from "../routes/consensus/page";
+import MyPage from "../routes/mypage/page";
 
 export const routerObj = [
   {
@@ -12,6 +13,10 @@ export const routerObj = [
     path: "/consensus",
     element: <ConsensusPage/>,
   },
+  {
+    path: "/mypage",
+    element: <MyPage/>
+  }
 ];
 const router = createBrowserRouter(routerObj);
 export default router;
