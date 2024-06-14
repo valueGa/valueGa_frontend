@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { SpreadSheets } from "@mescius/spread-sheets-react";
 import * as GC from "@mescius/spread-sheets";
 import * as ExcelIO from "@grapecity/spread-excelio";
@@ -18,7 +18,7 @@ export default function Excel({ formula = "", setFormula, fileInput }) {
     }
   }, [formula]);
 
-  const initSpread = (spread) => {
+  const initSpread = useCallback((spread) => {
     spreadRef.current = spread;
     spread.setSheetCount(2);
     const sheet = spread.getActiveSheet();
@@ -42,7 +42,7 @@ export default function Excel({ formula = "", setFormula, fileInput }) {
       const cellFormula = sheet.getFormula(row, col);
       setFormula(cellFormula || sheet.getText(row, col) || "");
     });
-  };
+  }, []);
 
   const handleSaveExcel = () => {
     const json = spreadRef.current.toJSON();
