@@ -124,6 +124,10 @@ export default function Excel() {
       const { row, col } = args;
       const cellFormula = sheet.getFormula(row, col);
       setFormula(cellFormula || sheet.getText(row, col) || "");
+
+      if (!cellFormula) {
+        sheet.setValue(row, col, args.editingText);
+      }
     });
   }, []);
 
