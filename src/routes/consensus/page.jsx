@@ -4,7 +4,7 @@ import NavBar from "~/components/NavBar";
 
 export default function ConsensusPage() {
   return (
-    <div className="flex flex-col w-screen min-h-screen bg-tuatara-800">
+    <div className="flex flex-col w-screen min-h-screen bg-tuatara-800 text-tuatara-50">
       <NavBar />
       <Outlet />
     </div>
