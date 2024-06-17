@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Excel from "../../components/consensus/valuation/Excel";
+import ExcelFooter from "../../components/consensus/valuation/ExcelFooter";
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
@@ -101,6 +102,7 @@ export default function ValuationCreateExcel() {
         />
         <Excel />
       </ExcelContext.Provider>
+      <ExcelFooter />
       <div className="w-full my-4 p-4 bg-tuatara-900 rounded">
         <p className="mb-2">내 PC에서 엑셀 가져오기 (.xlsx)</p>
         <input type="file" ref={fileInput} />
