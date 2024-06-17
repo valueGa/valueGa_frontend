@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div className="bg-gradient-to-b from-[#151515] to-[#2D2D2D]">
       {/* <div className="w-full flex relative w-64 h-64">
         <img src="public/logo_text.svg" alt="" className="absolute inset-0" />
         <img src="public/bg_lines.svg" alt="" className="w-64 h-auto" />
@@ -15,7 +15,9 @@ export default function Home() {
             alt="로고 텍스트"
             style={{ width: "50%" }}
           />
-          <p>We’re building future of research</p>
+          <p className="text-tuatara-50 font-apple">
+            We’re building future of research
+          </p>
         </div>
 
         <img
@@ -42,11 +44,21 @@ export default function Home() {
         />
 
         <div>
-          <p className="text-white">Future of Valuation</p>
+          <p className="text-subheading text-tuatara-50">Future of Valuation</p>
           <p className="text-white">누구나 쉬운 기업가치 계산을 위해</p>
-          <button className="text-white " style={{ marginTop: "42px" }}>
-            Let's Start
-          </button>
+
+          <div
+            className="flex items-center justify-center text-tuatara-50 bg-black pt-2 pb-2 gap-2 rounded-xl"
+            style={{ marginTop: "42px" }}
+          >
+            <img
+              src="public/img_arrow_right.svg"
+              alt="로고 텍스트"
+              style={{ width: "21px", height: "21px" }}
+            />
+
+            <p>Let's Start</p>
+          </div>
         </div>
       </div>
 
