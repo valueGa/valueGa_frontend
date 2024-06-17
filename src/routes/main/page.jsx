@@ -1,6 +1,47 @@
+import React from "react";
+import { useState } from "react";
+import Home from "./TabHome";
+import AboutUs from "./TabAboutUs";
+import Service from "./TabService";
+import Contact from "./TabContact";
+import MainFooter from "./MainFooter";
+import MainHeader from "./MainHeader";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
+import { URI_PATH } from "../../routers/main-router";
+
 export default function MainPage() {
+  const navigate = useNavigate();
   return (
-    <>
+    // <div>
+    //   <Example />
+    // </div>
+    <div className="bg-[#262626]">
+      <header className="fixed inset-x-0 top-0 z-50 left-0 bg-[#151515] text-gray-700 body-font border-b border-gray-200 pl-5 pr-5"></header>
+      <MainHeader />
+      <section>
+        <Home />
+      </section>
+      <section>
+        <AboutUs />
+      </section>
+      <section>
+        <Service />
+      </section>
+      <section>
+        <Contact />
+      </section>
+
+      <footer className="text-gray-700 body-font">
+        <MainFooter />
+      </footer>
+      {/* <div>
+      <button
+        className="text-body2 bg-tuatara-200 p-1 px-4 rounded-lg"
+        onClick={() => navigate(URI_PATH.consensusPage)}
+      >
+        Let's Start
+      </button>
       <div className=" bg-tuatara-950">
         <div className="text-hero text-tuatara-50">Hero</div>
         <div className="text-heading1 text-tuatara-50">제목</div>
@@ -14,7 +55,7 @@ export default function MainPage() {
       </div>
       <div className=" text-heading3 bg-blue-400 font-abril">Font</div>
       <div className=" text-body1 bg-blue-400 font-apple font-bold">폰트</div>
-      <div className=" text-body1 bg-blue-400 font-apple">폰트</div>
-    </>
+      <div className=" text-body1 bg-blue-400 font-apple">폰트</div> */}
+    </div>
   );
 }
