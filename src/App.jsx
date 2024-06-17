@@ -1,20 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
-import MainRouter from './routers/main-router.jsx'
-
+import { RouterProvider } from "react-router-dom";
+import "./App.css";
+import MainRouter from "~/routers/main-router.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <RouterProvider router={MainRouter}></RouterProvider>
-
-    // <h1 className="text-3xl font-bold underline ">
-    //   Hello world!11111
-    // </h1>
-  )
+    <div className="w-full h-full">
+      <RouterProvider router={MainRouter}></RouterProvider>
+    </div>
+  );
 }
 
-export default App
+export default App;
