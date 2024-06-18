@@ -33,7 +33,7 @@ function AuthModal({
   );
 }
 
-function ValugaInput(params) {
+function AuthInput(params) {
   return (
     <>
       <Form.Group
@@ -101,13 +101,13 @@ function LoginInput(params) {
   return (
     <>
       <Form className="mt-2">
-        <ValugaInput
+        <AuthInput
           placeholder="test@email"
           url="assets/images/ic_email.svg"
           handleInputChange={params.handleInputChange}
           activity={params.activity}
         />
-        <ValugaInput
+        <AuthInput
           placeholder="password"
           url="assets/images/ic_block.svg"
           handleInputChange={params.handleInputChange}
@@ -122,25 +122,25 @@ function SignupInput(params) {
   return (
     <>
       <Form className="mt-2">
-        <ValugaInput
+        <AuthInput
           placeholder="name"
           url="assets/images/ic_block.svg"
           handleInputChange={params.handleInputChange}
           activity={params.activity}
         />
-        <ValugaInput
+        <AuthInput
           placeholder="email"
           url="assets/images/ic_email.svg"
           handleInputChange={params.handleInputChange}
           activity={params.activity}
         />
-        <ValugaInput
+        <AuthInput
           placeholder="password"
           url="assets/images/ic_block.svg"
           handleInputChange={params.handleInputChange}
           activity={params.activity}
         />
-        <ValugaInput
+        <AuthInput
           placeholder="confirm password"
           url="assets/images/ic_block.svg"
           handleInputChange={params.handleInputChange}
