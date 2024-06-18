@@ -11,13 +11,17 @@ export default function Contact() {
             style={{ width: "400px" }}
           />
           <div className="absolute bottom-3 right-3">
-            <img src="public/ic_send.png" alt="icon" className="w-4 h-4" />
+            <img
+              src="/assets/images/ic_send.png"
+              alt="icon"
+              className="w-4 h-4"
+            />
           </div>
         </div>
       </div>
       <div className="flex items-center justify-end">
         <img
-          src="public/img_demo_2.svg"
+          src="/assets/images/img_demo_2.svg"
           alt="로고 텍스트"
           className="w-3/5 h-1/5 mt-10"
         />

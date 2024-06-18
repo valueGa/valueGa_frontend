@@ -11,7 +11,7 @@ export default function Home() {
           style={{ left: "40%", transform: "translateX(-50%)" }}
         >
           <img
-            src="public/logo_text.svg"
+            src="/assets/images/logo_text.svg"
             alt="로고 텍스트"
             style={{ width: "50%" }}
           />
@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         <img
-          src="public/bg_lines.svg"
+          src="/assets/images/bg_lines.svg"
           alt="배경 라인"
           className="h-auto absolute"
           style={{
@@ -38,7 +38,7 @@ export default function Home() {
         style={{ gap: "288px" }}
       >
         <img
-          src="public/img_3d.svg"
+          src="/assets/images/img_3d.svg"
           alt="로고 텍스트"
           style={{ width: "316px", height: "316px" }}
         />
@@ -52,7 +52,7 @@ export default function Home() {
             style={{ marginTop: "42px" }}
           >
             <img
-              src="public/img_arrow_right.svg"
+              src="/assets/images/img_arrow_right.svg"
               alt="로고 텍스트"
               style={{ width: "21px", height: "21px" }}
             />

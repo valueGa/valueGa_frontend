@@ -10,7 +10,11 @@ export default function Service() {
       <div className="flex items-center justify-center pt-20">
         <div className="pl-7 pr-7">
           <div className="flex items-center justify-center gap-5 mb-3">
-            <img className="w-8 h-8" src="/public/ic_expression.svg" alt="" />
+            <img
+              className="w-8 h-8"
+              src="/assets/images/ic_expression.svg"
+              alt=""
+            />
             <p className="text-subheading text-tuatara-50 font-serif">
               Valuation
             </p>
@@ -25,7 +29,7 @@ export default function Service() {
 
         <div className="pl-7 pr-7">
           <div className="flex items-center justify-center gap-5 mb-3">
-            <img className="w-8 h-8" src="/public/ic_chart.svg" alt="" />
+            <img className="w-8 h-8" src="/assets/images/ic_chart.svg" alt="" />
             <p className="text-subheading text-tuatara-50 font-serif">
               Consensus
             </p>

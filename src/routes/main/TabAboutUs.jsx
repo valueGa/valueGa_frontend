@@ -27,11 +27,15 @@ export default function AboutAs() {
               지원합니다.
             </p>
             <div className="flex items-center justify-center mt-10">
-              <img src="public/img_chart.svg" alt="" className="w-3/5" />
+              <img
+                src="/assets/images/img_chart.svg"
+                alt=""
+                className="w-3/5"
+              />
             </div>
           </div>
           <div className="flex items-center justify-center mt-10">
-            <img src="public/img_demo.svg" alt="" className="w-3/5" />
+            <img src="/assets/images/img_demo.svg" alt="" className="w-3/5" />
           </div>
         </div>
       </div>
