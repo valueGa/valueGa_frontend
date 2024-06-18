@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { URI_PATH } from "../../../routers/main-router";
 
 export default function ValuationCreate() {
-  const [selectedStockId, setSelectedStockId] = useState("");
+  const [selectedStock, setSelectedStock] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState("템플릿 선택");
 
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function ValuationCreate() {
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex flex-col justify-center items-center gap-8 my-4">
         <div className="flex gap-2">
-          <InputStock value={selectedStockId} setValue={setSelectedStockId} />
+          <InputStock value={selectedStock} setValue={setSelectedStock} />
           <InputTemplate
             value={selectedTemplate}
             setValue={setSelectedTemplate}
@@ -26,8 +26,14 @@ export default function ValuationCreate() {
           variant="dark"
           className="w-32"
           onClick={() => {
+            console.log(
+              "생성하기",
+              selectedStock.name,
+              selectedStock.id,
+              selectedTemplate
+            );
             navigate(
-              `${URI_PATH.valuationCreatePage}/?id=${selectedStockId}&template=${selectedTemplate}`
+              `${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`
             );
           }}
         >
