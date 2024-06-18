@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { URI_PATH } from "~/routers/main-router";
 import Graph from "./Graph";
 import Search from "./Search";
-import ConsensusList from "./ConsensusList"
+import ConsensusList from "./ConsensusList";
 export default function ConsensusHome() {
   const navigate = useNavigate();
   return (
@@ -27,7 +27,7 @@ export default function ConsensusHome() {
     <div>
       <Graph />
       <Search />
-      <ConsensusList/>
+      <ConsensusList />
     </div>
   );
 }
