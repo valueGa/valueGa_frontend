@@ -77,7 +77,11 @@ export default function MainHeader() {
       </nav>
 
       <Signup show={signupShow} handleClose={signupHandleClose} />
-      <Login show={loginShow} handleClose={loginHandleClose} />
+      <Login
+        show={loginShow}
+        handleClose={loginHandleClose}
+        handleClickedSignupButton={handleClickedSignupButton}
+      />
     </div>
   );
 }

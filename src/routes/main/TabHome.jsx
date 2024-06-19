@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { URI_PATH } from "~/routers/main-router";
+
 export default function Home() {
   return (
     <div className="bg-gradient-to-b from-[#151515] to-[#2D2D2D]">
@@ -11,7 +14,7 @@ export default function Home() {
           style={{ left: "40%", transform: "translateX(-50%)" }}
         >
           <img
-            src="public/logo_text.svg"
+            src="/assets/images/logo_text.svg"
             alt="로고 텍스트"
             style={{ width: "50%" }}
           />
@@ -21,7 +24,7 @@ export default function Home() {
         </div>
 
         <img
-          src="public/bg_lines.svg"
+          src="/assets/images/bg_lines.svg"
           alt="배경 라인"
           className="h-auto absolute"
           style={{
@@ -38,28 +41,31 @@ export default function Home() {
         style={{ gap: "288px" }}
       >
         <img
-          src="public/img_3d.svg"
+          src="/assets/images/img_3d.svg"
           alt="로고 텍스트"
           style={{ width: "316px", height: "316px" }}
         />
+        <Link to={`${URI_PATH.consensusPage}`}>
+          <div>
+            <p className="text-subheading text-tuatara-50">
+              Future of Valuation
+            </p>
+            <p className="text-white">누구나 쉬운 기업가치 계산을 위해</p>
 
-        <div>
-          <p className="text-subheading text-tuatara-50">Future of Valuation</p>
-          <p className="text-white">누구나 쉬운 기업가치 계산을 위해</p>
+            <div
+              className="flex items-center justify-center text-tuatara-50 bg-black pt-2 pb-2 gap-2 rounded-xl"
+              style={{ marginTop: "42px" }}
+            >
+              <img
+                src="/assets/images/img_arrow_right.svg"
+                alt="로고 텍스트"
+                style={{ width: "21px", height: "21px" }}
+              />
 
-          <div
-            className="flex items-center justify-center text-tuatara-50 bg-black pt-2 pb-2 gap-2 rounded-xl"
-            style={{ marginTop: "42px" }}
-          >
-            <img
-              src="public/img_arrow_right.svg"
-              alt="로고 텍스트"
-              style={{ width: "21px", height: "21px" }}
-            />
-
-            <p>Let's Start</p>
+              <p>Let's Start</p>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* <div className="top-30">

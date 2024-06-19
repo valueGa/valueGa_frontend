@@ -1,0 +1,7 @@
+.modal-content {
+  background-color: transparent !important;
+  border-radius: 1rem; /* Tailwind의 rounded-2xl에 해당 */
+}
+.custom-close-button .btn-close {
+  --bs-btn-close-bg: url("/assets/images/ic_close.svg");
+}
