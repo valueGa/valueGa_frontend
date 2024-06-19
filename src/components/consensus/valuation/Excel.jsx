@@ -22,7 +22,6 @@ export default function Excel() {
           const years = [];
 
           for (let i = 1; i <= 3; i++) {
-            // 3개년 연도 계산
             years.push(`${currentYear - i}12`);
           }
 
@@ -32,7 +31,7 @@ export default function Excel() {
         const years = getLastThreeYears();
 
         if (stockId && templateId) {
-          const result = await postValuation(stockId, years);
+          const result = await postValuation(stockId, templateId, years);
           setExcelValues(result.data);
         }
       } catch (error) {

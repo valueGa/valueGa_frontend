@@ -15,7 +15,9 @@ export const useExcelContext = () => useContext(ExcelContext);
 export default function ValuationCreateExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [stockId, setStockId] = useState();
+  const [stockName, setStockName] = useState();
   const [templateId, setTemplateId] = useState();
+  const [templateName, setTemplateName] = useState();
   const [formula, setFormula] = useState('');
   const fileInput = useRef(null);
   const spreadRef = useRef(null);
@@ -24,6 +26,12 @@ export default function ValuationCreateExcel() {
     setStockId(searchParams.get('id'));
     setTemplateId(searchParams.get('template'));
   }, [searchParams]);
+
+  useEffect(() => {
+    // API 연결
+    setStockName('삼성전자');
+    setTemplateName('DCF');
+  }, [stockId, templateId]);
 
   const handleSaveExcel = () => {
     const json = spreadRef.current.toJSON();
@@ -88,8 +96,8 @@ export default function ValuationCreateExcel() {
     <div className="w-full flex flex-col justify-center items-center">
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex gap-2">
-        <div className="flex">{`종목:  ${stockId}`}</div>
-        <p className="flex">{`템플릿:  ${templateId}`}</p>
+        <div className="flex">{`종목:  ${stockName}`}</div>
+        <p className="flex">{`템플릿:  ${templateName}`}</p>
       </div>
       <div className="flex gap-4">
         <div className="flex gap-2">

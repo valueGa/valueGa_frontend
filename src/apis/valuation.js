@@ -8,9 +8,10 @@ const service = axios.create({
   },
 });
 
-export const postValuation = async (stockId, years) => {
+export const postValuation = async (stockId, templateId, years) => {
   const res = await service.post(`/`, {
     stock_id: stockId,
+    template_id: templateId,
     years: years,
   });
   return res;
