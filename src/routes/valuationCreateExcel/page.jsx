@@ -1,16 +1,29 @@
-import React, { createContext, useContext, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import Excel from "../../components/consensus/valuation/Excel";
-import ExcelFooter from "../../components/consensus/valuation/ExcelFooter";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Excel from '../../components/consensus/valuation/Excel';
+import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
 
 export default function ValuationCreateExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formula, setFormula] = useState("");
+  const [stockId, setStockId] = useState();
+  const [templateId, setTemplateId] = useState();
+  const [formula, setFormula] = useState('');
   const fileInput = useRef(null);
   const spreadRef = useRef(null);
+
+  useEffect(() => {
+    setStockId(searchParams.get('id'));
+    setTemplateId(searchParams.get('template'));
+  }, [searchParams]);
 
   const handleSaveExcel = () => {
     const json = spreadRef.current.toJSON();
@@ -18,7 +31,7 @@ export default function ValuationCreateExcel() {
     excelIO.save(
       json,
       (blob) => {
-        saveAs(blob, "spreadsheet.xlsx");
+        saveAs(blob, 'spreadsheet.xlsx');
       },
       (error) => {
         console.error(error);
@@ -75,8 +88,8 @@ export default function ValuationCreateExcel() {
     <div className="w-full flex flex-col justify-center items-center">
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex gap-2">
-        <div className="flex">{`종목:  ${searchParams.get("id")}`}</div>
-        <p className="flex">{`템플릿:  ${searchParams.get("template")}`}</p>
+        <div className="flex">{`종목:  ${stockId}`}</div>
+        <p className="flex">{`템플릿:  ${templateId}`}</p>
       </div>
       <div className="flex gap-4">
         <div className="flex gap-2">
@@ -91,7 +104,14 @@ export default function ValuationCreateExcel() {
 
       {/*--- 엑셀 ---*/}
       <ExcelContext.Provider
-        value={{ formula, setFormula, fileInput, spreadRef }}
+        value={{
+          formula,
+          setFormula,
+          fileInput,
+          spreadRef,
+          stockId,
+          templateId,
+        }}
       >
         <input
           type="text"
