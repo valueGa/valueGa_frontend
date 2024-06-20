@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const tailwindConfig = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
@@ -41,11 +41,11 @@ export default {
             400: "#FF3D3D",
           },
           blue: {
-            50: "#FF7B51",
-            100: "#FF725E",
-            200: "#FF6262",
-            300: "#FF5757",
-            400: "#FF3D3D",
+            50: "#30B5FF",
+            100: "#5CB1FF",
+            200: "#62A3FF",
+            300: "#5891FF",
+            400: "#3D7FFF",
           },
         },
         magenta: {
@@ -95,3 +95,6 @@ export default {
   },
   plugins: [],
 };
+
+export default tailwindConfig;
+export const colors = tailwindConfig.theme.extend.colors;

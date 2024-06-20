@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { URI_PATH } from "~/routers/main-router";
 import Graph from "./Graph";
 import Search from "./Search";
+import GraphDemo from "./GraphDemo";
 import ConsensusList from "./ConsensusList";
 export default function ConsensusHome() {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ export default function ConsensusHome() {
     //   </div>
     // </div>
     <div>
-      <Graph />
+      {/* <Graph /> */}
+      <GraphDemo />
       <Search />
       <ConsensusList />
     </div>
