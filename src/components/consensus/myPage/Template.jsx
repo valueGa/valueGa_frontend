@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import moreIcon from "~/assets/icons/more.svg";
-import Popup from "~/components/consensus/myPage/Popup";
+import React, { useEffect, useRef, useState } from 'react';
+import moreIcon from '~/assets/icons/more.svg';
+import Popup from '~/components/consensus/myPage/Popup';
 
 export default function Template() {
   const [tempList, setTempList] = useState(null);
@@ -21,25 +21,25 @@ export default function Template() {
 
   useEffect(() => {
     setTempList(tmpTempList);
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   /* axios 이전, css를 위한 dump data */
   const tmpTempList = [
     {
-      tempName: "DCF 밸류에이션",
-      date: "2024.06.10",
+      tempName: 'DCF 밸류에이션',
+      date: '2024.06.10',
     },
     {
-      tempName: "PER 밸류에이션",
-      date: "2024.06.10",
+      tempName: 'PER 밸류에이션',
+      date: '2024.06.10',
     },
     {
-      tempName: "EV/EBITDA 밸류에이션",
-      date: "2024.06.10",
+      tempName: 'EV/EBITDA 밸류에이션',
+      date: '2024.06.10',
     },
   ];
 
