@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import React from "react";
 import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
-import { FaEnvelope } from "react-icons/fa";
 import "./ModalStyle.css";
 
 function AuthModal({

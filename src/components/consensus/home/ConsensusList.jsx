@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StockList from "./StockList";
+import downArrow from "~/assets/icons/downArrow.svg";
 
 export default function ConsensusList() {
   const [buyStocks, setBuyStock] = useState([]);
@@ -123,13 +124,28 @@ export default function ConsensusList() {
 
   return (
     <div>
-      <div className="font-apple mx-16">
+      <div className="font-apple mx-16 mb-16">
         <ul className="text-body2 columns-2 text-center flex flex-row">
           {tabContArr.map((element, index) => {
             return element.tabTitle;
           })}
         </ul>
-        <div>{activeIndex == 0 ? <StockList data={buyStocks} type="buy"/> : <StockList data={sellStocks} type="sell"/>}</div>
+        <div>
+          {activeIndex == 0 ? (
+            <StockList data={buyStocks} type="buy" />
+          ) : (
+            <StockList data={sellStocks} type="sell" />
+          )}
+        </div>
+        <div className="flex items-center justify-center text-tuatara-50 text-caption text-center rounded-lg h-16 m-2 bg-tuatara-900">
+          <div>
+            <div className="flex items-center gap-2">
+              <button className="text-caption font-apple">더 보기</button>
+              <img className="w-3 h-3" src={downArrow} alt="" />
+            </div>
+            <div className="text-mini font-apple">80/100</div>
+          </div>
+        </div>
       </div>
     </div>
   );
