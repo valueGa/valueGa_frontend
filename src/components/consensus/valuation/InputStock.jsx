@@ -1,39 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 export default function InputStock({ value, setValue }) {
-  const [selectedStock, setSelectedStock] = useState("");
-  const [stockId, setStockId] = useState("");
+  const [selectedStock, setSelectedStock] = useState('');
+  const [stockId, setStockId] = useState('');
   const [stockList, setStockList] = useState([]);
 
   useEffect(() => {
     setStockList([
       {
-        name: "삼성전자",
-        id: "005931",
+        name: '포스코DX',
+        id: '022100',
       },
       {
-        name: "삼성전자1",
-        id: "005932",
+        name: 'DS단석',
+        id: '017860',
       },
       {
-        name: "삼성전자2",
-        id: "005930",
-      },
-      {
-        name: "삼성전자2",
-        id: "005934",
-      },
-      {
-        name: "삼성전자2",
-        id: "005935",
-      },
-      {
-        name: "삼성전자2",
-        id: "005936",
-      },
-      {
-        name: "삼성전자2",
-        id: "005937",
+        name: '동인기연',
+        id: '111380',
       },
     ]);
   }, []);

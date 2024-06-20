@@ -9,12 +9,12 @@ export default function InputTemplate({ value, setValue }) {
       id="dropdown-basic-button"
       title={value}
     >
-      <Dropdown.Item className="w-full" onClick={() => setValue(0)}>
+      <Dropdown.Item className="w-full" onClick={() => setValue(7)}>
         DCF
       </Dropdown.Item>
-      <Dropdown.Item onClick={() => setValue(1)}>PER</Dropdown.Item>
+      <Dropdown.Item onClick={() => setValue(6)}>PER</Dropdown.Item>
       <Dropdown.Divider />
-      <Dropdown.Item onClick={() => setValue(2)}>
+      <Dropdown.Item onClick={() => setValue(8)}>
         내 PC에서 가져오기 (.xlsx)
       </Dropdown.Item>
     </DropdownButton>

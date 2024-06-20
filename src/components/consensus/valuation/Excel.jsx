@@ -8,6 +8,7 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { useExcelContext } from '../../../routes/valuationCreateExcel/page';
 import { postValuation } from '../../../apis/valuation';
+import { getTemplateById } from '../../../apis/template';
 
 export default function Excel() {
   const { formula, setFormula, fileInput, spreadRef, stockId, templateId } =
@@ -39,7 +40,19 @@ export default function Excel() {
       }
     };
 
+    const fetchTemplate = async () => {
+      try {
+        if (stockId && templateId) {
+          const result = await getTemplateById(templateId);
+          console.log(result.data);
+        }
+      } catch (error) {
+        console.error('Error fetching valuation data:', error);
+      }
+    };
+
     fetchValuationData();
+    fetchTemplate();
   }, [stockId, templateId]);
 
   useEffect(() => {
