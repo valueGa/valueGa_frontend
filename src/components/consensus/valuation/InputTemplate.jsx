@@ -12,7 +12,7 @@ export default function InputTemplate({ value, setValue }) {
       <Dropdown.Item className="w-full" onClick={() => setValue(7)}>
         DCF
       </Dropdown.Item>
-      <Dropdown.Item onClick={() => setValue(6)}>PER</Dropdown.Item>
+      <Dropdown.Item onClick={() => setValue(12)}>PER</Dropdown.Item>
       <Dropdown.Divider />
       <Dropdown.Item onClick={() => setValue(8)}>
         내 PC에서 가져오기 (.xlsx)

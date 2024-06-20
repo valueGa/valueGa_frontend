@@ -6,6 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import ExcelJS from 'exceljs';
 import Excel from '../../components/consensus/valuation/Excel';
 import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
 

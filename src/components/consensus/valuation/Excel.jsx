@@ -33,7 +33,7 @@ export default function Excel() {
 
         if (stockId && templateId) {
           const result = await postValuation(stockId, templateId, years);
-          setExcelValues(result.data);
+          // setExcelValues(result.data);
         }
       } catch (error) {
         console.error('Error fetching valuation data:', error);
@@ -45,6 +45,23 @@ export default function Excel() {
         if (stockId && templateId) {
           const result = await getTemplateById(templateId);
           console.log(result.data);
+
+          const arrayBuffer = result.data.excel_data.data;
+          const workbook = new ExcelJS.Workbook();
+          await workbook.xlsx.load(arrayBuffer);
+
+          const worksheet = workbook.getWorksheet(1); // 첫 번째 시트를 가져옴
+
+          worksheet.eachRow((row, rowNumber) => {
+            row.eachCell((cell, colNumber) => {
+              const sheet = spreadRef.current.getSheet(0);
+              if (cell.formula) {
+                sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
+              } else {
+                sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
+              }
+            });
+          });
         }
       } catch (error) {
         console.error('Error fetching valuation data:', error);
