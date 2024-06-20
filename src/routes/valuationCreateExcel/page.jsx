@@ -1,9 +1,15 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
-import * as ExcelIO from '@grapecity/spread-excelio';
+import ExcelJS from 'exceljs';
 import Excel from '../../components/consensus/valuation/Excel';
 import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
-import axios from 'axios';
+import * as ExcelIO from '@grapecity/spread-excelio';
 // import { jwtDecode } from 'jwt-decode';
 
 const ExcelContext = createContext();
@@ -19,12 +25,27 @@ export const useExcelContext = () => useContext(ExcelContext);
 
 export default function ValuationCreateExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [stockId, setStockId] = useState();
+  const [stockName, setStockName] = useState();
+  const [templateId, setTemplateId] = useState();
+  const [templateName, setTemplateName] = useState();
   const [formula, setFormula] = useState('');
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
   // const [userId, setUserId] = useState(null);
   const fileInput = useRef(null);
   const spreadRef = useRef(null);
+
+  useEffect(() => {
+    setStockId(searchParams.get('id'));
+    setTemplateId(searchParams.get('template'));
+  }, [searchParams]);
+
+  useEffect(() => {
+    // API 연결
+    setStockName('삼성전자');
+    setTemplateName('DCF');
+  }, [stockId, templateId]);
 
   // useEffect(() => {
   //   const userId = getUserIdFromToken();
@@ -34,6 +55,7 @@ export default function ValuationCreateExcel() {
   //     alert('로그인x');
   //   }
   // });
+
   const handleSaveExcel = () => {
     const json = spreadRef.current.toJSON();
     const excelIO = new ExcelIO.IO();
@@ -41,7 +63,6 @@ export default function ValuationCreateExcel() {
     excelIO.save(
       json,
       (blob) => {
-        console.log('dfasdfadsfdf');
         saveAs(blob, 'spreadsheet.xlsx');
       },
       (error) => {
@@ -195,8 +216,8 @@ export default function ValuationCreateExcel() {
     <div className="w-full flex flex-col justify-center items-center">
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex gap-2">
-        <div className="flex">{`종목:  ${searchParams.get('id')}`}</div>
-        <p className="flex">{`템플릿:  ${searchParams.get('template')}`}</p>
+        <div className="flex">{`종목:  ${stockName}`}</div>
+        <p className="flex">{`템플릿:  ${templateName}`}</p>
       </div>
       <div className="flex gap-4">
         <div className="flex gap-2">
@@ -223,7 +244,14 @@ export default function ValuationCreateExcel() {
 
       {/*--- 엑셀 ---*/}
       <ExcelContext.Provider
-        value={{ formula, setFormula, fileInput, spreadRef }}
+        value={{
+          formula,
+          setFormula,
+          fileInput,
+          spreadRef,
+          stockId,
+          templateId,
+        }}
       >
         <input
           type="text"
