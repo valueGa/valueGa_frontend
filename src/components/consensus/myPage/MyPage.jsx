@@ -1,23 +1,25 @@
-import React from "react";
-import { useState } from "react";
-import Template from "~/components/consensus/myPage/Template";
-import Valuation from "~/components/consensus/myPage/Valuation";
-import Profile from "~/components/consensus/myPage/Profile";
+import React from 'react';
+import { useState } from 'react';
+import Template from '~/components/consensus/myPage/Template';
+import Valuation from '~/components/consensus/myPage/Valuation';
+import Profile from '~/components/consensus/myPage/Profile';
 
 export default function MyPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [user, setUser] = useState({
-    name: "우채윤",
-    email: "heeni1004@gmail.com",
+    name: '우채윤',
+    email: 'heeni1004@gmail.com',
   });
+
   const tabContArr = [
     {
       tabTitle: (
         <li
+          key="0"
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 0
-              ? "border-b-2 border-yellow text-yellow"
-              : "border-b-2 border-tuatara-300 text-tuatara-300"
+              ? 'border-b-2 border-yellow text-yellow'
+              : 'border-b-2 border-tuatara-300 text-tuatara-300'
           }`}
           onClick={() => tabClickHandler(0)}
         >
@@ -28,10 +30,11 @@ export default function MyPage() {
     {
       tabTitle: (
         <li
+          key="1"
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 1
-              ? "border-b-2 border-yellow text-yellow"
-              : "border-b-2 border-gray-300 border-tuatara-300 text-tuatara-300"
+              ? 'border-b-2 border-yellow text-yellow'
+              : 'border-b-2 border-gray-300 border-tuatara-300 text-tuatara-300'
           }`}
           onClick={() => tabClickHandler(1)}
         >
