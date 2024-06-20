@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import moreIcon from "~/assets/icons/more.svg";
-import Popup from "~/components/consensus/myPage/Popup";
+import React, { useEffect, useRef, useState } from 'react';
+import moreIcon from '~/assets/icons/more.svg';
+import Popup from '~/components/consensus/myPage/Popup';
+import axios from 'axios';
 
 export default function Valuation() {
   const [valList, setValList] = useState(null);
@@ -17,40 +18,62 @@ export default function Valuation() {
     }
   };
 
+  const handleDelete = async (valuation_id) => {
+    console.log('삭제 요청 시작', valuation_id); // 로그 추가
+    try {
+      const token =
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg4Njg3ODgsImV4cCI6MTcxODg3MjM4OH0.lc7IvZJtNHwCnjVfVpeUpifA50AzliH9xD7mcAjlHAg'; // 실제 JWT 토큰을 여기에 설정하세요
+      await axios.delete('/api/valuation/delete', {
+        headers: {
+          auth: token,
+        },
+        data: { valuation_id },
+      });
+
+      setValList(valList.filter((item) => item.valuation_id !== valuation_id));
+    } catch (error) {
+      console.error('삭제 중 에러:', error);
+    }
+  };
+
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  /* axios 이전, css를 위한 dump data */
-  const tmpValList = [
-    {
-      stockName: "삼성전자",
-      targetPrice: 90000,
-      valuePotential: 0.1,
-      isTemp: false,
-      date: "2024.06.10",
-    },
-    {
-      stockName: "SK하이닉스",
-      targetPrice: 220000,
-      valuePotential: 0.2,
-      isTemp: false,
-      date: "2024.06.12",
-    },
-    {
-      stockName: "신한지주",
-      targetPrice: null,
-      valuePotential: null,
-      isTemp: true,
-      date: "2024.06.10",
-    },
-  ];
   useEffect(() => {
-    setValList(tmpValList);
+    const fetchData = async () => {
+      try {
+        const token =
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg4Njg3ODgsImV4cCI6MTcxODg3MjM4OH0.lc7IvZJtNHwCnjVfVpeUpifA50AzliH9xD7mcAjlHAg'; // 실제 JWT 토큰을 여기에 설정하세요
+        const response = await axios.get('/api/valuation/valuations', {
+          headers: {
+            auth: token,
+          },
+        });
+        console.log(response.data.data);
+        // 받은 데이터를 기존 더미 데이터 구조에 맞게 변환
+        const transformedData = response.data.data.map((item) => ({
+          valuationId: item.valuation_id,
+          stockName: item.stock_name,
+          targetPrice: item.target_price,
+          valuePotential: item.value_potential,
+          isTemp: item.is_temporary,
+          date: new Date(item.date).toLocaleDateString(),
+        }));
+        console.log(transformedData);
+
+        setValList(transformedData);
+      } catch (error) {
+        console.error('데이터 가져오기 중 에러:', error);
+      }
+    };
+
+    fetchData();
   }, []);
+
   return (
     <div>
       <div className="flex flex-row text-body1 text-center items-center w-3/5 h-7 mt-6">
@@ -61,11 +84,14 @@ export default function Valuation() {
       <div>
         {valList?.map((element, index) => {
           return (
-            <div className="text-tuatara-50 text-body2 flex justify-between flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900">
+            <div
+              key={index}
+              className="text-tuatara-50 text-body2 flex justify-between flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900"
+            >
               <div className="flex flex-row basis-3/5">
                 <div className="basis-1/3">{element.stockName}</div>
                 <div className="basis-1/3">{element.targetPrice}원</div>
-                <div className="basis-1/3">{element.valuePotential * 100}%</div>
+                <div className="basis-1/3">{element.valuePotential}%</div>
               </div>
               <div className="flex justify-end flex-row basis-2/5 mr-8">
                 {element.isTemp ? (
@@ -74,13 +100,23 @@ export default function Valuation() {
                   <div className="basis-1/5 mr-2">저장 완료</div>
                 )}
                 <div className="basis-1/5 mr-2">{element.date}</div>
-                <div className=" relative basis-1/7 mr-2" ref={popupRef}>
-                  {showPopup === index && <Popup />}
+
+                <div className=" relative basis-1/7 mr-2">
+                  {showPopup === index && (
+                    <div ref={popupRef}>
+                      <Popup
+                        onDelete={handleDelete}
+                        valuationId={element.valuationId}
+                      />
+                    </div>
+                  )}
                   <img
                     src={moreIcon}
                     alt="moreIcon"
                     className="w-6 h-6 cursor-pointer"
-                    onClick={() => togglePopup(index)}
+                    onClick={() => {
+                      togglePopup(index);
+                    }}
                   />
                 </div>
               </div>
