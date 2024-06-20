@@ -9,11 +9,13 @@ import { saveAs } from 'file-saver';
 import { useExcelContext } from '../../../routes/valuationCreateExcel/page';
 import { postValuation } from '../../../apis/valuation';
 import { getTemplateById } from '../../../apis/template';
+import { GLOSSARY } from '~/constants/valuation';
 
 export default function Excel() {
   const { formula, setFormula, fileInput, spreadRef, stockId, templateId } =
     useExcelContext();
   const [excelValues, setExcelValues] = useState({});
+  const [worksheet, setWorkSheet] = useState();
 
   useEffect(() => {
     const fetchValuationData = async () => {
@@ -33,7 +35,7 @@ export default function Excel() {
 
         if (stockId && templateId) {
           const result = await postValuation(stockId, templateId, years);
-          // setExcelValues(result.data);
+          setExcelValues(result.data);
         }
       } catch (error) {
         console.error('Error fetching valuation data:', error);
@@ -44,24 +46,12 @@ export default function Excel() {
       try {
         if (stockId && templateId) {
           const result = await getTemplateById(templateId);
-          console.log(result.data);
 
           const arrayBuffer = result.data.excel_data.data;
           const workbook = new ExcelJS.Workbook();
           await workbook.xlsx.load(arrayBuffer);
 
-          const worksheet = workbook.getWorksheet(1); // 첫 번째 시트를 가져옴
-
-          worksheet.eachRow((row, rowNumber) => {
-            row.eachCell((cell, colNumber) => {
-              const sheet = spreadRef.current.getSheet(0);
-              if (cell.formula) {
-                sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
-              } else {
-                sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
-              }
-            });
-          });
+          setWorkSheet(workbook.getWorksheet(1));
         }
       } catch (error) {
         console.error('Error fetching valuation data:', error);
@@ -73,6 +63,12 @@ export default function Excel() {
   }, [stockId, templateId]);
 
   useEffect(() => {
+    if (worksheet && excelValues) {
+      insertInitValuationData();
+    }
+  }, [worksheet, excelValues]);
+
+  useEffect(() => {
     const sheet = spreadRef.current?.getActiveSheet();
     if (sheet) {
       const { row, col } = sheet.getSelections()[0] || { row: 0, col: 0 };
@@ -80,28 +76,50 @@ export default function Excel() {
     }
   }, [formula]);
 
-  useEffect(() => {
-    insertInitValuationData();
-  }, [excelValues]);
-
   const insertInitValuationData = useCallback(() => {
     // 템플릿 데이터 세팅
     if (Object.keys(excelValues).length > 0) {
-      const sheet = spreadRef.current?.getActiveSheet();
+      const sheet = spreadRef.current.getSheet(0);
+
+      // console.log(excelValues);
+      // 템플릿 항목 세팅 (1열)
+      worksheet.eachRow(async (row, rowNumber) => {
+        row.eachCell((cell, colNumber) => {
+          if (cell.formula) {
+            sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
+          } else {
+            sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
+          }
+        });
+      });
+
+      // 템플릿 년도 세팅 (1행)
       const years = Object.keys(excelValues);
       years.forEach((year, colIndex) => {
         sheet.setValue(0, colIndex + 1, year);
       });
 
-      const fields = Object.keys(excelValues[years[0]]);
-      fields.forEach((field, rowIndex) => {
-        sheet.setValue(rowIndex + 1, 0, field);
-        years.forEach((year, colIndex) => {
-          sheet.setValue(rowIndex + 1, colIndex + 1, excelValues[year][field]);
-        });
-      });
+      // 템플릿 항목에 해당하는 년도별 데이터 삽입 (2행 2열부터)
+      const columnCount = worksheet.columnCount;
+      const rowCount = worksheet.rowCount;
+
+      for (let row = 2; row <= rowCount; row++) {
+        for (let col = 2; col <= columnCount; col++) {
+          const columnName = worksheet.getCell(row, 1).value;
+          const year = sheet.getText(0, col - 1);
+          const codeName = GLOSSARY[columnName];
+
+          // 해당 항목명에 대응하는 값을 가져와서 셀에 설정 (수식은 값 삽입 건너뜀)
+          if (
+            excelValues[year][codeName] &&
+            !worksheet.getCell(row, col).formula
+          ) {
+            sheet.setValue(row - 1, col - 1, excelValues[year][codeName]);
+          }
+        }
+      }
     }
-  }, [excelValues]);
+  }, [excelValues, worksheet]);
 
   const initSpread = useCallback(
     (spread) => {
