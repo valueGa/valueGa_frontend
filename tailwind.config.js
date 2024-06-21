@@ -48,6 +48,20 @@ const tailwindConfig = {
             400: "#3D7FFF",
           },
         },
+        consensus: {
+          blue: {
+            50: "#E3FAFF",
+            100: "#4BDFFF",
+          },
+          grey: {
+            50: "#EDEDED",
+            100: "#858585",
+          },
+          pink: {
+            50: "#F9D5FF",
+            100: "#E64BFF",
+          },
+        },
         magenta: {
           50: "#fff3ff",
           100: "#fee6ff",
@@ -97,6 +111,7 @@ const tailwindConfig = {
         pink: {
           50: "#FF6FFE",
           100: "#FF00FD",
+          200: "#FB4BFF",
         },
       },
     },
