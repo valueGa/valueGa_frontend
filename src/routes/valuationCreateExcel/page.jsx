@@ -169,8 +169,6 @@ export default function ValuationCreateExcel() {
       alert('목표 주가와 상승 여력을 입력하세요.');
       return;
     }
-    console.log('##############################');
-
     const json = spreadRef.current.toJSON();
     const excelIO = new ExcelIO.IO();
     console.log('spreadRef toJSON:', json);
@@ -200,9 +198,6 @@ export default function ValuationCreateExcel() {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-
-          const result = await response.json();
-          console.log(result);
           alert('임시저장 완료');
         } catch (error) {
           console.error('임시저장 중 에러: ', error);

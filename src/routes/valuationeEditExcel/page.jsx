@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ExcelJS from 'exceljs';
-import Excel from '../../components/consensus/valuation/Excel';
+import Excel from '../../components/consensus/valuation/ExcelEdit';
 import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
 import * as ExcelIO from '@grapecity/spread-excelio';
 // import { jwtDecode } from 'jwt-decode';
@@ -23,12 +23,13 @@ export const useExcelContext = () => useContext(ExcelContext);
 //   return null;
 // };
 
-export default function ValuationCreateExcel() {
+export default function ValuationEditExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [valuationId, setValuationId] = useState(null);
   const [stockId, setStockId] = useState();
   const [stockName, setStockName] = useState();
   const [templateId, setTemplateId] = useState();
-  const [templateName, setTemplateName] = useState();
+  // const [templateName, setTemplateName] = useState();
   const [formula, setFormula] = useState('');
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
@@ -37,15 +38,9 @@ export default function ValuationCreateExcel() {
   const spreadRef = useRef(null);
 
   useEffect(() => {
-    setStockId(searchParams.get('id'));
-    setTemplateId(searchParams.get('template'));
+    const id = searchParams.get('id');
+    setValuationId(id); // 수정된 부분: id를 valuationId로 사용
   }, [searchParams]);
-
-  useEffect(() => {
-    // API 연결
-    setStockName('삼성전자');
-    setTemplateName('DCF');
-  }, [stockId, templateId]);
 
   // useEffect(() => {
   //   const userId = getUserIdFromToken();
@@ -55,6 +50,43 @@ export default function ValuationCreateExcel() {
   //     alert('로그인x');
   //   }
   // });
+
+  useEffect(() => {
+    if (valuationId) {
+      fetch(`/api/valuation/${valuationId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setStockName(data.stock_name);
+          setTargetPrice(data.valuation.target_price);
+          setValuePotential(data.valuation.value_potential);
+
+          const buffer = new Uint8Array(data.valuation.excel_data.data);
+          const workbook = new ExcelJS.Workbook();
+          return workbook.xlsx.load(buffer);
+        })
+        .then((workbook) => {
+          const worksheet = workbook.getWorksheet(1);
+          worksheet.eachRow((row, rowNumber) => {
+            row.eachCell((cell, colNumber) => {
+              const sheet = spreadRef.current.getSheet(0);
+              if (cell.formula) {
+                sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
+              } else {
+                sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
+              }
+            });
+          });
+        })
+        .catch((error) => {
+          console.error('Error loading Excel data:', error);
+        });
+    }
+  }, [valuationId]);
 
   const handleSaveExcel = () => {
     const json = spreadRef.current.toJSON();
@@ -133,18 +165,15 @@ export default function ValuationCreateExcel() {
         // 서버로 파일 업로드
         const formData = new FormData();
         formData.append('file', file, 'excelFile');
-        formData.append('user_id', 1); // 사용자 ID 사용
+        formData.append('user_id', 3); // 사용자 ID 사용
         formData.append('target_price', targetPrice);
         formData.append('value_potential', valuePotential);
 
         try {
-          const response = await fetch(
-            `/api/valuation/save?id=${searchParams.get('id')}`,
-            {
-              method: 'POST',
-              body: formData,
-            }
-          );
+          const response = await fetch(`/api/valuation/${valuationId}`, {
+            method: 'PUT',
+            body: formData,
+          });
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -152,10 +181,10 @@ export default function ValuationCreateExcel() {
 
           const result = await response.json();
           console.log(result);
-          alert('저장 완료');
+          alert('밸류에이션 업데이트 완료');
         } catch (error) {
-          console.error('저장 중 에러: ', error);
-          alert('저장 중 에러');
+          console.error('업데이트 중 에러: ', error);
+          alert('업데이트 중 에러');
         }
       },
       (error) => {
@@ -169,8 +198,6 @@ export default function ValuationCreateExcel() {
       alert('목표 주가와 상승 여력을 입력하세요.');
       return;
     }
-    console.log('##############################');
-
     const json = spreadRef.current.toJSON();
     const excelIO = new ExcelIO.IO();
     console.log('spreadRef toJSON:', json);
@@ -189,21 +216,22 @@ export default function ValuationCreateExcel() {
         console.log(formData.get('file'));
 
         try {
-          const response = await fetch('/api/valuation/temporary-save', {
-            method: 'POST',
-            body: formData,
-          });
+          const response = await fetch(
+            `/api/valuation/${valuationId}/temporary`,
+            {
+              method: 'PUT',
+              body: formData,
+            }
+          );
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
 
-          const result = await response.json();
-          console.log(result);
-          alert('임시저장 완료');
+          alert('임시저장 업데이트 완료');
         } catch (error) {
-          console.error('임시저장 중 에러: ', error);
-          alert('임시저장 중 에러');
+          console.error('임시저장 업데이트 중 에러: ', error);
+          alert('임시저장 업데이트 중 에러');
         }
       },
       (error) => {
@@ -217,7 +245,7 @@ export default function ValuationCreateExcel() {
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex gap-2">
         <div className="flex">{`종목:  ${stockName}`}</div>
-        <p className="flex">{`템플릿:  ${templateName}`}</p>
+        {/* <p className="flex">{`템플릿:  ${templateName}`}</p> */}
       </div>
       <div className="flex gap-4">
         <div className="flex gap-2">
