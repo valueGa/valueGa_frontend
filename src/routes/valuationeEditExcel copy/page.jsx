@@ -189,13 +189,10 @@ export default function ValuationCreateExcel() {
         console.log(formData.get('file'));
 
         try {
-          const response = await fetch(
-            `/api/valuation/temporary-save?id=${searchParams.get('id')}`,
-            {
-              method: 'POST',
-              body: formData,
-            }
-          );
+          const response = await fetch('/api/valuation/temporary-save', {
+            method: 'POST',
+            body: formData,
+          });
 
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
