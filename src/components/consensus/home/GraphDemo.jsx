@@ -85,26 +85,17 @@ const ApexChartUp = () => {
         },
         columnWidth: "80%",
         dataLabels: {
-          position: "top",
-          maxItems: 100,
-          hideOverflowingLabels: true,
-          total: {
-            enabled: true,
-            formatter: undefined,
-            offsetX: 0,
-            offsetY: 0,
-            style: {
-              color: "#F15B46",
-              fontSize: "12px",
-              fontFamily: undefined,
-              fontWeight: 600,
-            },
+          enabled: true,
+          textAnchor: "middle",
+          distributed: false,
+          style: {
+            fontSize: "14px",
+            fontFamily: "Helvetica, Arial, sans-serif",
+            fontWeight: undefined,
+            colors: undefined,
           },
         },
       },
-    },
-    dataLabels: {
-      enabled: false,
     },
 
     yaxis: {
@@ -163,6 +154,7 @@ const ApexChartDown = () => {
       type: "bar",
       height: 350,
     },
+
     grid: {
       show: true,
       borderColor: "#90A4AE",
@@ -231,7 +223,15 @@ const ApexChartDown = () => {
       },
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
+      textAnchor: "middle",
+      distributed: false,
+      style: {
+        fontSize: "14px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: undefined,
+        colors: ["white"],
+      },
     },
 
     yaxis: {
