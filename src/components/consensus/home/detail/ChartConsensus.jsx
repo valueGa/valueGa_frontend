@@ -20,6 +20,11 @@ const ApexChart = () => {
   ]);
 
   const [options, setOptions] = useState({
+    colors: [
+      colors.consensus.blue[50],
+      colors.consensus.grey[50],
+      colors.consensus.pink[50],
+    ],
     chart: {
       toolbar: {
         show: false,
@@ -62,9 +67,9 @@ const ApexChart = () => {
 
     plotOptions: {
       bar: {
-        // borderRadius: 20,
-        // borderRadiusApplication: "around",
-        // borderRadiusWhenStacked: "end",
+        borderRadius: 20,
+        borderRadiusApplication: "around",
+        borderRadiusWhenStacked: "all",
         horizontal: true,
         distributed: false,
         rangeBarOverlap: true,
@@ -74,29 +79,30 @@ const ApexChart = () => {
         dumbbellColors: undefined,
         isFunnel: false,
         isFunnel3d: true,
-        colors: {
-          ranges: [
-            {
-              from: 1,
-              to: 17,
-              color: "#E3FAFF",
-            },
-            {
-              from: 18,
-              to: 34,
-              color: "#191919",
-            },
-            {
-              from: 35,
-              to: 50,
-              color: colors.chart.red[200],
-            },
-          ],
-        },
       },
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
+      textAnchor: "middle",
+      distributed: false,
+      style: {
+        fontSize: "14px",
+        fontWeight: "bold",
+        colors: [
+          colors.consensus.blue[100],
+          colors.consensus.grey[100],
+          colors.consensus.pink[100],
+        ],
+      },
+
+      dropShadow: {
+        enabled: false,
+        top: 1,
+        left: 1,
+        blur: 1,
+        color: "#000",
+        opacity: 0.45,
+      },
     },
 
     yaxis: {
@@ -195,26 +201,14 @@ const ApexChart = () => {
 
     legend: {
       show: false,
-      showForSingleSeries: false,
-      showForNullSeries: true,
-      showForZeroSeries: true,
-      position: "bottom",
-      horizontalAlign: "center",
-      floating: false,
-      fontSize: "14px",
-      fontFamily: "Helvetica, Arial",
-      fontWeight: 400,
-      formatter: undefined,
-      inverseOrder: false,
-      width: undefined,
-      height: undefined,
-      tooltipHoverFormatter: undefined,
-      customLegendItems: [],
     },
 
     title: {
       text: undefined,
       align: "left",
+    },
+    tooltip: {
+      enabled: false,
     },
   });
 
