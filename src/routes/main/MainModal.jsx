@@ -83,12 +83,12 @@ function LoginFooter({ handleClose, clickSignup }) {
   );
 }
 
-function SignupFooter({ handleClose }) {
+function SignupFooter({ handleClickedModalSignupButton }) {
   return (
     <>
       <Button
         className="bg-[#637CFF] border-none pr-8 pl-8 text-mini"
-        onClick={handleClose}
+        onClick={handleClickedModalSignupButton}
       >
         완료
       </Button>
@@ -103,14 +103,14 @@ function LoginInput(params) {
         <AuthInput
           placeholder="test@email"
           url="assets/images/ic_email.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputEmailChange}
+          activity={params.emailActivity}
         />
         <AuthInput
           placeholder="password"
           url="assets/images/ic_block.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputPasswordChange}
+          activity={params.passwordActivity}
         />
       </Form>
     </>
@@ -124,41 +124,63 @@ function SignupInput(params) {
         <AuthInput
           placeholder="name"
           url="assets/images/ic_block.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputNameChange}
+          activity={params.nameActivity}
         />
         <AuthInput
           placeholder="email"
           url="assets/images/ic_email.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputEmailChange}
+          activity={params.emailActivity}
         />
         <AuthInput
           placeholder="password"
           url="assets/images/ic_block.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputPasswordChange}
+          activity={params.passwordActivity}
         />
         <AuthInput
           placeholder="confirm password"
           url="assets/images/ic_block.svg"
-          handleInputChange={params.handleInputChange}
-          activity={params.activity}
+          handleInputChange={params.handleInputConfirmPasswordChange}
+          activity={params.confirmPasswordActivity}
         />
       </Form>
     </>
   );
 }
 
-export function Login({ show, handleClose, handleClickedSignupButton }) {
-  const [activity, setActivity] = useState(false);
-  const handleInputChange = (e) => {
-    console.log("login:" + e.target.value);
+export function Login({
+  show,
+  handleClose,
+  handleClickedSignupButton,
+  handleClickedModalLoginButton,
+}) {
+  const [emailActivity, setEmailActivity] = useState(false);
+  const [passwordActivity, setPasswordActivity] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleInputEmailChange = (e) => {
+    setEmail(e.target.value);
     if (e.target.value.length > 0) {
-      setActivity(true);
+      setEmailActivity(true);
     } else {
-      setActivity(false);
+      setEmailActivity(false);
     }
+  };
+
+  const handleInputPasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (e.target.value.length > 0) {
+      setPasswordActivity(true);
+    } else {
+      setPasswordActivity(false);
+    }
+  };
+
+  const clickedButton = () => {
+    console.log(`${email} ${password}`);
+    handleClickedModalLoginButton(email, password);
   };
 
   return (
@@ -169,39 +191,97 @@ export function Login({ show, handleClose, handleClickedSignupButton }) {
       formLabel="Enter your login details"
       footerContent={
         <LoginFooter
-          handleClose={handleClose}
+          handleClose={clickedButton}
           clickSignup={handleClickedSignupButton}
         />
       }
       input={
-        <LoginInput handleInputChange={handleInputChange} activity={activity} />
+        <LoginInput
+          handleInputEmailChange={handleInputEmailChange}
+          handleInputPasswordChange={handleInputPasswordChange}
+          emailActivity={emailActivity}
+          passwordActivity={passwordActivity}
+        />
       }
     />
   );
 }
+export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
+  const [nameActivity, setNameActivity] = useState(false);
+  const [emailActivity, setEmailActivity] = useState(false);
+  const [passwordActivity, setPasswordActivity] = useState(false);
+  const [confirmPasswordActivity, setConfirmPasswordActivity] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-export function Signup({ show, handleClose }) {
-  const [activity, setActivity] = useState(false);
-  const handleInputChange = (e) => {
+  const handleInputNameChange = (e) => {
+    console.log("signup Name:" + e.target.value);
+    setName(e.target.value);
+    if (e.target.value.length > 0) {
+      setNameActivity(true);
+    } else {
+      setNameActivity(false);
+    }
+  };
+
+  const handleInputEmailChange = (e) => {
+    console.log("signup Email:" + e.target.value);
+    setEmail(e.target.value);
+    if (e.target.value.length > 0) {
+      setEmailActivity(true);
+    } else {
+      setEmailActivity(false);
+    }
+  };
+
+  const handleInputPasswordChange = (e) => {
+    console.log("signup Password:" + e.target.value);
+    setPassword(e.target.value);
+    if (e.target.value.length > 0) {
+      setPasswordActivity(true);
+    } else {
+      setPasswordActivity(false);
+    }
+  };
+
+  const handleInputConfirmPasswordChange = (e) => {
     console.log("signup:" + e.target.value);
 
     if (e.target.value.length > 0) {
-      setActivity(true);
+      setConfirmPasswordActivity(true);
     } else {
-      setActivity(false);
+      setConfirmPasswordActivity(false);
     }
   };
+
+  const clickedButton = () => {
+    // console.log(`${email} ${password}`);
+    handleClickedModalSignupButton(name, email, password);
+  };
+
   return (
     <AuthModal
       show={show}
       handleClose={handleClose}
       title="회원가입"
       formLabel="Enter your signup details"
-      footerContent={<SignupFooter handleClose={handleClose} />}
+      footerContent={
+        <SignupFooter
+          handleClose={handleClose}
+          handleClickedModalSignupButton={clickedButton}
+        />
+      }
       input={
         <SignupInput
-          handleInputChange={handleInputChange}
-          activity={activity}
+          handleInputNameChange={handleInputNameChange}
+          handleInputEmailChange={handleInputEmailChange}
+          handleInputPasswordChange={handleInputPasswordChange}
+          handleInputConfirmPasswordChange={handleInputConfirmPasswordChange}
+          nameActivity={nameActivity}
+          emailActivity={emailActivity}
+          passwordActivity={passwordActivity}
+          confirmPasswordActivity={confirmPasswordActivity}
         />
       }
     />
