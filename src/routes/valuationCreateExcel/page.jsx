@@ -33,7 +33,6 @@ export default function ValuationCreateExcel() {
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
   // const [userId, setUserId] = useState(null);
-  const fileInput = useRef(null);
   const spreadRef = useRef(null);
 
   const [selectedCell, setSelectedCell] = useState({
@@ -371,46 +370,38 @@ export default function ValuationCreateExcel() {
       return;
     }
 
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    console.log('spreadRef toJSON:', json);
-    excelIO.save(
-      json,
-      async (blob) => {
-        const file = new File([blob], 'spreadsheet.xlsx');
+    const excelData = sheetData;
 
-        // 서버로 파일 업로드
-        const formData = new FormData();
-        formData.append('file', file, 'excelFile');
-        formData.append('user_id', 1); // 사용자 ID 사용
-        formData.append('target_price', targetPrice);
-        formData.append('value_potential', valuePotential);
+    const requestBody = {
+      user_id: 3,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
 
-        try {
-          const response = await fetch(
-            `/api/valuation/save?id=${searchParams.get('id')}`,
-            {
-              method: 'POST',
-              body: formData,
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-          console.log(result);
-          alert('저장 완료');
-        } catch (error) {
-          console.error('저장 중 에러: ', error);
-          alert('저장 중 에러');
+    try {
+      const response = await fetch(
+        `/api/valuation?id=${searchParams.get('id')}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
         }
-      },
-      (error) => {
-        console.error(error);
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    );
+
+      const result = await response.json();
+      console.log(result);
+      alert('저장 완료');
+    } catch (error) {
+      console.error('저장 중 에러: ', error);
+      alert('저장 중 에러');
+    }
   };
 
   const handleTemporarySave = async () => {
@@ -418,47 +409,39 @@ export default function ValuationCreateExcel() {
       alert('목표 주가와 상승 여력을 입력하세요.');
       return;
     }
-    console.log('##############################');
 
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    console.log('spreadRef toJSON:', json);
+    const excelData = sheetData;
 
-    excelIO.save(
-      json,
-      async (blob) => {
-        const file = new File([blob], 'spreadsheet.xlsx');
+    const requestBody = {
+      user_id: 3,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
 
-        // 서버로 파일 업로드
-        const formData = new FormData();
-        formData.append('file', file, 'excelFile');
-        formData.append('user_id', 3); // 사용자 ID 사용
-        formData.append('target_price', targetPrice);
-        formData.append('value_potential', valuePotential);
-        console.log(formData.get('file'));
-
-        try {
-          const response = await fetch('/api/valuation/temporary-save', {
-            method: 'POST',
-            body: formData,
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-          console.log(result);
-          alert('임시저장 완료');
-        } catch (error) {
-          console.error('임시저장 중 에러: ', error);
-          alert('임시저장 중 에러');
+    try {
+      const response = await fetch(
+        `/api/valuation/temporary?id=${searchParams.get('id')}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
         }
-      },
-      (error) => {
-        console.error('ExcelIO save error:', error);
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    );
+
+      const result = await response.json();
+      console.log(result);
+      alert('임시저장 완료');
+    } catch (error) {
+      console.error('임시저장 중 에러: ', error);
+      alert('임시저장 중 에러');
+    }
   };
 
   return (

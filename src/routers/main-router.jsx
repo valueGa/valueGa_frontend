@@ -1,18 +1,20 @@
-import { createBrowserRouter } from "react-router-dom";
-import MainPage from "~/routes/main/page";
-import ConsensusPage from "~/routes/consensus/page";
-import ConsensusHome from "~/components/consensus/home/ConsensusHome";
-import ValuationCreate from "~/components/consensus/valuation/ValuationCreate";
-import ConsensusDetail from "~/components/consensus/home/detail/ConsensusDetail";
-import MyPage from "~/components/consensus/myPage/MyPage";
-import ValuationCreateExcel from "~/routes/valuationCreateExcel/page";
+import { createBrowserRouter } from 'react-router-dom';
+import MainPage from '~/routes/main/page';
+import ConsensusPage from '~/routes/consensus/page';
+import ConsensusHome from '~/components/consensus/home/ConsensusHome';
+import ValuationCreate from '~/components/consensus/valuation/ValuationCreate';
+import ConsensusDetail from '~/components/consensus/home/detail/ConsensusDetail';
+import MyPage from '~/components/consensus/myPage/MyPage';
+import ValuationCreateExcel from '~/routes/valuationCreateExcel/page';
+import ValuationEditExcel from '~/routes/valuationEditExcel/page';
 
 export const URI_PATH = {
-  mainPage: "/",
-  consensusPage: "/consensus",
-  valuationPage: "/consensus/valuation",
-  valuationCreatePage: "/consensus/valuation/create",
-  myPage: "/consensus/my",
+  mainPage: '/',
+  consensusPage: '/consensus',
+  valuationPage: '/consensus/valuation',
+  valuationCreatePage: '/consensus/valuation/create',
+  valuationEditPage: '/consensus/valuation/edit',
+  myPage: '/consensus/my',
 };
 
 export const routerObj = [
@@ -25,23 +27,27 @@ export const routerObj = [
     element: <ConsensusPage />,
     children: [
       {
-        path: "",
+        path: '',
         element: <ConsensusHome />,
       },
       {
-        path: ":id",
+        path: ':id',
         element: <ConsensusDetail />,
       },
       {
-        path: "valuation",
+        path: 'valuation',
         element: <ValuationCreate />,
       },
       {
-        path: "valuation/create",
+        path: 'valuation/create',
         element: <ValuationCreateExcel />,
       },
       {
-        path: "my",
+        path: 'valuation/edit',
+        element: <ValuationEditExcel />,
+      },
+      {
+        path: 'my',
         element: <MyPage />,
       },
     ],
