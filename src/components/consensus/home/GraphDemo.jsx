@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세요
 
-const ApexChartUp = () => {
-  const [series] = useState([
+const ApexChartUp = ({ top5List }) => {
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    setCategoryList(top5List.map((item) => item.company_name));
+  }, [top5List]);
+
+  const series = [
     {
       name: "Cash Flow",
       data: [5, 4, 3, 2, 1],
     },
-  ]);
-  //apexcharts-toolbar
-  const [options] = useState({
+  ];
+
+  const options = {
     chart: {
       toolbar: {
         show: false,
@@ -48,12 +54,10 @@ const ApexChartUp = () => {
         left: 0,
       },
     },
-
     plotOptions: {
       bar: {
         borderRadius: 20,
         borderRadiusApplication: "end",
-
         colors: {
           ranges: [
             {
@@ -97,15 +101,13 @@ const ApexChartUp = () => {
         },
       },
     },
-
     yaxis: {
       show: false,
     },
     xaxis: {
       type: "category",
       position: "bottom",
-      categories: ["LG전자", "삼성전자", "알텐오젠", "다우존스", "HLB"],
-      color: "#F15B46",
+      categories: categoryList,
       labels: {
         rotate: -90,
         style: {
@@ -113,7 +115,6 @@ const ApexChartUp = () => {
         },
       },
     },
-
     tooltip: {
       enabled: true,
       enabledOnSeries: undefined,
@@ -126,7 +127,11 @@ const ApexChartUp = () => {
       fillSeriesColor: false,
       theme: false,
     },
-  });
+  };
+
+  // categoryList가 설정된 후에 Chart 컴포넌트를 렌더링
+  if (categoryList.length === 0) {
+  }
 
   return (
     <div className="flex flex-col items-center justify-between w-50 h-full">
@@ -138,15 +143,9 @@ const ApexChartUp = () => {
   );
 };
 
-const ApexChartDown = () => {
-  const [series] = useState([
-    {
-      name: "Cash Flow",
-      data: [-1, -2, -3, -4, -5],
-    },
-  ]);
-  //apexcharts-toolbar
-  const [options] = useState({
+const ApexChartDown = ({ down5List }) => {
+  const [categoryList, setCategoryList] = useState([]);
+  const [options, setOptions] = useState({
     chart: {
       toolbar: {
         show: false,
@@ -154,7 +153,6 @@ const ApexChartDown = () => {
       type: "bar",
       height: 350,
     },
-
     grid: {
       show: true,
       borderColor: "#90A4AE",
@@ -185,7 +183,6 @@ const ApexChartDown = () => {
         left: 0,
       },
     },
-
     plotOptions: {
       bar: {
         borderRadius: 20,
@@ -233,20 +230,13 @@ const ApexChartDown = () => {
         colors: ["white"],
       },
     },
-
     yaxis: {
       show: false,
     },
     xaxis: {
       type: "category",
       position: "top",
-      categories: [
-        "하나손해보험",
-        "한국석유",
-        "신한투자증권",
-        "미래에셋증권",
-        "테슬라",
-      ],
+      categories: [],
       color: "#F15B46",
       labels: {
         rotate: -90,
@@ -269,6 +259,26 @@ const ApexChartDown = () => {
     },
   });
 
+  useEffect(() => {
+    const updatedCategoryList = down5List.map((item) => item.company_name);
+    setCategoryList(updatedCategoryList);
+
+    setOptions((prevOptions) => ({
+      ...prevOptions,
+      xaxis: {
+        ...prevOptions.xaxis,
+        categories: updatedCategoryList,
+      },
+    }));
+  }, [down5List]);
+
+  const [series] = useState([
+    {
+      name: "Cash Flow",
+      data: [-1, -2, -3, -4, -5],
+    },
+  ]);
+
   return (
     <div className="flex flex-col items-center justify-end w-50 h-full pb-[64px]">
       <div className="w-100" id="chart">
@@ -279,11 +289,11 @@ const ApexChartDown = () => {
   );
 };
 
-export default function GraphDemo() {
+export default function GraphDemo({ top5List, down5List }) {
   return (
     <div className="flex w-full h-[500px] px-[200px]">
-      <ApexChartUp />
-      <ApexChartDown />
+      <ApexChartUp top5List={top5List} />
+      <ApexChartDown down5List={down5List} />
     </div>
   );
 }
