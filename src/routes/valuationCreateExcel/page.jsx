@@ -476,6 +476,7 @@ export default function ValuationCreateExcel() {
       </section>
       <ExcelContext.Provider
         value={{
+          sheetData,
           stockName,
           templateName,
           targetPrice,
