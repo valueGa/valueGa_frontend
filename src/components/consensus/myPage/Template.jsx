@@ -30,14 +30,17 @@ export default function Template() {
   /* axios 이전, css를 위한 dump data */
   const tmpTempList = [
     {
+      tempId: 1,
       tempName: 'DCF 밸류에이션',
       date: '2024.06.10',
     },
     {
+      tempId: 2,
       tempName: 'PER 밸류에이션',
       date: '2024.06.10',
     },
     {
+      tempId: 3,
       tempName: 'EV/EBITDA 밸류에이션',
       date: '2024.06.10',
     },
@@ -48,7 +51,10 @@ export default function Template() {
       <div className="mt-8">
         {tempList?.map((element, index) => {
           return (
-            <div className="flex justify-between text-body2 flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900">
+            <div
+              key={element.tempId}
+              className="flex justify-between text-body2 flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900"
+            >
               <div className="flex flex-row basis-3/5">
                 <div className="basis-1/3">{element.tempName}</div>
               </div>
