@@ -35,7 +35,7 @@ export default function ExcelHeader() {
             목표주가
             <input
               type="number"
-              className="w-28 h-8 px-2 text-tuatara-100 bg-tuatara-900 rounded-md"
+              className="w-28 h-8 px-2 text-tuatara-100 bg-tuatara-900 rounded-md focus:outline-none focus:outline-1 focus:outline-tuatara-500"
               value={targetPrice}
               placeholder="0"
               onChange={(e) => setTargetPrice(e.target.value)}
@@ -46,7 +46,7 @@ export default function ExcelHeader() {
             상승여력
             <input
               type="number"
-              className="w-28 h-8 px-2 text-tuatara-100 bg-tuatara-900 rounded-md"
+              className="w-28 h-8 px-2 text-tuatara-100 bg-tuatara-900 rounded-md focus:outline-none focus:outline-1 focus:outline-tuatara-500"
               value={valuePotential}
               placeholder="0"
               onChange={(e) => setValuePotential(e.target.value)}

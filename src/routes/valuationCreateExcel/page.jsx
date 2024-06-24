@@ -489,9 +489,9 @@ export default function ValuationCreateExcel() {
         <input
           type="text"
           value={selectedCell.value}
-          placeholder="f(x) 수식을 입력하세요"
+          placeholder="f(x) : 값 또는 수식을 입력하세요"
           onChange={handleInputChange}
-          className="w-full my-2 p-2 px-6 border text-tuatara-800 border-gray-400 rounded"
+          className="w-full my-2 px-4 border-none py-2 text-tuatara-100 bg-tuatara-900 rounded focus:outline-none focus:outline-1 focus:outline-tuatara-500"
         />
         <Spreadsheet
           darkMode
