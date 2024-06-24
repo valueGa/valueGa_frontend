@@ -48,7 +48,7 @@ export default function Template() {
             auth: token,
           },
         });
-        console.log(response.data);
+
         const transformedData = response.data.map((item) => ({
           template_id: item.template_id,
           template_name: item.template_name,
@@ -90,7 +90,7 @@ export default function Template() {
                     <div ref={popupRef}>
                       <Popup
                         onDelete={() => handleDelete(element.template_id)}
-                        onEdit={() => navigate(`$(URI_PATH.templateEditPage)/>id=${element.template_id}`)}
+                        onEdit={() => navigate(`${URI_PATH.templateEditPage}/?id=${element.template_id}`)}
                       />
                     </div>
                   )}
