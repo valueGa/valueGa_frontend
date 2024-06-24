@@ -22,15 +22,19 @@ export default function Valuation() {
     console.log('삭제 요청 시작', valuation_id); // 로그 추가
     try {
       const token =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg4Njg3ODgsImV4cCI6MTcxODg3MjM4OH0.lc7IvZJtNHwCnjVfVpeUpifA50AzliH9xD7mcAjlHAg'; // 실제 JWT 토큰을 여기에 설정하세요
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA'; // 실제 JWT 토큰을 여기에 설정하세요
       await axios.delete('/api/valuation/delete', {
         headers: {
           auth: token,
         },
         data: { valuation_id },
       });
-
-      setValList(valList.filter((item) => item.valuation_id !== valuation_id));
+      console.log(valList);
+      for (const val of valList) {
+        console.log(val);
+      }
+      setValList(valList.filter((item) => item.valuationId !== valuation_id));
+      console.log(valList);
     } catch (error) {
       console.error('삭제 중 에러:', error);
     }
@@ -47,13 +51,13 @@ export default function Valuation() {
     const fetchData = async () => {
       try {
         const token =
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg4Njg3ODgsImV4cCI6MTcxODg3MjM4OH0.lc7IvZJtNHwCnjVfVpeUpifA50AzliH9xD7mcAjlHAg'; // 실제 JWT 토큰을 여기에 설정하세요
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA'; // 실제 JWT 토큰을 여기에 설정하세요
         const response = await axios.get('/api/valuation/valuations', {
           headers: {
             auth: token,
           },
         });
-        console.log(response.data.data);
+        console.log('useEffect');
         // 받은 데이터를 기존 더미 데이터 구조에 맞게 변환
         const transformedData = response.data.data.map((item) => ({
           valuationId: item.valuation_id,
@@ -61,7 +65,7 @@ export default function Valuation() {
           targetPrice: item.target_price,
           valuePotential: item.value_potential,
           isTemp: item.is_temporary,
-          date: new Date(item.date).toLocaleDateString(),
+          date: new Date(item.date).toLocaleDateString().slice(0, 11),
         }));
         console.log(transformedData);
 
@@ -104,10 +108,7 @@ export default function Valuation() {
                 <div className=" relative basis-1/7 mr-2">
                   {showPopup === index && (
                     <div ref={popupRef}>
-                      <Popup
-                        onDelete={handleDelete}
-                        valuationId={element.valuationId}
-                      />
+                      <Popup onDelete={handleDelete} valuationId={element.valuationId} />
                     </div>
                   )}
                   <img
