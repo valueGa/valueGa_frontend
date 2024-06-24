@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import moreIcon from '~/assets/icons/more.svg';
 import Popup from '~/components/consensus/myPage/Popup';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { URI_PATH } from '../../../routers/main-router';
 
 export default function Valuation() {
   const [valList, setValList] = useState(null);
   const [showPopup, setShowPopup] = useState(null); // null로 초기화하여 팝업이 표시되지 않도록 설정
   const popupRef = useRef(null);
+  const navigate = useNavigate();
 
   const togglePopup = (index) => {
     setShowPopup(showPopup === index ? null : index);
@@ -19,22 +22,30 @@ export default function Valuation() {
   };
 
   const handleDelete = async (valuation_id) => {
-    console.log('삭제 요청 시작', valuation_id); // 로그 추가
     try {
       const token =
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA'; // 실제 JWT 토큰을 여기에 설정하세요
+<<<<<<< feature/42
+      await axios.delete(`/api/valuation/${valuation_id}`, {
+=======
       await axios.delete('/api/valuation/delete', {
+>>>>>>> develop
         headers: {
           auth: token,
         },
         data: { valuation_id },
       });
+<<<<<<< feature/42
+
+      setValList(valList.filter((item) => item.valuationId !== valuation_id));
+=======
       console.log(valList);
       for (const val of valList) {
         console.log(val);
       }
       setValList(valList.filter((item) => item.valuationId !== valuation_id));
       console.log(valList);
+>>>>>>> develop
     } catch (error) {
       console.error('삭제 중 에러:', error);
     }
@@ -57,8 +68,11 @@ export default function Valuation() {
             auth: token,
           },
         });
+<<<<<<< feature/42
+=======
         console.log('useEffect');
         // 받은 데이터를 기존 더미 데이터 구조에 맞게 변환
+>>>>>>> develop
         const transformedData = response.data.data.map((item) => ({
           valuationId: item.valuation_id,
           stockName: item.stock_name,
@@ -67,8 +81,6 @@ export default function Valuation() {
           isTemp: item.is_temporary,
           date: new Date(item.date).toLocaleDateString().slice(0, 11),
         }));
-        console.log(transformedData);
-
         setValList(transformedData);
       } catch (error) {
         console.error('데이터 가져오기 중 에러:', error);
@@ -108,7 +120,18 @@ export default function Valuation() {
                 <div className=" relative basis-1/7 mr-2">
                   {showPopup === index && (
                     <div ref={popupRef}>
+<<<<<<< feature/42
+                      <Popup
+                        onDelete={() => handleDelete(element.valuationId)}
+                        onEdit={() =>
+                          navigate(
+                            `${URI_PATH.valuationEditPage}/?id=${element.valuationId}`
+                          )
+                        }
+                      />
+=======
                       <Popup onDelete={handleDelete} valuationId={element.valuationId} />
+>>>>>>> develop
                     </div>
                   )}
                   <img

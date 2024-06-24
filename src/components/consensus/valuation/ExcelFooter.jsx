@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-export default function ExcelFooter({ onSave, onTemporarySave }) {
+export default function ExcelFooter({ onTemporarySave, onSave }) {
   return (
     <div className="py-4 flex flex-col gap-2">
       <div className="flex justify-center gap-4">
