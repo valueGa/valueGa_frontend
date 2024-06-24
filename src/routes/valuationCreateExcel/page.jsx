@@ -6,10 +6,11 @@ import React, {
   useState,
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import ExcelJS from 'exceljs';
-import Excel from '../../components/consensus/valuation/Excel';
+import Spreadsheet from 'react-spreadsheet';
+import ExcelHeader from '../../components/consensus/valuation/ExcelHeader';
 import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
-import * as ExcelIO from '@grapecity/spread-excelio';
+import './valuationCreateExcel.css';
+
 // import { jwtDecode } from 'jwt-decode';
 
 const ExcelContext = createContext();
@@ -29,12 +30,308 @@ export default function ValuationCreateExcel() {
   const [stockName, setStockName] = useState();
   const [templateId, setTemplateId] = useState();
   const [templateName, setTemplateName] = useState();
-  const [formula, setFormula] = useState('');
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
   // const [userId, setUserId] = useState(null);
   const fileInput = useRef(null);
   const spreadRef = useRef(null);
+
+  const [selectedCell, setSelectedCell] = useState({
+    row: 0,
+    column: 0,
+    value: '',
+  });
+
+  const [sheetData, setSheetData] = useState([
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+  ]);
 
   useEffect(() => {
     setStockId(searchParams.get('id'));
@@ -47,73 +344,25 @@ export default function ValuationCreateExcel() {
     setTemplateName('DCF');
   }, [stockId, templateId]);
 
-  // useEffect(() => {
-  //   const userId = getUserIdFromToken();
-  //   if (userId) {
-  //     setUserId(userId);
-  //   } else {
-  //     alert('로그인x');
-  //   }
-  // });
-
-  const handleSaveExcel = () => {
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    console.log(excelIO);
-    excelIO.save(
-      json,
-      (blob) => {
-        saveAs(blob, 'spreadsheet.xlsx');
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  const handleSelectedCell = ({ row, column }) => {
+    setSelectedCell({ row, column, value: sheetData[row][column].value });
   };
 
-  const handleOpenExcel = async () => {
-    const file = fileInput.current.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.load(data);
-
-        const worksheet = workbook.getWorksheet(1); // 첫 번째 시트를 가져옴
-
-        worksheet.eachRow((row, rowNumber) => {
-          row.eachCell((cell, colNumber) => {
-            const sheet = spreadRef.current.getSheet(0);
-            if (cell.formula) {
-              sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
-            } else {
-              sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
-            }
-          });
-        });
-      };
-
-      reader.readAsArrayBuffer(file);
-    }
+  const handleSheetDataChange = (sheetArr) => {
+    setSheetData(sheetArr);
+    setSelectedCell((prev) => ({
+      ...prev,
+      value: sheetArr[selectedCell.row][selectedCell.column].value,
+    }));
   };
 
-  //   const handleAddData = () => {
-  //     const sheet = spreadRef.current.getActiveSheet();
-  //     sheet.setValue(0, 0, "New Data");
-  //   };
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    setSelectedCell((prev) => ({ ...prev, value: newValue }));
 
-  const handleGetFormula = () => {
-    const sheet = spreadRef.current.getActiveSheet();
-    const selection = sheet.getSelections()[0];
-    const row = selection.row;
-    const col = selection.col;
-    const formula = sheet.getFormula(row, col);
-    if (formula) {
-      alert(`Formula at (${row}, ${col}): ${formula}`);
-    } else {
-      alert(`No formula at (${row}, ${col})`);
-    }
+    const updatedData = [...sheetData];
+    updatedData[selectedCell.row][selectedCell.column] = { value: newValue };
+    setSheetData(updatedData);
   };
 
   const handleSave = async () => {
@@ -213,81 +462,48 @@ export default function ValuationCreateExcel() {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <div className="p-2 text-heading2">목표 주가 계산표</div>
-      <div className="flex gap-2">
-        <div className="flex">{`종목:  ${stockName}`}</div>
-        <p className="flex">{`템플릿:  ${templateName}`}</p>
-      </div>
-      <div className="flex gap-4">
-        <div className="flex gap-2">
-          목표주가
-          <input
-            type="number"
-            className="text-tuatara-100 bg-tuatara-900"
-            value={targetPrice}
-            onChange={(e) => setTargetPrice(e.target.value)}
-          />
-          원
+    <div className="w-full px-20 flex flex-col justify-center items-center">
+      <div className=" text-heading3 font-bold">목표 주가 계산표</div>
+      <section className="flex gap-20 py-2 mb-8 text-body2">
+        <div className="flex gap-4">
+          <p>종목:</p>
+          <p className=" text-body2 font-bold">{stockName}</p>
         </div>
-        <div className="flex gap-2">
-          상승여력
-          <input
-            type="number"
-            className="text-tuatara-100 bg-tuatara-900"
-            value={valuePotential}
-            onChange={(e) => setValuePotential(e.target.value)}
-          />
-          %
+        <div className="flex gap-4">
+          <p>템플릿:</p>
+          <p className="font-bold">{templateName}</p>
         </div>
-      </div>
-
-      {/*--- 엑셀 ---*/}
+      </section>
       <ExcelContext.Provider
         value={{
-          formula,
-          setFormula,
-          fileInput,
-          spreadRef,
-          stockId,
-          templateId,
+          stockName,
+          templateName,
+          targetPrice,
+          valuePotential,
+          setTargetPrice,
+          setValuePotential,
         }}
       >
+        <ExcelHeader />
         <input
           type="text"
-          value={formula}
-          onChange={(e) => setFormula(e.target.value)}
+          value={selectedCell.value}
           placeholder="f(x) 수식을 입력하세요"
-          className="w-full mt-4 my-2 p-2 px-6 border text-tuatara-800 border-gray-400 rounded"
+          onChange={handleInputChange}
+          className="w-full my-2 p-2 px-6 border text-tuatara-800 border-gray-400 rounded"
         />
-        <Excel />
+        <Spreadsheet
+          darkMode
+          data={sheetData}
+          onChange={handleSheetDataChange}
+          onActivate={handleSelectedCell}
+          className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0"
+        />
+        <ExcelFooter
+          onSave={handleSave}
+          onTemporarySave={handleTemporarySave}
+        />
       </ExcelContext.Provider>
-      <ExcelFooter onSave={handleSave} onTemporarySave={handleTemporarySave} />
-      <div className="w-full my-4 p-4 bg-tuatara-900 rounded">
-        <p className="mb-2">내 PC에서 엑셀 가져오기 (.xlsx)</p>
-        <input type="file" ref={fileInput} />
-        <button
-          className="p-2 bg-blue-500 text-white rounded"
-          onClick={handleOpenExcel}
-        >
-          OK
-        </button>
-        <div className="">
-          <button
-            className="p-2 mr-4 bg-green-500 text-white rounded"
-            onClick={handleSaveExcel}
-          >
-            Save Excel
-          </button>
-          <button
-            className=" p-2 bg-red-500 text-white rounded"
-            onClick={handleGetFormula}
-          >
-            Get Formula
-          </button>
-        </div>
-      </div>
-      {/* <div className="w-full p-10 flex flex-col"></div> */}
     </div>
   );
 }
