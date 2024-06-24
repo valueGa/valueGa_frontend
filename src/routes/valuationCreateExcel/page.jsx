@@ -7,9 +7,10 @@ import React, {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
-import ExcelHeader from '../../components/consensus/valuation/ExcelHeader';
-import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
+import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
+import ExcelFooter from '~/components/consensus/valuation/ExcelFooter';
 import './valuationCreateExcel.css';
+import { getTemplateById } from '~/apis/template';
 
 // import { jwtDecode } from 'jwt-decode';
 
@@ -341,8 +342,22 @@ export default function ValuationCreateExcel() {
   useEffect(() => {
     // API 연결
     setStockName('삼성전자');
-    setTemplateName('DCF');
-  }, [stockId, templateId]);
+  }, [stockId]);
+
+  useEffect(() => {
+    // API 연결
+
+    const fetchTemplateById = async () => {
+      if (templateId) {
+        const res = await getTemplateById(templateId);
+        setTemplateName(res.data.template_name);
+        setSheetData(res.data.excel_data);
+        console.log(res);
+      }
+    };
+
+    fetchTemplateById();
+  }, [templateId]);
 
   const handleSelectedCell = ({ row, column }) => {
     setSelectedCell({ row, column, value: sheetData[row][column].value });
@@ -366,99 +381,11 @@ export default function ValuationCreateExcel() {
   };
 
   const handleSave = async () => {
-    if (!targetPrice || !valuePotential) {
-      alert('목표 주가와 상승 여력을 입력하세요.');
-      return;
-    }
-
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    console.log('spreadRef toJSON:', json);
-    excelIO.save(
-      json,
-      async (blob) => {
-        const file = new File([blob], 'spreadsheet.xlsx');
-
-        // 서버로 파일 업로드
-        const formData = new FormData();
-        formData.append('file', file, 'excelFile');
-        formData.append('user_id', 1); // 사용자 ID 사용
-        formData.append('target_price', targetPrice);
-        formData.append('value_potential', valuePotential);
-
-        try {
-          const response = await fetch(
-            `/api/valuation/save?id=${searchParams.get('id')}`,
-            {
-              method: 'POST',
-              body: formData,
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-          console.log(result);
-          alert('저장 완료');
-        } catch (error) {
-          console.error('저장 중 에러: ', error);
-          alert('저장 중 에러');
-        }
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    console.log('저장');
   };
 
   const handleTemporarySave = async () => {
-    if (!targetPrice || !valuePotential) {
-      alert('목표 주가와 상승 여력을 입력하세요.');
-      return;
-    }
-    console.log('##############################');
-
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    console.log('spreadRef toJSON:', json);
-
-    excelIO.save(
-      json,
-      async (blob) => {
-        const file = new File([blob], 'spreadsheet.xlsx');
-
-        // 서버로 파일 업로드
-        const formData = new FormData();
-        formData.append('file', file, 'excelFile');
-        formData.append('user_id', 3); // 사용자 ID 사용
-        formData.append('target_price', targetPrice);
-        formData.append('value_potential', valuePotential);
-        console.log(formData.get('file'));
-
-        try {
-          const response = await fetch('/api/valuation/temporary-save', {
-            method: 'POST',
-            body: formData,
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-          console.log(result);
-          alert('임시저장 완료');
-        } catch (error) {
-          console.error('임시저장 중 에러: ', error);
-          alert('임시저장 중 에러');
-        }
-      },
-      (error) => {
-        console.error('ExcelIO save error:', error);
-      }
-    );
+    console.log('임시저장');
   };
 
   return (

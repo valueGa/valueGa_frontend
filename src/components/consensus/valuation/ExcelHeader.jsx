@@ -5,6 +5,7 @@ import { CgLoadbarDoc } from 'react-icons/cg';
 import { BsArrowUpCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { URI_PATH } from '~/routers/main-router';
+import { postTemplate } from '../../../apis/template';
 
 export default function ExcelHeader() {
   const {
@@ -16,16 +17,28 @@ export default function ExcelHeader() {
   } = useExcelContext();
   const navigate = useNavigate();
 
-  const handleMakeTemplate = () => {
+  const handleMakeTemplate = async () => {
     // 템플릿화 API 연결
     const newTemplate = sheetData.map((rowArr, i) =>
       rowArr.map((cell, j) => {
-        return i === 0 || j === 0 ? cell.value : '';
+        if (i === 0 || j === 0 || cell.value.charAt(0) === '=') {
+          // 1행 1열인 경우
+          return cell;
+        } else {
+          return { value: '' };
+        }
       })
     );
-    console.log(newTemplate);
+
+    await postTemplate({
+      templateName: 'test2',
+      userId: 1,
+      excelData: newTemplate,
+    });
     navigate(`${URI_PATH.myPage}`, { redirect: true });
   };
+
+  const handleExportExcel = () => {};
 
   return (
     <>
@@ -63,7 +76,7 @@ export default function ExcelHeader() {
             템플릿화
           </Button>
           <Button className="flex items-center gap-2 bg-blue-400 border-none">
-            <BsArrowUpCircle size={18} />
+            <BsArrowUpCircle size={18} onClick={handleExportExcel} />
             엑셀 추출
           </Button>
         </div>

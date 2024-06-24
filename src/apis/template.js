@@ -12,3 +12,12 @@ export const getTemplateById = async (templateId) => {
   const res = await service.get(`/${templateId}`);
   return res;
 };
+
+export const postTemplate = async ({ templateName, userId, excelData }) => {
+  const res = await service.post(`/`, {
+    template_name: templateName,
+    user_id: userId,
+    excel_data: excelData,
+  });
+  return res;
+};

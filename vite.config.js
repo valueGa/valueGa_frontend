@@ -20,6 +20,7 @@ export default defineConfig({
       { find: '~/utiles', replacement: '/src/utiles' },
       { find: '~/components', replacement: '/src/components' },
       { find: '~/constants', replacement: '/src/constants' },
+      { find: '~/apis', replacement: '/src/apis' },
     ],
   },
 });
