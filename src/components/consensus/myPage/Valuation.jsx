@@ -23,7 +23,6 @@ export default function Valuation() {
 
   const handleDelete = async (valuation_id) => {
     try {
-      console.log('벨류에이션 아이디', valuation_id);
       await deleteValuation(valuation_id);
       setValList(valList.filter((item) => item.valuationId !== valuation_id));
     } catch (error) {

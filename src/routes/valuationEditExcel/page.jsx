@@ -24,7 +24,6 @@ const getUserIdFromToken = () => {
   const token = localStorage.getItem('valueGa_AccessToken');
   if (token) {
     const decodeToken = jwtDecode(token);
-    console.log(decodeToken);
     return decodeToken.user_id;
   }
   return null;
@@ -60,8 +59,6 @@ export default function ValuationEditExcel() {
   const fetchValuationData = async (id) => {
     try {
       const response = await getValuation(id);
-      console.log(response);
-
       const data = response.data;
       const { excel_data, target_price, value_potential } = data.valuation;
       const { stock_name } = data;
@@ -123,7 +120,6 @@ export default function ValuationEditExcel() {
         searchParams.get('id'),
         requestBody
       );
-      console.log(result);
       alert('저장 완료');
     } catch (error) {
       console.error('저장 중 에러: ', error);
@@ -148,7 +144,6 @@ export default function ValuationEditExcel() {
 
     try {
       const result = await editTemporarySaveValuation(valuationId, requestBody);
-      console.log(result);
       alert('임시저장 완료');
     } catch (error) {
       console.error('임시저장 중 에러: ', error);
