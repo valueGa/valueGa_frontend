@@ -6,24 +6,17 @@ import ValuationCreate from '~/components/consensus/valuation/ValuationCreate';
 import ConsensusDetail from '~/components/consensus/home/detail/ConsensusDetail';
 import MyPage from '~/components/consensus/myPage/MyPage';
 import ValuationCreateExcel from '~/routes/valuationCreateExcel/page';
-<<<<<<< feature/42
 import ValuationEditExcel from '~/routes/valuationEditExcel/page';
-=======
 import TemplateEditExcel from '~/routes/templateEditExcel/page';
->>>>>>> develop
 
 export const URI_PATH = {
   mainPage: '/',
   consensusPage: '/consensus',
   valuationPage: '/consensus/valuation',
   valuationCreatePage: '/consensus/valuation/create',
-<<<<<<< feature/42
   valuationEditPage: '/consensus/valuation/edit',
   myPage: '/consensus/my',
-=======
-  myPage: '/consensus/my',
   templateEditPage: '/consensus/template/edit',
->>>>>>> develop
 };
 
 export const routerObj = [
@@ -52,13 +45,10 @@ export const routerObj = [
         element: <ValuationCreateExcel />,
       },
       {
-<<<<<<< feature/42
         path: 'valuation/edit',
         element: <ValuationEditExcel />,
       },
       {
-=======
->>>>>>> develop
         path: 'my',
         element: <MyPage />,
       },
