@@ -77,7 +77,7 @@ export default function Template() {
         {tempList?.map((element, index) => {
           return (
             <div
-              key={index}
+              key={element.tempId}
               className="flex justify-between text-body2 flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-900"
             >
               <div className="flex flex-row basis-3/5">
@@ -90,7 +90,11 @@ export default function Template() {
                     <div ref={popupRef}>
                       <Popup
                         onDelete={() => handleDelete(element.template_id)}
-                        onEdit={() => navigate(`${URI_PATH.templateEditPage}/?id=${element.template_id}`)}
+                        onEdit={() =>
+                          navigate(
+                            `${URI_PATH.templateEditPage}/?id=${element.template_id}`
+                          )
+                        }
                       />
                     </div>
                   )}

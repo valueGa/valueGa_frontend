@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -7,9 +8,12 @@ import React, {
 } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
-import ExcelHeader from '../../components/consensus/valuation/ExcelHeader';
-import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
+import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
+import ExcelFooter from '~/components/consensus/valuation/ExcelFooter';
 import './valuationCreateExcel.css';
+import { getTemplateById } from '~/apis/template';
+import { getValuation } from '../../apis/valuation';
+import { GLOSSARY } from '~/constants/valuation';
 
 // import { jwtDecode } from 'jwt-decode';
 
@@ -338,10 +342,54 @@ export default function ValuationCreateExcel() {
   }, [searchParams]);
 
   useEffect(() => {
-    // API 연결
-    setStockName('삼성전자');
-    setTemplateName('DCF');
+    if (stockId && templateId) {
+      getExcelDataWithTemplate();
+    }
   }, [stockId, templateId]);
+
+  const getExcelDataWithTemplate = async () => {
+    await fetchTemplateById();
+    await fetchValuationData();
+  };
+
+  const fetchTemplateById = useCallback(async () => {
+    if (templateId) {
+      const res = await getTemplateById(templateId);
+      setTemplateName(res.data.template_name);
+      setSheetData(res.data.excel_data);
+    }
+  }, [templateId]);
+
+  const fetchValuationData = useCallback(async () => {
+    if (stockId) {
+      const res = await getValuation(stockId);
+      setStockName(res.data[Object.keys(res.data)[0]].stock_name);
+
+      setSheetData((prevData) => {
+        const newData = [...prevData];
+
+        // 첫번째 행: 날짜
+        const years = Object.keys(res.data);
+        years.forEach((year, i) => {
+          newData[0][i + 1] = { value: year };
+        });
+
+        // 나머지 행: 항목에 따라 데이터 삽입
+        for (let i = 1; i < newData.length; i++) {
+          const dataName = newData[i][0].value;
+          const codeName = GLOSSARY[dataName];
+          if (!codeName) continue;
+
+          for (let j = 1; j < 1 + years.length; j++) {
+            const year = newData[0][j].value;
+            newData[i][j].value = res.data[year][codeName];
+          }
+        }
+
+        return newData;
+      });
+    }
+  }, [stockId]);
 
   const handleSelectedCell = ({ row, column }) => {
     setSelectedCell({ row, column, value: sheetData[row][column].value });
@@ -459,6 +507,7 @@ export default function ValuationCreateExcel() {
       </section>
       <ExcelContext.Provider
         value={{
+          sheetData,
           stockName,
           templateName,
           targetPrice,
@@ -471,9 +520,9 @@ export default function ValuationCreateExcel() {
         <input
           type="text"
           value={selectedCell.value}
-          placeholder="f(x) 수식을 입력하세요"
+          placeholder="f(x) : 값 또는 수식을 입력하세요"
           onChange={handleInputChange}
-          className="w-full my-2 p-2 px-6 border text-tuatara-800 border-gray-400 rounded"
+          className="w-full my-2 px-4 border-none py-2 text-tuatara-100 bg-tuatara-900 rounded focus:outline-none focus:outline-1 focus:outline-tuatara-500"
         />
         <Spreadsheet
           darkMode

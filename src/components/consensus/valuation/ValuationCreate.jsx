@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import InputStock from "./InputStock";
-import InputTemplate from "./InputTemplate";
-import { useNavigate } from "react-router-dom";
-import { URI_PATH } from "../../../routers/main-router";
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import InputStock from './InputStock';
+import InputTemplate from './InputTemplate';
+import { useNavigate } from 'react-router-dom';
+import { URI_PATH } from '../../../routers/main-router';
 
 export default function ValuationCreate() {
-  const [selectedStock, setSelectedStock] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState("템플릿 선택");
+  const [selectedStock, setSelectedStock] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState('템플릿 선택');
 
   const navigate = useNavigate();
 
@@ -26,12 +26,6 @@ export default function ValuationCreate() {
           variant="dark"
           className="w-32"
           onClick={() => {
-            console.log(
-              "생성하기",
-              selectedStock.name,
-              selectedStock.id,
-              selectedTemplate
-            );
             navigate(
               `${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`
             );

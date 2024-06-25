@@ -28,7 +28,6 @@ export default function InputStock({ value, setValue }) {
     );
     if (selectedStock) {
       setValue(selectedStock);
-      console.log(selectedStock);
     }
   };
 
