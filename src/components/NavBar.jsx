@@ -5,6 +5,7 @@ import logo from "~/assets/icons/logo.svg";
 import search from "~/assets/icons/search.svg";
 import { useNavigate } from "react-router-dom";
 
+
 export default function NavBar() {
   const navigate = useNavigate();
   return (
@@ -27,6 +28,7 @@ export default function NavBar() {
       </ul>
       <ul className="flex flex-row text-center items-center space-x-7">
         <li>
+
           <Link to="#">
             <img src={search} alt="logo" className="w-8 h-8" />
           </Link>
@@ -40,6 +42,7 @@ export default function NavBar() {
           >
             Logout
           </button>
+
         </li>
       </ul>
     </div>

@@ -2,9 +2,10 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
 import TemplateEditHeader from '../../components/consensus/valuation/TemplateHeader';
-import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
+import TemplateFooter from '../../components/consensus/valuation/TemplateFooter';
 import '../valuationCreateExcel/valuationCreateExcel.css';
 import axios from 'axios';
+import { getTemplateById, editMyTemplate } from '../../apis/template';
 
 // import { jwtDecode } from 'jwt-decode';
 
@@ -50,14 +51,7 @@ export default function TemplateEditExcel() {
 
   const fetchData = async (templateId) => {
     try {
-      const token =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA';
-
-      const response = await axios.get(`/api/template/${templateId}`, {
-        headers: {
-          auth: token,
-        },
-      });
+      const response = await getTemplateById(templateId);
 
       setSheetData(response.data.excel_data);
       setTemplateName(response.data.template_name);
@@ -92,24 +86,15 @@ export default function TemplateEditExcel() {
   const handleSave = async () => {
     //템플릿을 수정해서 저장.
     try {
-      const token =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA';
-
-      const response = await axios.put(
-        `/api/template/${templateId}`,
-        {
-          excel_data: sheetData,
-        },
-        {
-          headers: {
-            auth: token,
-          },
-        }
-      );
+      const requestBody = {
+        excel_data: sheetData,
+      };
+      const response = await editMyTemplate(templateId, requestBody);
 
       if (response.status === 200) {
-        console.log(response.data.message);
+        alert('수정이 완료되었습니다.');
       } else {
+        alert('수정이 실패했습니다.');
         console.error(response.data.error);
       }
     } catch (error) {
@@ -155,7 +140,7 @@ export default function TemplateEditExcel() {
           onActivate={handleSelectedCell}
           className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0"
         />
-        <ExcelFooter onSave={handleSave} />
+        <TemplateFooter onSave={handleSave} />
       </ExcelContext.Provider>
     </div>
   );

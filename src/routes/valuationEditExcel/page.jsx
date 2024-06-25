@@ -8,22 +8,26 @@ import React, {
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Spreadsheet from 'react-spreadsheet';
+import {
+  getValuationById,
+  editSaveValuation,
+  editTemporarySaveValuation,
+} from '../../apis/valuation';
 import ExcelEditHeader from '../../components/consensus/valuation/ExcelEditHeader';
 import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
 import './valuationEditExcel.css';
-
-// import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
-// const getUserIdFromToken = () => {
-//   const token = localStorage.getItem('authToken');
-//   if (token) {
-//     const decodeToken = jwtDecode(token);
-//     return decodeToken.user_id;
-//   }
-//   return null;
-// };
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function ValuationEditExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +38,7 @@ export default function ValuationEditExcel() {
   const [templateName, setTemplateName] = useState('');
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
-  // const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const spreadRef = useRef(null);
 
   const [selectedCell, setSelectedCell] = useState({
@@ -46,6 +50,7 @@ export default function ValuationEditExcel() {
   const [sheetData, setSheetData] = useState([]);
 
   useEffect(() => {
+    setUserId(getUserIdFromToken());
     if (valuationId) {
       fetchValuationData(valuationId);
     }
@@ -53,8 +58,7 @@ export default function ValuationEditExcel() {
 
   const fetchValuationData = async (id) => {
     try {
-      const response = await axios.get(`/api/valuation/${id}`);
-
+      const response = await getValuationById(id);
       const data = response.data;
       const { excel_data, target_price, value_potential } = data.valuation;
       const { stock_name } = data;
@@ -105,27 +109,17 @@ export default function ValuationEditExcel() {
     const excelData = sheetData;
 
     const requestBody = {
-      user_id: 3,
+      user_id: userId,
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
     };
 
     try {
-      const response = await fetch(`/api/valuation/${valuationId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
+      const result = await editSaveValuation(
+        searchParams.get('id'),
+        requestBody
+      );
       alert('저장 완료');
     } catch (error) {
       console.error('저장 중 에러: ', error);
@@ -142,36 +136,21 @@ export default function ValuationEditExcel() {
     const excelData = sheetData;
 
     const requestBody = {
-      user_id: 3,
+      user_id: userId,
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
     };
 
     try {
-      const response = await fetch(
-        `/api/valuation/id=${{ valuationId }}/temporary`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
+      const result = await editTemporarySaveValuation(valuationId, requestBody);
       alert('임시저장 완료');
     } catch (error) {
       console.error('임시저장 중 에러: ', error);
       alert('임시저장 중 에러');
     }
   };
+
   return (
     <div className="w-full px-20 flex flex-col justify-center items-center">
       <div className=" text-heading3 font-bold">목표 주가 계산표</div>

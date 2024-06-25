@@ -1,15 +1,46 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Template from '~/components/consensus/myPage/Template';
 import Valuation from '~/components/consensus/myPage/Valuation';
 import Profile from '~/components/consensus/myPage/Profile';
+import { jwtDecode } from 'jwt-decode';
+import { getUserInfo } from '../../../apis/mypage';
+
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    console.log(decodeToken);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function MyPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [userId, setUserId] = useState(null);
   const [user, setUser] = useState({
-    name: '우채윤',
-    email: 'heeni1004@gmail.com',
+    name: '',
+    email: '',
   });
+
+  useEffect(() => {
+    const userId = getUserIdFromToken();
+    setUserId(userId);
+    if (userId) {
+      getUserInfo(userId)
+        .then((data) => {
+          setUser({
+            name: data.data.user_name,
+            email: data.data.user_email,
+          });
+        })
+        .catch((error) => {
+          console.error('사용자 정보를 가져오는 중 에러 발생: ', error);
+          alert('사용자 정보를 가져오는 중 에러');
+        });
+    }
+  }, []);
 
   const tabContArr = [
     {
