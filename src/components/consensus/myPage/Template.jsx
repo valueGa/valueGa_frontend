@@ -4,6 +4,7 @@ import Popup from '~/components/consensus/myPage/Popup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URI_PATH } from '../../../routers/main-router';
+import { deleteMyTemplate, getMyTemplate } from '../../../apis/template';
 
 export default function Template() {
   const [tempList, setTempList] = useState(null);
@@ -23,16 +24,10 @@ export default function Template() {
 
   const handleDelete = async (template_id) => {
     try {
-      const token =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA';
-      await axios.delete(`/api/template/${template_id}`, {
-        headers: {
-          auth: token,
-        },
-        data: { template_id },
-      });
-
+      await deleteMyTemplate(template_id);
       setTempList(tempList.filter((item) => item.template_id !== template_id));
+
+      alert('삭제가 완료되었습니다.');
     } catch (error) {
       console.error('삭제 중 에러:', error);
     }
@@ -41,13 +36,7 @@ export default function Template() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token =
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA';
-        const response = await axios.get('/api/template', {
-          headers: {
-            auth: token,
-          },
-        });
+        const response = await getMyTemplate();
 
         const transformedData = response.data.map((item) => ({
           template_id: item.template_id,
