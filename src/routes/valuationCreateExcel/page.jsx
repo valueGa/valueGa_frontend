@@ -529,7 +529,7 @@ export default function ValuationCreateExcel() {
           data={sheetData}
           onChange={handleSheetDataChange}
           onActivate={handleSelectedCell}
-          className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0"
+          className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0 rounded-lg"
         />
         <ExcelFooter
           onSave={handleSave}

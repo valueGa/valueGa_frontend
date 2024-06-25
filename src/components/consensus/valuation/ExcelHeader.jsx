@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useExcelContext } from '~/routes/valuationCreateExcel/page';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { CgLoadbarDoc } from 'react-icons/cg';
 import { BsArrowUpCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +18,7 @@ export default function ExcelHeader() {
     setValuePotential,
   } = useExcelContext();
   const navigate = useNavigate();
+  const [templateName, setTemplateName] = useState('');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,7 +28,11 @@ export default function ExcelHeader() {
     // 템플릿화 API 연결
     const newTemplate = sheetData.map((rowArr, i) =>
       rowArr.map((cell, j) => {
-        if (i === 0 || j === 0 || cell.value.charAt(0) === '=') {
+        if (
+          i === 0 ||
+          j === 0 ||
+          (cell.value.length > 0 && cell.value.charAt(0) === '=')
+        ) {
           // 1행 1열인 경우
           return cell;
         } else {
@@ -36,12 +41,24 @@ export default function ExcelHeader() {
       })
     );
 
-    await postTemplate({
-      templateName: 'per',
-      userId: 1, // TODO : userId 가져오기 수정
-      excelData: newTemplate,
-    });
+    try {
+      const res = await postTemplate({
+        templateName: templateName,
+        userId: 1, // TODO : userId 가져오기 수정
+        excelData: newTemplate,
+      });
+
+      if (res.status === 200) {
+        alert('템플릿으로 저장되었습니다.');
+      }
+    } catch (error) {
+      console.error('Error saving template:', error);
+    }
   };
+
+  useEffect(() => {
+    console.log(templateName);
+  }, [templateName]);
 
   const handleExportExcel = () => {};
 
@@ -75,8 +92,8 @@ export default function ExcelHeader() {
         <div className="flex justify-center gap-4">
           <Button
             className="flex items-center gap-1 bg-blue-500 border-none"
-            // onClick={setShow}
-            onClick={handleMakeTemplate}
+            onClick={setShow}
+            // onClick={handleMakeTemplate}
           >
             <CgLoadbarDoc size={20} />
             템플릿화
@@ -88,16 +105,42 @@ export default function ExcelHeader() {
         </div>
       </section>
       <Modal show={show} onHide={handleClose} dialogClassName="rounded-modal">
-        <div className="bg-tuatara-900 rounded-2xl overflow-hidden">
-          <Modal.Header closeButton className="custom-close-button">
-            <Modal.Title className="w-100 text-center text-white text-caption">
+        <div className="bg-tuatara-900 text-white rounded-2xl overflow-hidden">
+          <Modal.Header
+            closeButton
+            className="w-full grid grid-cols-3 border-tuatara-600 custom-close-button"
+          >
+            <div></div>
+            <Modal.Title className="text-center text-caption">
               템플릿화
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>바디...</Modal.Body>
-          <Modal.Footer className="flex-col border-t border-gray-700">
-            내용
-          </Modal.Footer>
+          <Modal.Body>
+            <Form.Group
+              className="mb-3 mr-14 ml-14"
+              controlId="templateNameControlInput"
+            >
+              <Form.Control
+                type="text"
+                onChange={(e) => setTemplateName(e.target.value)}
+                placeholder="템플릿명 입력"
+                autoFocus
+                className="bg-tuatara-900 placeholder-tuatara-400 text-white text-caption font-apple border-tuatara-400 pl-10 py-2 focus:bg-tuatara-900 focus:text-white"
+              />
+            </Form.Group>
+          </Modal.Body>
+          <div className="flex justify-center py-2">
+            <Button
+              onClick={() => {
+                handleClose();
+                handleMakeTemplate();
+              }}
+              className="bg-blue-500 border-none pr-8 pl-8 text-caption"
+              disabled={templateName.length > 0 ? false : true}
+            >
+              완료
+            </Button>
+          </div>
         </div>
       </Modal>
     </>
