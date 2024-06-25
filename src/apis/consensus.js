@@ -31,3 +31,8 @@ export const getConsensusMore = async (count) => {
   });
   return res;
 };
+
+export const getConsensusDetail = async (stockCode) => {
+  const res = await service.get(`/${stockCode}`);
+  return res;
+};
