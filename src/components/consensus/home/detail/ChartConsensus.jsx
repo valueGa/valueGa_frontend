@@ -3,28 +3,22 @@ import ReactDOM from "react-dom";
 import ReactApexChart from "react-apexcharts";
 import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세요
 
-const ApexChart = () => {
+const ApexChart = ({ ratioList }) => {
+  console.log(`${ratioList.upPoten}, ${ratioList.downPoten}`);
   const [series, setSeries] = useState([
     {
       name: "Marine Sprite",
-      data: [1],
+      data: [ratioList.downPoten],
     },
-    {
-      name: "Striking Calf",
-      data: [2],
-    },
+
     {
       name: "Tank Picture",
-      data: [3],
+      data: [ratioList.upPoten],
     },
   ]);
 
   const [options, setOptions] = useState({
-    colors: [
-      colors.consensus.blue[50],
-      colors.consensus.grey[50],
-      colors.consensus.pink[50],
-    ],
+    colors: [colors.consensus.blue[50], colors.consensus.pink[50]],
     chart: {
       toolbar: {
         show: false,
@@ -88,11 +82,7 @@ const ApexChart = () => {
       style: {
         fontSize: "14px",
         fontWeight: "bold",
-        colors: [
-          colors.consensus.blue[100],
-          colors.consensus.grey[100],
-          colors.consensus.pink[100],
-        ],
+        colors: [colors.consensus.blue[100], colors.consensus.pink[100]],
       },
 
       dropShadow: {
@@ -227,10 +217,10 @@ const ApexChart = () => {
   );
 };
 
-export default function ChartRatio() {
+export default function ChartRatio({ data }) {
   return (
     <div>
-      <ApexChart />
+      <ApexChart ratioList={data} />
     </div>
   );
 }
