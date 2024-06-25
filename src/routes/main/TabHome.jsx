@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { URI_PATH } from "~/routers/main-router";
+import { Link } from 'react-router-dom';
+import { URI_PATH } from '~/routers/main-router';
 
 export default function Home() {
   return (
@@ -11,12 +11,12 @@ export default function Home() {
       <div className="relative w-full h-64 flex items-center justify-center">
         <div
           className="h-auto absolute"
-          style={{ left: "40%", transform: "translateX(-50%)" }}
+          style={{ left: '40%', transform: 'translateX(-50%)' }}
         >
           <img
             src="/assets/images/logo_text.svg"
             alt="로고 텍스트"
-            style={{ width: "50%" }}
+            style={{ width: '50%' }}
           />
           <p className="text-tuatara-50 font-apple">
             We’re building future of research
@@ -28,22 +28,23 @@ export default function Home() {
           alt="배경 라인"
           className="h-auto absolute"
           style={{
-            right: "calc(0% + 128px)",
-            transform: "translateX(-50%)",
-            width: "50%",
-            height: "50%",
+            right: 'calc(0% + 128px)',
+            transform: 'translateX(-50%)',
+            width: '50%',
+            height: '50%',
           }}
         />
       </div>
 
       <div
         className="w-full flex items-center justify-center"
-        style={{ gap: "288px" }}
+        style={{ gap: '288px' }}
       >
         <img
           src="/assets/images/img_3d.svg"
+          className="animate-bounce-slow w-24 h-auto"
           alt="로고 텍스트"
-          style={{ width: "316px", height: "316px" }}
+          style={{ width: '316px', height: '316px' }}
         />
         <Link to={`${URI_PATH.consensusPage}`}>
           <div>
@@ -54,12 +55,12 @@ export default function Home() {
 
             <div
               className="flex items-center justify-center text-tuatara-50 bg-black pt-2 pb-2 gap-2 rounded-xl"
-              style={{ marginTop: "42px" }}
+              style={{ marginTop: '42px' }}
             >
               <img
                 src="/assets/images/img_arrow_right.svg"
                 alt="로고 텍스트"
-                style={{ width: "21px", height: "21px" }}
+                style={{ width: '21px', height: '21px' }}
               />
 
               <p>Let's Start</p>
