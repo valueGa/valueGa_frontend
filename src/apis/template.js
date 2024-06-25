@@ -18,8 +18,13 @@ service.interceptors.request.use(
   }
 );
 
-export const getMyTemplate = async () => {
+export const getCreateTemplate = async () => {
   const res = await service.get(`/`);
+  return res;
+};
+
+export const getMyTemplate = async () => {
+  const res = await service.get(`/my`);
   return res;
 };
 

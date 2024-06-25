@@ -5,7 +5,7 @@ import { CgLoadbarDoc } from 'react-icons/cg';
 import { BsArrowUpCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { URI_PATH } from '~/routers/main-router';
-import { postTemplate } from '../../../apis/template';
+import { postTemplate } from '~/apis/template';
 import Modal from 'react-bootstrap/Modal';
 import '~/routes/main/ModalStyle.css';
 
