@@ -9,7 +9,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Spreadsheet from 'react-spreadsheet';
 import {
-  getValuation,
+  getValuationById,
   editSaveValuation,
   editTemporarySaveValuation,
 } from '../../apis/valuation';
@@ -58,7 +58,7 @@ export default function ValuationEditExcel() {
 
   const fetchValuationData = async (id) => {
     try {
-      const response = await getValuation(id);
+      const response = await getValuationById(id);
       const data = response.data;
       const { excel_data, target_price, value_potential } = data.valuation;
       const { stock_name } = data;
