@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE_URL = '/api/valuation';
+const BASE_URL = "/api/valuation";
 const service = axios.create({
   baseURL: BASE_URL,
   headers: {
-    'Content-type': 'application/json; charset=UTF-8',
+    "Content-type": "application/json; charset=UTF-8",
   },
 });
 

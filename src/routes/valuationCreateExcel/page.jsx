@@ -37,7 +37,6 @@ export default function ValuationCreateExcel() {
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
   // const [userId, setUserId] = useState(null);
-  const fileInput = useRef(null);
   const spreadRef = useRef(null);
 
   const [selectedCell, setSelectedCell] = useState({
@@ -414,11 +413,83 @@ export default function ValuationCreateExcel() {
   };
 
   const handleSave = async () => {
-    console.log('저장');
+    if (!targetPrice || !valuePotential) {
+      alert('목표 주가와 상승 여력을 입력하세요.');
+      return;
+    }
+
+    const excelData = sheetData;
+
+    const requestBody = {
+      user_id: 3,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
+
+    try {
+      const response = await fetch(
+        `/api/valuation?id=${searchParams.get('id')}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      alert('저장 완료');
+    } catch (error) {
+      console.error('저장 중 에러: ', error);
+      alert('저장 중 에러');
+    }
   };
 
   const handleTemporarySave = async () => {
-    console.log('임시저장');
+    if (!targetPrice || !valuePotential) {
+      alert('목표 주가와 상승 여력을 입력하세요.');
+      return;
+    }
+
+    const excelData = sheetData;
+
+    const requestBody = {
+      user_id: 3,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
+
+    try {
+      const response = await fetch(
+        `/api/valuation/temporary?id=${searchParams.get('id')}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+      alert('임시저장 완료');
+    } catch (error) {
+      console.error('임시저장 중 에러: ', error);
+      alert('임시저장 중 에러');
+    }
   };
 
   return (

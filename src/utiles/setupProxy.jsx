@@ -1,10 +1,10 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 export default function (app) {
   app.use(
-    createProxyMiddleware('/users', {
-      target: 'https://{url}',
+    createProxyMiddleware("/users", {
+      target: "https://{url}",
       changeOrigin: true,
-    }),
+    })
   );
-};
+}
