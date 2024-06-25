@@ -1,8 +1,14 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
 import TemplateEditHeader from '../../components/consensus/valuation/TemplateHeader';
-import ExcelFooter from '../../components/consensus/valuation/ExcelFooter';
+import TemplateFooter from '../../components/consensus/valuation/TemplateFooter';
 import '../valuationCreateExcel/valuationCreateExcel.css';
 import axios from 'axios';
 
@@ -155,7 +161,7 @@ export default function TemplateEditExcel() {
           onActivate={handleSelectedCell}
           className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0"
         />
-        <ExcelFooter onSave={handleSave} />
+        <TemplateFooter onSave={handleSave} />
       </ExcelContext.Provider>
     </div>
   );
