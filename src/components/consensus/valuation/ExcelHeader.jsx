@@ -136,6 +136,7 @@ export default function ExcelHeader() {
                 handleMakeTemplate();
               }}
               className="bg-blue-500 border-none pr-8 pl-8 text-caption"
+              disabled={templateName.length > 0 ? false : true}
             >
               완료
             </Button>
