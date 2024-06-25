@@ -24,3 +24,10 @@ export const getConsensus = async () => {
   const res = await service.get(`/`);
   return res;
 };
+
+export const getConsensusMore = async (count) => {
+  const res = await service.get(``, {
+    params: { index: count },
+  });
+  return res;
+};
