@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import moreIcon from '~/assets/icons/more.svg';
 import Popup from '~/components/consensus/myPage/Popup';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URI_PATH } from '../../../routers/main-router';
+import { getValuations, deleteValuation } from '../../../apis/valuation'; // 새로운 API 서비스 임포트
 
 export default function Valuation() {
   const [valList, setValList] = useState(null);
@@ -23,20 +23,9 @@ export default function Valuation() {
 
   const handleDelete = async (valuation_id) => {
     try {
-      const token =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA'; // 실제 JWT 토큰을 여기에 설정하세요
-      await axios.delete(`/api/valuation/${valuation_id}`, {
-        headers: {
-          auth: token,
-        },
-        data: { valuation_id },
-      });
+      console.log('벨류에이션 아이디', valuation_id);
+      await deleteValuation(valuation_id);
       setValList(valList.filter((item) => item.valuationId !== valuation_id));
-      for (const val of valList) {
-        console.log(val);
-      }
-      setValList(valList.filter((item) => item.valuationId !== valuation_id));
-      console.log(valList);
     } catch (error) {
       console.error('삭제 중 에러:', error);
     }
@@ -52,14 +41,9 @@ export default function Valuation() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token =
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJpYXQiOjE3MTg5MzI5OTAsImV4cCI6MTcxOTc5Njk5MH0.BAl-EkK7ExHe2GiDpWb1sYWqu4rM-OzBJLZt23xecFA'; // 실제 JWT 토큰을 여기에 설정하세요
-        const response = await axios.get('/api/valuation/valuations', {
-          headers: {
-            auth: token,
-          },
-        });
-        const transformedData = response.data.data.map((item) => ({
+        const data = await getValuations();
+
+        const transformedData = data.data.data.map((item) => ({
           valuationId: item.valuation_id,
           stockName: item.stock_name,
           targetPrice: item.target_price,
@@ -75,7 +59,6 @@ export default function Valuation() {
 
     fetchData();
   }, []);
-
   return (
     <div>
       <div className="flex flex-row text-body1 text-center items-center w-3/5 h-7 mt-6">
