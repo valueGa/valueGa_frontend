@@ -11,22 +11,22 @@ import Spreadsheet from 'react-spreadsheet';
 import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
 import ExcelFooter from '~/components/consensus/valuation/ExcelFooter';
 import './valuationCreateExcel.css';
+import { saveValuation, temporarySaveValuation } from '../../apis/valuation';
 import { getTemplateById } from '~/apis/template';
 import { getValuation } from '../../apis/valuation';
 import { GLOSSARY } from '~/constants/valuation';
-
-// import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
-// const getUserIdFromToken = () => {
-//   const token = localStorage.getItem('authToken');
-//   if (token) {
-//     const decodeToken = jwtDecode(token);
-//     return decodeToken.user_id;
-//   }
-//   return null;
-// };
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function ValuationCreateExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,7 +36,7 @@ export default function ValuationCreateExcel() {
   const [templateName, setTemplateName] = useState();
   const [targetPrice, setTargetPrice] = useState('');
   const [valuePotential, setValuePotential] = useState('');
-  // const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const spreadRef = useRef(null);
 
   const [selectedCell, setSelectedCell] = useState({
@@ -339,6 +339,7 @@ export default function ValuationCreateExcel() {
   useEffect(() => {
     setStockId(searchParams.get('id'));
     setTemplateId(searchParams.get('template'));
+    setUserId(getUserIdFromToken());
   }, [searchParams]);
 
   useEffect(() => {
@@ -421,30 +422,14 @@ export default function ValuationCreateExcel() {
     const excelData = sheetData;
 
     const requestBody = {
-      user_id: 3,
+      user_id: userId,
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
     };
 
     try {
-      const response = await fetch(
-        `/api/valuation?id=${searchParams.get('id')}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
+      const result = await saveValuation(searchParams.get('id'), requestBody);
       alert('저장 완료');
     } catch (error) {
       console.error('저장 중 에러: ', error);
@@ -461,30 +446,17 @@ export default function ValuationCreateExcel() {
     const excelData = sheetData;
 
     const requestBody = {
-      user_id: 3,
+      user_id: userId,
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
     };
 
     try {
-      const response = await fetch(
-        `/api/valuation/temporary?id=${searchParams.get('id')}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        }
+      const result = await temporarySaveValuation(
+        searchParams.get('id'),
+        requestBody
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log(result);
       alert('임시저장 완료');
     } catch (error) {
       console.error('임시저장 중 에러: ', error);
