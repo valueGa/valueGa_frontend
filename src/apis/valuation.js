@@ -24,6 +24,11 @@ export const postValuation = async (stockId, templateId, years) => {
     template_id: templateId,
     years: years,
   });
+
+export const getValuation = async (stockId, startYear) => {
+  const res = await service.get(
+    `/init?stock_id=${stockId}&start_year=${startYear}`
+  );
   return res;
 };
 
