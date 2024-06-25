@@ -71,25 +71,6 @@ export default function Template() {
     };
   }, []);
 
-  /* axios 이전, css를 위한 dump data */
-  const tmpTempList = [
-    {
-      tempId: 1,
-      tempName: 'DCF 밸류에이션',
-      date: '2024.06.10',
-    },
-    {
-      tempId: 2,
-      tempName: 'PER 밸류에이션',
-      date: '2024.06.10',
-    },
-    {
-      tempId: 3,
-      tempName: 'EV/EBITDA 밸류에이션',
-      date: '2024.06.10',
-    },
-  ];
-
   return (
     <div>
       <div className="mt-8">
