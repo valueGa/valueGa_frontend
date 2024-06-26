@@ -20,17 +20,10 @@ const getUserIdFromToken = () => {
 };
 
 export default function ExcelHeader() {
-  const {
-    sheetData = [],
-    targetPrice,
-    valuePotential,
-    setTargetPrice,
-    setValuePotential,
-  } = useExcelContext();
-  const navigate = useNavigate();
+  const { sheetData = [], targetPrice, valuePotential, setTargetPrice, setValuePotential } = useExcelContext();
   const [templateName, setTemplateName] = useState('');
   const [show, setShow] = useState(false);
-
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -38,11 +31,7 @@ export default function ExcelHeader() {
     // 템플릿화 API 연결
     const newTemplate = sheetData.map((rowArr, i) =>
       rowArr.map((cell, j) => {
-        if (
-          i === 0 ||
-          j === 0 ||
-          (cell.value.length > 0 && cell.value.charAt(0) === '=')
-        ) {
+        if (i === 0 || j === 0 || (cell.value.length > 0 && cell.value.charAt(0) === '=')) {
           // 1행 1열인 경우
           return cell;
         } else {
@@ -59,16 +48,16 @@ export default function ExcelHeader() {
       });
 
       if (res.status === 200) {
+        //여기서 저장 -> edit 페이지 이동
         alert('템플릿으로 저장되었습니다.');
+        navigate(`${URI_PATH.templateEditPage}/?id=${res.data}`, { replace: true });
       }
     } catch (error) {
       console.error('Error saving template:', error);
     }
   };
 
-  useEffect(() => {
-    console.log(templateName);
-  }, [templateName]);
+  useEffect(() => {}, [templateName]);
 
   // const handleExportExcel = () => {};
 
@@ -116,20 +105,12 @@ export default function ExcelHeader() {
       </section>
       <Modal show={show} onHide={handleClose} dialogClassName="rounded-modal">
         <div className="bg-tuatara-900 text-white rounded-2xl overflow-hidden">
-          <Modal.Header
-            closeButton
-            className="w-full grid grid-cols-3 border-tuatara-600 custom-close-button"
-          >
+          <Modal.Header closeButton className="w-full grid grid-cols-3 border-tuatara-600 custom-close-button">
             <div></div>
-            <Modal.Title className="text-center text-caption">
-              템플릿화
-            </Modal.Title>
+            <Modal.Title className="text-center text-caption">템플릿화</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group
-              className="mb-3 mr-14 ml-14"
-              controlId="templateNameControlInput"
-            >
+            <Form.Group className="mb-3 mr-14 ml-14" controlId="templateNameControlInput">
               <Form.Control
                 type="text"
                 onChange={(e) => setTemplateName(e.target.value)}
