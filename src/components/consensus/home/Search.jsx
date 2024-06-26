@@ -114,7 +114,7 @@ export default function Search() {
               setSearchWord(e.target.value);
             }
           }}
-          maxLength={30} // 최대 길이 지정
+          maxLength={30}
           className="w-full text-center mx-auto py-2 text-tuatara-100 bg-tuatara-900 rounded-md focus:outline-none "
         />
 
