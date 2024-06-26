@@ -15,7 +15,7 @@ export default function ConsensusDetail() {
     },
     {
       부채비율: "77,400",
-      evebitda: "77,400",
+      ebitda: "77,400",
       자기자본이익률: "77,400",
       주당순이익: "77,400",
     },
@@ -79,7 +79,7 @@ export default function ConsensusDetail() {
     setFinancialInfo((prevInfo) => {
       // 첫 번째 객체의 매출액 값을 변경
       const updatedInfo = [...prevInfo];
-      updatedInfo[1] = { ...updatedInfo[1], evebitda: value };
+      updatedInfo[1] = { ...updatedInfo[1], ebitda: value };
       return updatedInfo;
     });
   };
@@ -197,9 +197,25 @@ export default function ConsensusDetail() {
     <div className="px-[180px] mb-20">
       <div>
         <div className="flex justify-center items-center gap-2">
-          <p className="text-subheading text-body1">{location.state}</p>
+          <p className="text-subheading text-body1">
+            {location.state.companyName}
+          </p>
 
-          <button className="bg-pink-100 px-3 rounded-md">Buy</button>
+          <button
+            className={`px-3 rounded-md ${
+              location.state.type === "buy"
+                ? "bg-pink-100 px-3 rounded-md"
+                : location.state.type === "sell"
+                ? "bg-spray-350"
+                : "bg-pink-100"
+            }`}
+          >
+            {location.state.type === "buy"
+              ? "Buy"
+              : location.state.type === "sell"
+              ? "Sell"
+              : "기본"}
+          </button>
         </div>
         <p className="text-center text-tuatara-200">{params.id}</p>
       </div>
