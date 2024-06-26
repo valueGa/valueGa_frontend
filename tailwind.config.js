@@ -11,6 +11,7 @@ const tailwindConfig = {
         'bounce-slow': 'bounce 4s infinite',
         wipe: 'wipe 3s linear infinite',
         wipeOpacity: 'wipeOpacity 3s linear 1s infinite',
+        'slide-in-down': 'slideInDown 1s ease-in-out',
       },
       keyframes: {
         'bounce-slow': {
@@ -39,6 +40,16 @@ const tailwindConfig = {
           '100%': {
             clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
             opacity: 0,
+          },
+        },
+        slideInDown: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(-20px)', // 시작 위치를 조정
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0)', // 최종 위치를 조정
           },
         },
       },
