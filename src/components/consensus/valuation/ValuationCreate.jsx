@@ -9,6 +9,10 @@ export default function ValuationCreate() {
   const [selectedStock, setSelectedStock] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('템플릿 선택');
 
+  useEffect(() => {
+    console.log(selectedStock);
+  }, [selectedStock]);
+
   const navigate = useNavigate();
 
   return (
@@ -16,7 +20,7 @@ export default function ValuationCreate() {
       <div className="p-2 text-heading2">목표 주가 계산표</div>
       <div className="flex flex-col justify-center items-center gap-8 my-4">
         <div className="flex gap-2">
-          <InputStock value={selectedStock} setValue={setSelectedStock} />
+          <InputStock value={selectedStock} callback={setSelectedStock} />
           <InputTemplate
             value={selectedTemplate}
             setValue={setSelectedTemplate}
