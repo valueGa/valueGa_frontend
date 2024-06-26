@@ -9,16 +9,36 @@ const tailwindConfig = {
       },
       animation: {
         'bounce-slow': 'bounce 4s infinite',
+        wipe: 'wipe 3s linear infinite',
+        wipeOpacity: 'wipeOpacity 3s linear 1s infinite',
       },
       keyframes: {
         'bounce-slow': {
           '0%, 100%': {
             transform: 'translateY(-5.5%)',
-            'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)',
+            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
           },
           '50%': {
             transform: 'translateY(0)',
-            'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
+            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+        wipe: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        wipeOpacity: {
+          '0%': {
+            clipPath: 'polygon(0 0, 0 100%, 0 100%, 0 0)',
+            opacity: 0,
+          },
+          '50%': {
+            clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
+            opacity: 1,
+          },
+          '100%': {
+            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+            opacity: 0,
           },
         },
       },
