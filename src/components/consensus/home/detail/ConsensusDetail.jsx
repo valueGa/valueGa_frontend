@@ -8,16 +8,16 @@ import { getConsensusDetail } from "/src/apis/consensus";
 export default function ConsensusDetail() {
   const [financialInfo, setFinancialInfo] = useState([
     {
-      매출액: "77,400",
-      영업이익: "77,400",
-      총유통주식: "77,400",
-      유보비율: "77,400",
+      매출액: "N/A",
+      영업이익: "N/A",
+      총유통주식: "N/A",
+      유보비율: "N/A",
     },
     {
-      부채비율: "77,400",
-      ebitda: "77,400",
-      자기자본이익률: "77,400",
-      주당순이익: "77,400",
+      부채비율: "N/A",
+      ebitda: "N/A",
+      자기자본이익률: "N/A",
+      주당순이익: "N/A",
     },
     {
       년도: "",
@@ -126,8 +126,8 @@ export default function ConsensusDetail() {
   // console.log(`${location.state}`);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getConsensusDetail("017860");
-      setCurrentPrice(result.data.currentPrice);
+      const result = await getConsensusDetail(`${params.id}`);
+
       setTargetPrice(result.data.consensusInfo.target_price);
       setClosePriceList(
         result.data.chartInfo.map((element, index) =>
@@ -150,6 +150,7 @@ export default function ConsensusDetail() {
       updateRoe(result.data.financeInfos.roe);
       updateBps(result.data.financeInfos.bps);
       updateTs(result.data.financeInfos.ts);
+      setCurrentPrice(result.data.currentPrice);
     };
 
     fetchData();
@@ -198,7 +199,7 @@ export default function ConsensusDetail() {
       <div>
         <div className="flex justify-center items-center gap-2">
           <p className="text-subheading text-body1">
-            {location.state.companyName}
+            {location.state.companyName.split(" ")[0]}
           </p>
 
           <button
@@ -226,12 +227,12 @@ export default function ConsensusDetail() {
             <p className="text-tuatara-200 text-body2">현재 주가</p>
             <div>
               <div className="flex justify-end items-center gap-1">
-                <img
+                {/* <img
                   className="w-3 h-3"
                   src="/assets/images/ic_down.svg"
                   alt=""
                 />
-                <p className="text-spray-300 text-body2 text-right">N/A</p>
+                <p className="text-spray-300 text-body2 text-right">N/A</p> */}
               </div>
 
               <p className="text-spray-350 text-heading3 font-bold">
@@ -243,12 +244,12 @@ export default function ConsensusDetail() {
             <p className="text-tuatara-200 text-body2">목표 주가</p>
             <div>
               <div className="flex justify-end items-center gap-1">
-                <img
+                {/* <img
                   className="w-3 h-3"
                   src="/assets/images/ic_up.svg"
                   alt=""
                 />
-                <p className="text-pink-50 text-body2 text-right">N/A</p>
+                <p className="text-pink-50 text-body2 text-right">N/A</p> */}
               </div>
 
               <p className="text-pink-100 text-heading3 font-bold">
@@ -292,7 +293,7 @@ export default function ConsensusDetail() {
         </div>
       </div>
       <ChartStock data={closePriceList} />
-      <StockPredictionList data={valuationList} />
+      <StockPredictionList data={valuationList} currentPrice={currentPrice} />
     </div>
   );
 }
