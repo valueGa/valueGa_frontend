@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, DropdownButton, DropdownMenu } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 import { getCreateTemplate } from '~/apis/template';
 
 export default function InputTemplate({ setValue }) {
@@ -41,30 +41,3 @@ export default function InputTemplate({ setValue }) {
     </Dropdown>
   );
 }
-
-/*
-
-    <DropdownButton
-      data-bs-theme="dark"
-      variant="dark"
-      id="dropdown-basic-button"
-      title={value}
-      className="w-full"
-    >
-      <Dropdown.Menu>
-        {templateList.map((template) => (
-          <Dropdown.Item
-            key={template.template_id}
-            className="w-full "
-            onClick={() => setValue(template.template_id)}
-          >
-            {template.template_name}
-          </Dropdown.Item>
-        ))}
-        <Dropdown.Divider />
-        <Dropdown.Item onClick={() => setValue(8)}>
-          내 PC에서 가져오기 (.xlsx)
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    </DropdownButton>
-*/
