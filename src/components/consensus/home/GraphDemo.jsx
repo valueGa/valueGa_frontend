@@ -92,6 +92,7 @@ const ApexChartUp = ({ top5List }) => {
           enabled: true,
           textAnchor: "middle",
           distributed: false,
+
           style: {
             fontSize: "14px",
             fontFamily: "Helvetica, Arial, sans-serif",
@@ -116,7 +117,7 @@ const ApexChartUp = ({ top5List }) => {
       },
     },
     tooltip: {
-      enabled: true,
+      enabled: false,
       enabledOnSeries: undefined,
       shared: true,
       followCursor: false,
@@ -246,7 +247,7 @@ const ApexChartDown = ({ down5List }) => {
       },
     },
     tooltip: {
-      enabled: true,
+      enabled: false,
       enabledOnSeries: undefined,
       shared: true,
       followCursor: false,
