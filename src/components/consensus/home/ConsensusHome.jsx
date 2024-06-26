@@ -167,7 +167,6 @@ export default function ConsensusHome() {
     const result = await getConsensusMore(index);
 
     if (activeIndex === 0) {
-      console.log(`${index}, ${allBuyCount}`);
       if (index >= allBuyCount) {
       } else {
         const moreBuyList = [];
@@ -218,12 +217,8 @@ export default function ConsensusHome() {
         }
 
         setAllBuyList((prevList) => [...prevList, ...moreBuyList]);
-        console.log(
-          `${moreBuyList[0].company_name}, ${moreBuyList[1].company_name}, ${moreBuyList[2].company_name}`
-        );
       }
     } else {
-      console.log(`${index}, ${allSellCount}`);
       if (index >= allSellCount) {
       } else {
         const moreSellList = [];
@@ -274,9 +269,6 @@ export default function ConsensusHome() {
         }
 
         setAllSellList((prevList) => [...prevList, ...moreSellList]);
-        console.log(
-          `${moreSellList[0].company_name}, ${moreSellList[1].company_name}, ${moreSellList[2].company_name}`
-        );
       }
     }
   };

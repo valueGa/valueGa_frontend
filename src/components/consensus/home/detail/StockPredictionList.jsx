@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { URI_PATH } from "~/routers/main-router";
 
 export default function StockPredictionList({ data, currentPrice }) {
-  console.log(`${currentPrice}`);
   return (
     <div>
       <div className="mt-8">

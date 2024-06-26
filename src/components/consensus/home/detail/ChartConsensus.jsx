@@ -4,7 +4,6 @@ import ReactApexChart from "react-apexcharts";
 import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세요
 
 const ApexChart = ({ ratioList }) => {
-  console.log(`${ratioList.upPoten}, ${ratioList.downPoten}`);
   const [series, setSeries] = useState([
     {
       name: "Marine Sprite",

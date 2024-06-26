@@ -119,11 +119,10 @@ export default function ConsensusDetail() {
   const [valuationList, setValuationList] = useState([]);
   const [currentPrice, setCurrentPrice] = useState("");
   const [targetPrice, setTargetPrice] = useState("");
-  // const [sellRatio, setSellRatio] = useState(0);
-  // const [buyRatio, setBuyRatio] = useState(0);
+
   const [closePriceList, setClosePriceList] = useState([]);
   const [ratioList, setRatioList] = useState([]);
-  // console.log(`${location.state}`);
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await getConsensusDetail(`${params.id}`);
