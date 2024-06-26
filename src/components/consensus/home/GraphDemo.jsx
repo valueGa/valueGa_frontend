@@ -5,17 +5,6 @@ import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세�
 const ApexChartUp = ({ top5List }) => {
   const [categoryList, setCategoryList] = useState([]);
 
-  useEffect(() => {
-    setCategoryList(top5List.map((item) => item.company_name));
-  }, [top5List]);
-
-  const series = [
-    {
-      name: "Cash Flow",
-      data: [5, 4, 3, 2, 1],
-    },
-  ];
-
   const options = {
     chart: {
       toolbar: {
@@ -23,6 +12,17 @@ const ApexChartUp = ({ top5List }) => {
       },
       type: "bar",
       height: 350,
+    },
+    dataLabels: {
+      enabled: false,
+      textAnchor: "middle",
+      distributed: false,
+      style: {
+        fontSize: "14px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        fontWeight: undefined,
+        colors: ["white"],
+      },
     },
     grid: {
       show: true,
@@ -54,6 +54,7 @@ const ApexChartUp = ({ top5List }) => {
         left: 0,
       },
     },
+
     plotOptions: {
       bar: {
         borderRadius: 20,
@@ -88,18 +89,6 @@ const ApexChartUp = ({ top5List }) => {
           ],
         },
         columnWidth: "80%",
-        dataLabels: {
-          enabled: true,
-          textAnchor: "middle",
-          distributed: false,
-
-          style: {
-            fontSize: "14px",
-            fontFamily: "Helvetica, Arial, sans-serif",
-            fontWeight: undefined,
-            colors: undefined,
-          },
-        },
       },
     },
     yaxis: {
@@ -131,9 +120,17 @@ const ApexChartUp = ({ top5List }) => {
   };
 
   // categoryList가 설정된 후에 Chart 컴포넌트를 렌더링
-  if (categoryList.length === 0) {
-  }
 
+  useEffect(() => {
+    setCategoryList(top5List.map((item) => item.company_name));
+  }, [top5List]);
+
+  const series = [
+    {
+      name: "Cash Flow",
+      data: [5, 4, 3, 2, 1],
+    },
+  ];
   return (
     <div className="flex flex-col items-center justify-between w-50 h-full">
       <div className="w-100" id="chart">
@@ -221,7 +218,7 @@ const ApexChartDown = ({ down5List }) => {
       },
     },
     dataLabels: {
-      enabled: true,
+      enabled: false,
       textAnchor: "middle",
       distributed: false,
       style: {
@@ -292,7 +289,7 @@ const ApexChartDown = ({ down5List }) => {
 
 export default function GraphDemo({ top5List, down5List }) {
   return (
-    <div className="flex w-full h-[500px] px-[200px]">
+    <div className="flex w-full h-[500px] px-[100px]">
       <ApexChartUp top5List={top5List} />
       <ApexChartDown down5List={down5List} />
     </div>
