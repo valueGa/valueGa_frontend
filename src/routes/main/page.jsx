@@ -1,14 +1,15 @@
-import React from "react";
-import { useState, useRef } from "react";
-import Home from "./TabHome";
-import AboutUs from "./TabAboutUs";
-import Service from "./TabService";
-import Contact from "./TabContact";
-import MainFooter from "./MainFooter";
-import MainHeader from "./MainHeader";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-import { URI_PATH } from "../../routers/main-router";
+import React from 'react';
+import { useState } from 'react';
+import Home from './TabHome';
+import AboutUs from './TabAboutUs';
+import Service from './TabService';
+import Contact from './TabContact';
+import MainFooter from './MainFooter';
+import MainHeader from './MainHeader';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+import { URI_PATH } from '../../routers/main-router';
+
 
 export default function MainPage() {
   const navigate = useNavigate();

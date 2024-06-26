@@ -17,7 +17,7 @@ export default function InputTemplate({ value, setValue }) {
       <Dropdown.Toggle
         variant="dark"
         id="dropdown-basic"
-        className="min-w-40 flex justify-between items-center"
+        className="min-w-40 h-full flex justify-between items-center"
       >
         {templateName}
       </Dropdown.Toggle>

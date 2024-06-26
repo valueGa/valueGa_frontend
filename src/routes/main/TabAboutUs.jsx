@@ -3,14 +3,19 @@ export default function AboutAs() {
     <div className="bg-gradient-to-b from-[#262626] to-[#454545] min-h-screen py-20">
       <div>
         <div className="flex items-center justify-center">
-          <p className="text-subheading text-tuatara-50 font-abril">About Us</p>
+          <p className="text-heading1 text-tuatara-50 font-abril mt-12">
+            About Us
+          </p>
         </div>
         <div className="flex items-center justify-center mt-10">
-          <p className="text-subheading text-tuatara-50 font-bold">Value Ga</p>
+          <p className="font-apple text-[30px] pr-1 text-tuatara-50 font-bold">
+            Value Ga
+          </p>
           <p className="text-subheading text-tuatara-50">
             는 애널리스트를 위해 쉬운 밸류에이션 툴을 제공합니다
           </p>
         </div>
+
         <div className="flex items-center justify-center h-screen">
           <div className="flex w-4/5 h-4/5 gap-4">
             <div className="w-1/2 h-full justify-center">
@@ -31,6 +36,7 @@ export default function AboutAs() {
             </div>
 
             <div className="w-1/2 h-full flex items-center justify-center">
+
               <img
                 src="/assets/gif/gif_valuega_demo.gif"
                 alt=""
