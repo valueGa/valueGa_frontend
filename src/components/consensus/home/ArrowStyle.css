@@ -1,0 +1,22 @@
+/* 추가된 CSS 스타일 */
+
+.arrow-icon.up {
+  width: 12px;
+  height: 12px;
+  background: url('~/assets/icons/upArrow.svg') no-repeat center center;
+  background-size: contain;
+  filter: invert(28%) sepia(100%) saturate(7461%) hue-rotate(359deg)
+    brightness(102%) contrast(101%);
+  /* 강렬한 빨간색으로 변환 */
+  /* Filter를 통해 빨간색으로 변환 */
+}
+
+.arrow-icon.down {
+  width: 12px;
+  height: 12px;
+  background: url('~/assets/icons/downArrow.svg') no-repeat center center;
+  background-size: contain;
+  filter: invert(27%) sepia(94%) saturate(2214%) hue-rotate(186deg)
+    brightness(85%) contrast(102%);
+  /* 강렬한 파란색으로 변환 */
+}

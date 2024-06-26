@@ -6,9 +6,9 @@ import '@mescius/spread-sheets-charts';
 import '@mescius/spread-sheets-shapes';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-import { useExcelContext } from '../../../routes/valuationCreateExcel/page';
-import { postValuation } from '../../../apis/valuation';
-import { getTemplateById } from '../../../apis/template';
+import { useExcelContext } from '../../../routes/valuationeEditExcel/page';
+import { postValuation } from '../../../apis/valuation.js';
+import { getTemplateById } from '../../../apis/template.js';
 import { GLOSSARY } from '~/constants/valuation';
 
 export default function Excel() {

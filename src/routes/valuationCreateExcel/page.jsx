@@ -1,131 +1,513 @@
-import React, { createContext, useContext, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import Excel from "../../components/consensus/valuation/Excel";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Spreadsheet from 'react-spreadsheet';
+import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
+import ExcelFooter from '~/components/consensus/valuation/ExcelFooter';
+import './valuationCreateExcel.css';
+import { saveValuation, temporarySaveValuation } from '../../apis/valuation';
+import { getTemplateById } from '~/apis/template';
+import { getValuation } from '../../apis/valuation';
+import { GLOSSARY } from '~/constants/valuation';
+import { jwtDecode } from 'jwt-decode';
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function ValuationCreateExcel() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [formula, setFormula] = useState("");
-  const fileInput = useRef(null);
+  const [stockId, setStockId] = useState();
+  const [stockName, setStockName] = useState();
+  const [templateId, setTemplateId] = useState();
+  const [templateName, setTemplateName] = useState();
+  const [targetPrice, setTargetPrice] = useState('');
+  const [valuePotential, setValuePotential] = useState('');
+  const [userId, setUserId] = useState(null);
   const spreadRef = useRef(null);
 
-  const handleSaveExcel = () => {
-    const json = spreadRef.current.toJSON();
-    const excelIO = new ExcelIO.IO();
-    excelIO.save(
-      json,
-      (blob) => {
-        saveAs(blob, "spreadsheet.xlsx");
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  const [selectedCell, setSelectedCell] = useState({
+    row: 0,
+    column: 0,
+    value: '',
+  });
+
+  const [sheetData, setSheetData] = useState([
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+    [
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+      { value: '' },
+    ],
+  ]);
+
+  useEffect(() => {
+    setStockId(searchParams.get('id'));
+    setTemplateId(searchParams.get('template'));
+    setUserId(getUserIdFromToken());
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (stockId && templateId) {
+      getExcelDataWithTemplate();
+    }
+  }, [stockId, templateId]);
+
+  const getExcelDataWithTemplate = async () => {
+    await fetchTemplateById();
+    await fetchValuationData();
   };
 
-  const handleOpenExcel = async () => {
-    const file = fileInput.current.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.load(data);
+  const fetchTemplateById = useCallback(async () => {
+    if (templateId) {
+      const res = await getTemplateById(templateId);
+      setTemplateName(res.data.template_name);
+      setSheetData(res.data.excel_data);
+    }
+  }, [templateId]);
 
-        const worksheet = workbook.getWorksheet(1); // 첫 번째 시트를 가져옴
+  const fetchValuationData = useCallback(async () => {
+    if (stockId) {
+      const res = await getValuation(stockId);
+      setStockName(res.data[Object.keys(res.data)[0]].stock_name);
 
-        worksheet.eachRow((row, rowNumber) => {
-          row.eachCell((cell, colNumber) => {
-            const sheet = spreadRef.current.getSheet(0);
-            if (cell.formula) {
-              sheet.setFormula(rowNumber - 1, colNumber - 1, cell.formula);
-            } else {
-              sheet.setValue(rowNumber - 1, colNumber - 1, cell.value);
-            }
-          });
+      setSheetData((prevData) => {
+        const newData = [...prevData];
+
+        // 첫번째 행: 날짜
+        const years = Object.keys(res.data);
+        years.forEach((year, i) => {
+          newData[0][i + 1] = { value: year };
         });
-      };
 
-      reader.readAsArrayBuffer(file);
+        // 나머지 행: 항목에 따라 데이터 삽입
+        for (let i = 1; i < newData.length; i++) {
+          const dataName = newData[i][0].value;
+          const codeName = GLOSSARY[dataName];
+          if (!codeName) continue;
+
+          for (let j = 1; j < 1 + years.length; j++) {
+            const year = newData[0][j].value;
+            newData[i][j].value = res.data[year][codeName];
+          }
+        }
+
+        return newData;
+      });
+    }
+  }, [stockId]);
+
+  const handleSelectedCell = ({ row, column }) => {
+    setSelectedCell({ row, column, value: sheetData[row][column].value });
+  };
+
+  const handleSheetDataChange = (sheetArr) => {
+    setSheetData(sheetArr);
+    setSelectedCell((prev) => ({
+      ...prev,
+      value: sheetArr[selectedCell.row][selectedCell.column].value,
+    }));
+  };
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    setSelectedCell((prev) => ({ ...prev, value: newValue }));
+
+    const updatedData = [...sheetData];
+    updatedData[selectedCell.row][selectedCell.column] = { value: newValue };
+    setSheetData(updatedData);
+  };
+
+  const handleSave = async () => {
+    if (!targetPrice || !valuePotential) {
+      alert('목표 주가와 상승 여력을 입력하세요.');
+      return;
+    }
+
+    const excelData = sheetData;
+
+    const requestBody = {
+      user_id: userId,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
+
+    try {
+      const result = await saveValuation(searchParams.get('id'), requestBody);
+      alert('저장 완료');
+    } catch (error) {
+      console.error('저장 중 에러: ', error);
+      alert('저장 중 에러');
     }
   };
 
-  //   const handleAddData = () => {
-  //     const sheet = spreadRef.current.getActiveSheet();
-  //     sheet.setValue(0, 0, "New Data");
-  //   };
+  const handleTemporarySave = async () => {
+    if (!targetPrice || !valuePotential) {
+      alert('목표 주가와 상승 여력을 입력하세요.');
+      return;
+    }
 
-  const handleGetFormula = () => {
-    const sheet = spreadRef.current.getActiveSheet();
-    const selection = sheet.getSelections()[0];
-    const row = selection.row;
-    const col = selection.col;
-    const formula = sheet.getFormula(row, col);
-    if (formula) {
-      alert(`Formula at (${row}, ${col}): ${formula}`);
-    } else {
-      alert(`No formula at (${row}, ${col})`);
+    const excelData = sheetData;
+
+    const requestBody = {
+      user_id: userId,
+      target_price: targetPrice,
+      value_potential: valuePotential,
+      excel_data: excelData,
+    };
+
+    try {
+      const result = await temporarySaveValuation(
+        searchParams.get('id'),
+        requestBody
+      );
+      alert('임시저장 완료');
+    } catch (error) {
+      console.error('임시저장 중 에러: ', error);
+      alert('임시저장 중 에러');
     }
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
-      <div className="p-2 text-heading2">목표 주가 계산표</div>
-      <div className="flex gap-2">
-        <div className="flex">{`종목:  ${searchParams.get("id")}`}</div>
-        <p className="flex">{`템플릿:  ${searchParams.get("template")}`}</p>
-      </div>
-      <div className="flex gap-4">
-        <div className="flex gap-2">
-          목표주가
-          <input type="number" className="text-tuatara-100 bg-tuatara-900" />원
+    <div className="w-full px-20 flex flex-col justify-center items-center">
+      <div className=" text-heading3 font-bold">목표 주가 계산표</div>
+      <section className="flex gap-20 py-2 mb-8 text-body2">
+        <div className="flex gap-4">
+          <p>종목:</p>
+          <p className=" text-body2 font-bold">{stockName}</p>
         </div>
-        <div className="flex gap-2">
-          상승여력
-          <input type="number" className="text-tuatara-100 bg-tuatara-900" />%
+        <div className="flex gap-4">
+          <p>템플릿:</p>
+          <p className="font-bold">{templateName}</p>
         </div>
-      </div>
-
-      {/*--- 엑셀 ---*/}
+      </section>
       <ExcelContext.Provider
-        value={{ formula, setFormula, fileInput, spreadRef }}
+        value={{
+          sheetData,
+          stockName,
+          templateName,
+          targetPrice,
+          valuePotential,
+          setTargetPrice,
+          setValuePotential,
+        }}
       >
+        <ExcelHeader />
         <input
           type="text"
-          value={formula}
-          onChange={(e) => setFormula(e.target.value)}
-          placeholder="f(x) 수식을 입력하세요"
-          className="w-full mt-4 my-2 p-2 px-6 border text-tuatara-800 border-gray-400 rounded"
+          value={selectedCell.value}
+          placeholder="f(x) : 값 또는 수식을 입력하세요"
+          onChange={handleInputChange}
+          className="w-full my-2 px-4 border-none py-2 text-tuatara-100 bg-tuatara-900 rounded focus:outline-none focus:outline-1 focus:outline-tuatara-500"
         />
-        <Excel />
+        <Spreadsheet
+          darkMode
+          data={sheetData}
+          onChange={handleSheetDataChange}
+          onActivate={handleSelectedCell}
+          className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0 rounded-lg"
+        />
+        <ExcelFooter
+          onSave={handleSave}
+          onTemporarySave={handleTemporarySave}
+        />
       </ExcelContext.Provider>
-      <div className="w-full my-4 p-4 bg-tuatara-900 rounded">
-        <p className="mb-2">내 PC에서 엑셀 가져오기 (.xlsx)</p>
-        <input type="file" ref={fileInput} />
-        <button
-          className="p-2 bg-blue-500 text-white rounded"
-          onClick={handleOpenExcel}
-        >
-          OK
-        </button>
-        <div className="">
-          <button
-            className="p-2 mr-4 bg-green-500 text-white rounded"
-            onClick={handleSaveExcel}
-          >
-            Save Excel
-          </button>
-          <button
-            className=" p-2 bg-red-500 text-white rounded"
-            onClick={handleGetFormula}
-          >
-            Get Formula
-          </button>
-        </div>
-      </div>
-      {/* <div className="w-full p-10 flex flex-col"></div> */}
     </div>
   );
 }
