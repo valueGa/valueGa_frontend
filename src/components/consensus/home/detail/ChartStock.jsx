@@ -3,14 +3,15 @@ import ReactDOM from "react-dom";
 import ReactApexChart from "react-apexcharts";
 import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세요
 
-const ApexChart = () => {
+const ApexChart = ({ closePriceList }) => {
+  if (!closePriceList || closePriceList.length === 0) {
+    console.log("closePriceList is empty or undefined");
+    return null; // Return null or a placeholder if the list is empty
+  }
   const [series] = useState([
     {
       name: "Desktops",
-      data: [
-        10, 31, 24, 50, 45, 47, 40, 52, 1, 32, 4, 52, 32, 21, 41, 35, 51, 49,
-        62, 69, 91, 148,
-      ],
+      data: closePriceList,
     },
   ]);
 
@@ -176,10 +177,10 @@ const ApexChart = () => {
   );
 };
 
-export default function ChartStock() {
+export default function ChartStock({ data }) {
   return (
     <div>
-      <ApexChart />
+      <ApexChart closePriceList={data} />
     </div>
   );
 }
