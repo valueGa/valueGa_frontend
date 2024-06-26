@@ -98,10 +98,10 @@ export default function ExcelHeader() {
             <CgLoadbarDoc size={20} />
             템플릿화
           </Button>
-          <Button className="flex items-center gap-2 bg-blue-400 border-none">
+          {/* <Button className="flex items-center gap-2 bg-blue-400 border-none">
             <BsArrowUpCircle size={18} onClick={handleExportExcel} />
             엑셀 추출
-          </Button>
+          </Button> */}
         </div>
       </section>
       <Modal show={show} onHide={handleClose} dialogClassName="rounded-modal">
