@@ -130,7 +130,6 @@ export default function ConsensusList({
     setBuyStock(allTopList);
     setSellStock(allDownList);
   }, [allTopList, allDownList]);
-
   return (
     <div>
       <div className="font-apple mx-16 mb-16">
