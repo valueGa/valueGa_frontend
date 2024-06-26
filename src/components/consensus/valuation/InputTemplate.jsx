@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, DropdownButton, DropdownMenu } from 'react-bootstrap';
 import { getCreateTemplate } from '~/apis/template';
 
-export default function InputTemplate({ value, setValue }) {
-  const [templateName, setTemplateName] = useState(value);
+export default function InputTemplate({ setValue }) {
+  const [templateName, setTemplateName] = useState('템플릿 선택');
   const [templateList, setTemplateList] = useState([]);
 
   useEffect(() => {
