@@ -7,13 +7,16 @@ import { useNavigate } from "react-router-dom";
 
 import { URI_PATH } from "~/routers/main-router";
 
-export default function MainHeader() {
+export default function MainHeader(props) {
+  const accessToken = localStorage.getItem("valueGa_AccessToken");
+
   const [activeButton, setActiveButton] = useState("Home");
   const [signupShow, setSignupShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const navigate = useNavigate();
   const handleClickedButton = (buttonName) => {
     console.log("handleClickedButton");
+
     setActiveButton(buttonName);
   };
 
@@ -41,7 +44,7 @@ export default function MainHeader() {
       }
       signupHandleClose();
       loginHandleClose();
-      navigate(`${URI_PATH.consensusPage}`);
+      // navigate(`${URI_PATH.consensusPage}`);
     } catch (error) {
       console.log(`${error}`);
     }
@@ -54,7 +57,7 @@ export default function MainHeader() {
       console.log(`${result.data.user_id}, ${result.data.user_email}`);
       signupHandleClose();
       loginHandleClose();
-      navigate(`${URI_PATH.consensusPage}`);
+      // navigate(`${URI_PATH.consensusPage}`);
     } catch (error) {
       console.log(`${error}`);
     }
@@ -80,7 +83,10 @@ export default function MainHeader() {
             className={`mr-5 text-tuatara-50 ${
               activeButton === "Home" ? "underline" : ""
             }`}
-            onClick={() => handleClickedButton("Home")}
+            onClick={() => {
+              handleClickedButton("Home");
+              props.onContentHomeClick();
+            }}
           >
             Home
           </button>
@@ -88,7 +94,10 @@ export default function MainHeader() {
             className={`mr-5 text-tuatara-50 ${
               activeButton === "About As" ? "underline" : ""
             }`}
-            onClick={() => handleClickedButton("About As")}
+            onClick={() => {
+              handleClickedButton("About As");
+              props.onContentAboutUsClick();
+            }}
           >
             About As
           </button>
@@ -96,7 +105,10 @@ export default function MainHeader() {
             className={`mr-5 text-tuatara-50 ${
               activeButton === "Service" ? "underline" : ""
             }`}
-            onClick={() => handleClickedButton("Service")}
+            onClick={() => {
+              handleClickedButton("Service");
+              props.onContentServiceClick();
+            }}
           >
             Service
           </button>
@@ -104,25 +116,42 @@ export default function MainHeader() {
             className={`mr-5 text-tuatara-50 ${
               activeButton === "Cotact" ? "underline" : ""
             }`}
-            onClick={() => handleClickedButton("Cotact")}
+            onClick={() => {
+              handleClickedButton("Cotact");
+              props.onContentContactClick();
+            }}
           >
             Contact
           </button>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-5">
-          <button
-            className="text-tuatara-50"
-            onClick={handleClickedLoginButton}
-          >
-            Login
-          </button>
-          <button
-            className="text-tuatara-50"
-            onClick={handleClickedSignupButton}
-          >
-            Signup
-          </button>
+          {accessToken ? (
+            <button
+              onClick={() => {
+                localStorage.removeItem("valueGa_AccessToken");
+                accessToken = null;
+              }}
+              className="text-tuatara-50"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <button
+                className="text-tuatara-50"
+                onClick={handleClickedLoginButton}
+              >
+                Login
+              </button>
+              <button
+                className="text-tuatara-50"
+                onClick={handleClickedSignupButton}
+              >
+                Signup
+              </button>
+            </>
+          )}
         </div>
       </nav>
 
