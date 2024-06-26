@@ -4,7 +4,7 @@ import downArrow from "~/assets/icons/downArrow.svg";
 import { Link } from "react-router-dom";
 import { URI_PATH } from "~/routers/main-router";
 
-export default function StockPredictionList({ data }) {
+export default function StockPredictionList({ data, currentPrice }) {
   return (
     <div>
       <div className="mt-8">
@@ -21,12 +21,21 @@ export default function StockPredictionList({ data }) {
               <div className="flex flex-row w-full">
                 <div className="basis-1/5">{element.user_name}</div>
                 <div className="basis-1/5 flex flex-row space-x-6 items-center justify-center">
-                  <div>{element.user_target_price * 100}%</div>
+                  <div>
+                    {(element.user_target_price / element.past_price).toFixed(
+                      2
+                    )}
+                    %
+                  </div>
                 </div>
                 <div className="basis-1/5 flex flex-row space-x-6 items-center justify-center">
-                  <div>{element.user_past_potential * 100}%</div>
+                  <div>
+                    {(element.user_target_price / currentPrice).toFixed(2)}%
+                  </div>
                 </div>
-                <div className="basis-1/5">{element.valuation_date}</div>
+                <div className="basis-1/5">
+                  {element.valuation_date.slice(0, 10)}
+                </div>
                 <div className="basis-1/5 flex flex-row space-x-6 items-center justify-center">
                   <div>{element.user_target_price}원</div>
                 </div>
