@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
 import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
@@ -426,6 +419,7 @@ export default function ValuationCreateExcel() {
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
+      stock_id: stockId,
     };
 
     try {
@@ -450,13 +444,11 @@ export default function ValuationCreateExcel() {
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
+      stock_id: stockId,
     };
 
     try {
-      const result = await temporarySaveValuation(
-        searchParams.get('id'),
-        requestBody
-      );
+      const result = await temporarySaveValuation(searchParams.get('id'), requestBody);
       alert('임시저장 완료');
     } catch (error) {
       console.error('임시저장 중 에러: ', error);
@@ -503,10 +495,7 @@ export default function ValuationCreateExcel() {
           onActivate={handleSelectedCell}
           className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0 rounded-lg"
         />
-        <ExcelFooter
-          onSave={handleSave}
-          onTemporarySave={handleTemporarySave}
-        />
+        <ExcelFooter onSave={handleSave} onTemporarySave={handleTemporarySave} />
       </ExcelContext.Provider>
     </div>
   );
