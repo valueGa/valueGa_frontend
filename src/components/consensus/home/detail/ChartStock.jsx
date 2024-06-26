@@ -165,6 +165,9 @@ const ApexChart = ({ closePriceList }) => {
   return (
     <div>
       <div id="chart">
+        <p className="mb-1 text-tuatara-400 text-mini">
+          * 금일 기준 30일 일별 차트입니다.
+        </p>
         <ReactApexChart
           options={options}
           series={series}
