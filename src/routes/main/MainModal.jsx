@@ -179,7 +179,6 @@ export function Login({
   };
 
   const clickedButton = () => {
-    console.log(`${email} ${password}`);
     handleClickedModalLoginButton(email, password);
   };
 
@@ -216,7 +215,6 @@ export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
   const [password, setPassword] = useState("");
 
   const handleInputNameChange = (e) => {
-    console.log("signup Name:" + e.target.value);
     setName(e.target.value);
     if (e.target.value.length > 0) {
       setNameActivity(true);
@@ -226,7 +224,6 @@ export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
   };
 
   const handleInputEmailChange = (e) => {
-    console.log("signup Email:" + e.target.value);
     setEmail(e.target.value);
     if (e.target.value.length > 0) {
       setEmailActivity(true);
@@ -236,7 +233,6 @@ export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
   };
 
   const handleInputPasswordChange = (e) => {
-    console.log("signup Password:" + e.target.value);
     setPassword(e.target.value);
     if (e.target.value.length > 0) {
       setPasswordActivity(true);
@@ -246,8 +242,6 @@ export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
   };
 
   const handleInputConfirmPasswordChange = (e) => {
-    console.log("signup:" + e.target.value);
-
     if (e.target.value.length > 0) {
       setConfirmPasswordActivity(true);
     } else {
@@ -256,7 +250,6 @@ export function Signup({ show, handleClose, handleClickedModalSignupButton }) {
   };
 
   const clickedButton = () => {
-    // console.log(`${email} ${password}`);
     handleClickedModalSignupButton(name, email, password);
   };
 
