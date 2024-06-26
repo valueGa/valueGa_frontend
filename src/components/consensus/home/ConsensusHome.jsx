@@ -24,67 +24,127 @@ export default function ConsensusHome() {
 
         const initialBuy5List = [
           {
-            company_name: result.data.undervaluedList.top1.company_name,
+            company_name:
+              result.data.undervaluedList.top1.company_name +
+              ` ${(
+                result.data.undervaluedList.top1.target_price /
+                result.data.undervaluedList.top1.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top1.stock_code,
             value_potential: result.data.undervaluedList.top1.value_potential,
             target_price: result.data.undervaluedList.top1.target_price,
+            currentPrice: result.data.undervaluedList.top1.currentPrice,
           },
           {
-            company_name: result.data.undervaluedList.top2.company_name,
+            company_name:
+              result.data.undervaluedList.top2.company_name +
+              ` ${(
+                result.data.undervaluedList.top2.target_price /
+                result.data.undervaluedList.top2.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top2.stock_code,
             value_potential: result.data.undervaluedList.top2.value_potential,
             target_price: result.data.undervaluedList.top2.target_price,
+            currentPrice: result.data.undervaluedList.top2.currentPrice,
           },
           {
-            company_name: result.data.undervaluedList.top3.company_name,
+            company_name:
+              result.data.undervaluedList.top3.company_name +
+              ` ${(
+                result.data.undervaluedList.top3.target_price /
+                result.data.undervaluedList.top3.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top3.stock_code,
             value_potential: result.data.undervaluedList.top3.value_potential,
             target_price: result.data.undervaluedList.top3.target_price,
+            currentPrice: result.data.undervaluedList.top3.currentPrice,
           },
           {
-            company_name: result.data.undervaluedList.top4.company_name,
+            company_name:
+              result.data.undervaluedList.top4.company_name +
+              ` ${(
+                result.data.undervaluedList.top4.target_price /
+                result.data.undervaluedList.top4.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top4.stock_code,
             value_potential: result.data.undervaluedList.top4.value_potential,
             target_price: result.data.undervaluedList.top4.target_price,
+            currentPrice: result.data.undervaluedList.top4.currentPrice,
           },
           {
-            company_name: result.data.undervaluedList.top5.company_name,
+            company_name:
+              result.data.undervaluedList.top5.company_name +
+              ` ${(
+                result.data.undervaluedList.top5.target_price /
+                result.data.undervaluedList.top5.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top5.stock_code,
             value_potential: result.data.undervaluedList.top5.value_potential,
             target_price: result.data.undervaluedList.top5.target_price,
+            currentPrice: result.data.undervaluedList.top5.currentPrice,
           },
         ];
 
         const initialSell5List = [
           {
-            company_name: result.data.overvaluedList.top1.company_name,
+            company_name:
+              result.data.overvaluedList.top1.company_name +
+              ` ${(
+                result.data.overvaluedList.top1.target_price /
+                result.data.overvaluedList.top1.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top1.stock_code,
             value_potential: result.data.overvaluedList.top1.value_potential,
             target_price: result.data.overvaluedList.top1.target_price,
+            currentPrice: result.data.overvaluedList.top1.currentPrice,
           },
           {
-            company_name: result.data.overvaluedList.top2.company_name,
+            company_name:
+              result.data.overvaluedList.top2.company_name +
+              ` ${(
+                result.data.overvaluedList.top2.target_price /
+                result.data.overvaluedList.top2.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top2.stock_code,
             value_potential: result.data.overvaluedList.top2.value_potential,
             target_price: result.data.overvaluedList.top2.target_price,
+            currentPrice: result.data.overvaluedList.top2.currentPrice,
           },
           {
-            company_name: result.data.overvaluedList.top3.company_name,
+            company_name:
+              result.data.overvaluedList.top3.company_name +
+              ` ${(
+                result.data.overvaluedList.top3.target_price /
+                result.data.overvaluedList.top3.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top3.stock_code,
             value_potential: result.data.overvaluedList.top3.value_potential,
             target_price: result.data.overvaluedList.top3.target_price,
+            currentPrice: result.data.overvaluedList.top3.currentPrice,
           },
           {
-            company_name: result.data.overvaluedList.top4.company_name,
+            company_name:
+              result.data.overvaluedList.top4.company_name +
+              ` ${(
+                result.data.overvaluedList.top4.target_price /
+                result.data.overvaluedList.top4.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top4.stock_code,
             value_potential: result.data.overvaluedList.top4.value_potential,
             target_price: result.data.overvaluedList.top4.target_price,
+            currentPrice: result.data.overvaluedList.top4.currentPrice,
           },
           {
-            company_name: result.data.overvaluedList.top5.company_name,
+            company_name:
+              result.data.overvaluedList.top5.company_name +
+              ` ${(
+                result.data.overvaluedList.top5.target_price /
+                result.data.overvaluedList.top5.currentPrice
+              ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top5.stock_code,
             value_potential: result.data.overvaluedList.top5.value_potential,
             target_price: result.data.overvaluedList.top5.target_price,
+            currentPrice: result.data.overvaluedList.top5.currentPrice,
           },
         ];
         setTop5List(initialBuy5List);
@@ -117,6 +177,7 @@ export default function ConsensusHome() {
             stock_code: result.data.undervaluedList.top1.stock_code,
             value_potential: result.data.undervaluedList.top1.value_potential,
             target_price: result.data.undervaluedList.top1.target_price,
+            currentPrice: result.data.undervaluedList.top1.currentPrice,
           });
         }
         if (result.data.undervaluedList.top2 != null) {
@@ -125,6 +186,7 @@ export default function ConsensusHome() {
             stock_code: result.data.undervaluedList.top2.stock_code,
             value_potential: result.data.undervaluedList.top2.value_potential,
             target_price: result.data.undervaluedList.top2.target_price,
+            currentPrice: result.data.undervaluedList.top2.currentPrice,
           });
         }
         if (result.data.undervaluedList.top3 != null) {
@@ -133,6 +195,7 @@ export default function ConsensusHome() {
             stock_code: result.data.undervaluedList.top3.stock_code,
             value_potential: result.data.undervaluedList.top3.value_potential,
             target_price: result.data.undervaluedList.top3.target_price,
+            currentPrice: result.data.undervaluedList.top3.currentPrice,
           });
         }
         if (result.data.undervaluedList.top4 != null) {
@@ -141,6 +204,7 @@ export default function ConsensusHome() {
             stock_code: result.data.undervaluedList.top4.stock_code,
             value_potential: result.data.undervaluedList.top4.value_potential,
             target_price: result.data.undervaluedList.top4.target_price,
+            currentPrice: result.data.undervaluedList.top4.currentPrice,
           });
         }
         if (result.data.undervaluedList.top5 != null) {
@@ -149,6 +213,7 @@ export default function ConsensusHome() {
             stock_code: result.data.undervaluedList.top5.stock_code,
             value_potential: result.data.undervaluedList.top5.value_potential,
             target_price: result.data.undervaluedList.top5.target_price,
+            currentPrice: result.data.undervaluedList.top5.currentPrice,
           });
         }
 
@@ -168,6 +233,7 @@ export default function ConsensusHome() {
             stock_code: result.data.overvaluedList.top1.stock_code,
             value_potential: result.data.overvaluedList.top1.value_potential,
             target_price: result.data.overvaluedList.top1.target_price,
+            currentPrice: result.data.overvaluedList.top1.currentPrice,
           });
         }
         if (result.data.overvaluedList.top2 != null) {
@@ -176,6 +242,7 @@ export default function ConsensusHome() {
             stock_code: result.data.overvaluedList.top2.stock_code,
             value_potential: result.data.overvaluedList.top2.value_potential,
             target_price: result.data.overvaluedList.top2.target_price,
+            currentPrice: result.data.overvaluedList.top2.currentPrice,
           });
         }
         if (result.data.overvaluedList.top3 != null) {
@@ -184,6 +251,7 @@ export default function ConsensusHome() {
             stock_code: result.data.overvaluedList.top3.stock_code,
             value_potential: result.data.overvaluedList.top3.value_potential,
             target_price: result.data.overvaluedList.top3.target_price,
+            currentPrice: result.data.overvaluedList.top3.currentPrice,
           });
         }
         if (result.data.overvaluedList.top4 != null) {
@@ -192,6 +260,7 @@ export default function ConsensusHome() {
             stock_code: result.data.overvaluedList.top4.stock_code,
             value_potential: result.data.overvaluedList.top4.value_potential,
             target_price: result.data.overvaluedList.top4.target_price,
+            currentPrice: result.data.overvaluedList.top4.currentPrice,
           });
         }
         if (result.data.overvaluedList.top5 != null) {
@@ -200,6 +269,7 @@ export default function ConsensusHome() {
             stock_code: result.data.overvaluedList.top5.stock_code,
             value_potential: result.data.overvaluedList.top5.value_potential,
             target_price: result.data.overvaluedList.top5.target_price,
+            currentPrice: result.data.overvaluedList.top5.currentPrice,
           });
         }
 
@@ -214,6 +284,9 @@ export default function ConsensusHome() {
   return (
     <div>
       {/* <Graph /> */}
+      <div className="text-center text-heading3 font-bold">
+        상하향 목표 주가 컨센서스 TOP 5
+      </div>
       <GraphDemo top5List={top5List} down5List={down5List} />
       <Search />
       <ConsensusList
