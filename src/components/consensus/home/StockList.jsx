@@ -26,16 +26,19 @@ export default function StockList({ data, type }) {
         {data?.map((element, index) => {
           return (
             <Link
+              key={index}
               to={`${URI_PATH.consensusPage}/${element.stock_code}`}
               state={{
                 companyName: element.company_name,
                 type: type,
               }}
             >
+
               <div className="flex justify-between items-center text-tuatara-50 text-caption flex-row text-center rounded-lg h-16 m-2 bg-tuatara-950">
                 <div className="flex flex-row w-full items-center justify-between">
                   <div className="flex-1 text-center">
                     {element.company_name}
+
                   </div>
 
                   <div className="flex-1 flex flex-row space-x-2 items-center justify-center">
@@ -46,11 +49,13 @@ export default function StockList({ data, type }) {
                     </div>
                   </div>
 
+
                   <div className="flex-1 text-center">
                     {element.currentPrice}원
                   </div>
 
                   <div className="flex-1 flex flex-row space-x-2 items-center justify-center">
+
                     <img src={arrowClass} className="w-3 h-3" />
                     <div>{element.target_price}원</div>
                   </div>
