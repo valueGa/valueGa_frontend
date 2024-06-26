@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getSearchResult } from '../../../apis/search';
 
-export default function InputStock({ callback, setIsSelectedStock }) {
+export default function InputStock({
+  callback,
+  setIsSelectedStock = () => {},
+}) {
   const [searchWord, setSearchWord] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
@@ -52,6 +55,14 @@ export default function InputStock({ callback, setIsSelectedStock }) {
 
   // 검색 결과에서 종목 선택시 발생 이벤트
   const handleSelect = (stock) => {
+    if (!stock) {
+      if (searchResults.length === 1) {
+        stock = searchResults[0];
+      } else {
+        return;
+      }
+    }
+    console.log(stock);
     const name = stock[0];
     const id = stock[1];
 

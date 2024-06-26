@@ -26,7 +26,11 @@ export default function StockList({ data, type }) {
         </div>
         {data?.map((element, index) => {
           return (
-            <Link to={`${URI_PATH.consensusPage}/${element.stock_code}`} state={element.company_name}>
+            <Link
+              key={index}
+              to={`${URI_PATH.consensusPage}/${element.stock_code}`}
+              state={element.company_name}
+            >
               <div className="flex justify-between text-tuatara-50 text-caption flex-row text-center items-center rounded-lg h-16 m-2 bg-tuatara-950">
                 <div className="flex flex-row w-full">
                   <div className="basis-1/5">{element.company_name}</div>

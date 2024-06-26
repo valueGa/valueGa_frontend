@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import StockList from "./StockList";
-import downArrow from "~/assets/icons/downArrow.svg";
-import { getConsensusMore } from "/src/apis/consensus";
+import React, { useEffect, useState } from 'react';
+import StockList from './StockList';
+import downArrow from '~/assets/icons/downArrow.svg';
+import { getConsensusMore } from '/src/apis/consensus';
 
 export default function ConsensusList({
   allBuyCount,
@@ -18,35 +18,35 @@ export default function ConsensusList({
 
   const tmpTop5 = [
     {
-      company_name: "LG전자",
+      company_name: 'LG전자',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "삼성전자",
+      company_name: '삼성전자',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "알테오젠",
+      company_name: '알테오젠',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "다우존스",
+      company_name: '다우존스',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "HLB",
+      company_name: 'HLB',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
@@ -55,35 +55,35 @@ export default function ConsensusList({
   ];
   const tmpBottom5 = [
     {
-      company_name: "LG전자",
+      company_name: 'LG전자',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "삼성전자",
+      company_name: '삼성전자',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "알테오젠",
+      company_name: '알테오젠',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "다우존스",
+      company_name: '다우존스',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
       target_price: 120000,
     },
     {
-      company_name: "HLB",
+      company_name: 'HLB',
       stock_code: 0.5,
       currentValuePotential: 0.4,
       value_potential: 80000,
@@ -95,10 +95,11 @@ export default function ConsensusList({
     {
       tabTitle: (
         <li
+          key={1}
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 0
-              ? "border-b-2 border-tuatara-50 text-tuatara-50 font-bold"
-              : "border-b-2 border-tuatara-300 text-tuatara-300"
+              ? 'border-b-2 border-tuatara-50 text-tuatara-50 font-bold'
+              : 'border-b-2 border-tuatara-300 text-tuatara-300'
           }`}
           onClick={() => tabClickHandler(0)}
         >
@@ -109,10 +110,11 @@ export default function ConsensusList({
     {
       tabTitle: (
         <li
+          key={2}
           className={`py-3 basis-1/2 cursor-pointer ${
             activeIndex === 1
-              ? "border-b-2 border-tuatara-50 text-tuatara-50 font-bold"
-              : "border-b-2 border-tuatara-300 text-tuatara-300"
+              ? 'border-b-2 border-tuatara-50 text-tuatara-50 font-bold'
+              : 'border-b-2 border-tuatara-300 text-tuatara-300'
           }`}
           onClick={() => tabClickHandler(1)}
         >
