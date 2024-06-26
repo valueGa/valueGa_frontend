@@ -8,6 +8,16 @@ import { URI_PATH } from '~/routers/main-router';
 import { postTemplate } from '~/apis/template';
 import Modal from 'react-bootstrap/Modal';
 import '~/routes/main/ModalStyle.css';
+import { jwtDecode } from 'jwt-decode';
+
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function ExcelHeader() {
   const {
@@ -44,7 +54,7 @@ export default function ExcelHeader() {
     try {
       const res = await postTemplate({
         templateName: templateName,
-        userId: 1, // TODO : userId 가져오기 수정
+        userId: getUserIdFromToken(),
         excelData: newTemplate,
       });
 
@@ -60,7 +70,7 @@ export default function ExcelHeader() {
     console.log(templateName);
   }, [templateName]);
 
-  const handleExportExcel = () => {};
+  // const handleExportExcel = () => {};
 
   return (
     <>
@@ -98,10 +108,10 @@ export default function ExcelHeader() {
             <CgLoadbarDoc size={20} />
             템플릿화
           </Button>
-          <Button className="flex items-center gap-2 bg-blue-400 border-none">
+          {/* <Button className="flex items-center gap-2 bg-blue-400 border-none">
             <BsArrowUpCircle size={18} onClick={handleExportExcel} />
             엑셀 추출
-          </Button>
+          </Button> */}
         </div>
       </section>
       <Modal show={show} onHide={handleClose} dialogClassName="rounded-modal">

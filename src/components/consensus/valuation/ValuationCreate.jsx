@@ -34,7 +34,7 @@ export default function ValuationCreate() {
               `${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`
             );
           }}
-          disabled={!isSelectedStock}
+          disabled={!isSelectedStock || selectedTemplate === '템플릿 선택'}
         >
           생성하기
         </Button>
