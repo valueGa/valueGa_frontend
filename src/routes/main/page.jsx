@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Home from './TabHome';
 import AboutUs from './TabAboutUs';
 import Service from './TabService';
@@ -10,7 +10,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { URI_PATH } from '../../routers/main-router';
 
-
 export default function MainPage() {
   const navigate = useNavigate();
   const contentHomeRef = useRef();
@@ -19,16 +18,16 @@ export default function MainPage() {
   const contentContactRef = useRef();
 
   const onContentHomeClick = () => {
-    contentHomeRef.current?.scrollIntoView({ behavior: "smooth" });
+    contentHomeRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   const onContentAboutUsClick = () => {
-    contentAboutUsRef.current?.scrollIntoView({ behavior: "smooth" });
+    contentAboutUsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   const onContentServiceClick = () => {
-    contentServiceRef.current?.scrollIntoView({ behavior: "smooth" });
+    contentServiceRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   const onContentContactClick = () => {
-    contentContactRef.current?.scrollIntoView({ behavior: "smooth" });
+    contentContactRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
