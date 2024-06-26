@@ -96,6 +96,7 @@ export default function Search() {
   return (
     <div className="relative w-full flex max-w-2xl mx-auto my-6 mb-10">
       <div className="w-full items-center flex flex-row p-2 mx-auto justify-between font-apple text-caption bg-tuatara-900 text-tuatara-200 rounded-lg">
+        <BiSearch size={22} className="absolute ml-2" />
         <input
           ref={inputRef}
           type="text"
@@ -113,9 +114,9 @@ export default function Search() {
               setSearchWord(e.target.value);
             }
           }}
+          maxLength={30} // 최대 길이 지정
           className="w-full text-center mx-auto py-2 text-tuatara-100 bg-tuatara-900 rounded-md focus:outline-none "
         />
-        <BiSearch size={22} className="relative mr-2" />
 
         {searchResults.length > 0 && showResults && (
           <div

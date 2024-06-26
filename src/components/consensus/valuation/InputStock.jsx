@@ -108,6 +108,7 @@ export default function InputStock({
             setSearchWord(e.target.value);
           }
         }}
+        maxLength={30}
         className="w-72 p-2 px-3 text-tuatara-100 bg-tuatara-900 rounded-md focus:outline-none focus:outline-1 focus:outline-tuatara-500"
       />
       {searchResults.length > 0 && showResults && (
