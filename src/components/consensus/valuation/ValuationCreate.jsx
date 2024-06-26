@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import InputStock from './InputStock';
 import InputTemplate from './InputTemplate';
