@@ -236,7 +236,7 @@ export default function ConsensusDetail() {
               </div>
 
               <p className="text-spray-350 text-heading3 font-bold">
-                {currentPrice}
+                {Number(currentPrice).toLocaleString()}
               </p>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function ConsensusDetail() {
               </div>
 
               <p className="text-pink-100 text-heading3 font-bold">
-                {targetPrice}
+                {Number(targetPrice).toLocaleString()}
               </p>
             </div>
           </div>

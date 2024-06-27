@@ -69,7 +69,7 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link to={`${URI_PATH.consensusPage}`}>Home</Link>
+          <Link to={`${URI_PATH.consensusPage}`}>Consensus</Link>
         </li>
         <li>
           <Link to={`${URI_PATH.valuationPage}`}>Valuation</Link>
