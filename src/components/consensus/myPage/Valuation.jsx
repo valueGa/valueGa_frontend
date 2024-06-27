@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import moreIcon from '~/assets/icons/more.svg';
-import Popup from '~/components/consensus/myPage/Popup';
-import { useNavigate } from 'react-router-dom';
-import { URI_PATH } from '../../../routers/main-router';
-import { getValuations, deleteValuation } from '../../../apis/valuation'; // 새로운 API 서비스 임포트
+import React, { useEffect, useRef, useState } from "react";
+import moreIcon from "~/assets/icons/more.svg";
+import Popup from "~/components/consensus/myPage/Popup";
+import { useNavigate } from "react-router-dom";
+import { URI_PATH } from "../../../routers/main-router";
+import { getValuations, deleteValuation } from "../../../apis/valuation"; // 새로운 API 서비스 임포트
 
 export default function Valuation() {
   const [valList, setValList] = useState(null);
@@ -26,14 +26,14 @@ export default function Valuation() {
       await deleteValuation(valuation_id);
       setValList(valList.filter((item) => item.valuationId !== valuation_id));
     } catch (error) {
-      console.error('삭제 중 에러:', error);
+      console.error("삭제 중 에러:", error);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -52,7 +52,7 @@ export default function Valuation() {
         }));
         setValList(transformedData);
       } catch (error) {
-        console.error('데이터 가져오기 중 에러:', error);
+        console.error("데이터 가져오기 중 에러:", error);
       }
     };
 
@@ -63,7 +63,7 @@ export default function Valuation() {
       <div className="flex flex-row text-body1 text-center items-center w-3/5 h-7 mt-6">
         <div className="basis-1/3 text-tuatara-300">종목</div>
         <div className="basis-1/3 text-tuatara-300">목표 주가</div>
-        <div className="basis-1/3 text-tuatara-300">상승 여력</div>
+        <div className="basis-1/3 text-tuatara-300">과거 상승 여력</div>
       </div>
       <div>
         {valList?.map((element, index) => {
@@ -74,8 +74,21 @@ export default function Valuation() {
             >
               <div className="flex flex-row basis-3/5">
                 <div className="basis-1/3">{element.stockName}</div>
-                <div className="basis-1/3">{element.targetPrice}원</div>
-                <div className="basis-1/3">{element.valuePotential}%</div>
+                <div className="basis-1/3">
+                  {Number(element.targetPrice).toLocaleString()} 원
+                </div>
+                <div className="flex basis-1/3 items-center justify-center text-center">
+                  <img
+                    className="w-4 h-4"
+                    src={
+                      element.valuePotential >= 0
+                        ? "/assets/images/ic_up.svg"
+                        : "/assets/images/ic_down.svg"
+                    }
+                    alt=""
+                  />
+                  <div className="ml-2">{element.valuePotential} %</div>
+                </div>
               </div>
               <div className="flex justify-end flex-row basis-2/5 mr-8">
                 {element.isTemp ? (

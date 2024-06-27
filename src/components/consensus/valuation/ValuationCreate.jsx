@@ -28,10 +28,7 @@ export default function ValuationCreate() {
       const result = await postLogin(`${email}`, `${password}`);
 
       if (result.data.token != null) {
-        localStorage.setItem(
-          'valueGa_AccessToken',
-          `Bearer ${result.data.token}`
-        );
+        localStorage.setItem('valueGa_AccessToken', `Bearer ${result.data.token}`);
       }
 
       signupHandleClose();
@@ -43,7 +40,6 @@ export default function ValuationCreate() {
   };
 
   const handleClickedModalSignupButton = async (name, email, password) => {
-    console.log(`${name}`, `${email}`, `${password}`);
     try {
       const result = await postSignup(`${name}`, `${email}`, `${password}`);
 
@@ -67,21 +63,13 @@ export default function ValuationCreate() {
             }
           }}
         >
-          <InputStock
-            callback={setSelectedStock}
-            setIsSelectedStock={setIsSelectedStock}
-          />
-          <InputTemplate
-            value={selectedTemplate}
-            setValue={setSelectedTemplate}
-          />
+          <InputStock callback={setSelectedStock} setIsSelectedStock={setIsSelectedStock} />
+          <InputTemplate value={selectedTemplate} setValue={setSelectedTemplate} />
         </div>
         <Button
           className="bg-blue-500 border-none px-10 "
           onClick={() => {
-            navigate(
-              `${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`
-            );
+            navigate(`${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`);
           }}
           disabled={!isSelectedStock || selectedTemplate === '템플릿 선택'}
         >

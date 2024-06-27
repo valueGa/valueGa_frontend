@@ -40,7 +40,6 @@ export const getMyTemplateById = async (templateId) => {
 
 export const editMyTemplate = async (templateId, requestBody) => {
   const res = await service.put(`/${templateId}`, requestBody);
-  console.log(res);
   return res;
 };
 
