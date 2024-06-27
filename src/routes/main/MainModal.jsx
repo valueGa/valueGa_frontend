@@ -44,7 +44,7 @@ function AuthInput(params) {
             <img className="w-4 h-4" src={params.url} alt="" />
           </span>
           <Form.Control
-            type="email"
+            type={params.type}
             onChange={params.handleInputChange}
             placeholder={params.placeholder}
             autoFocus
@@ -54,7 +54,7 @@ function AuthInput(params) {
             <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-white">
               <img
                 className="w-4 h-4"
-                src="/public/assets/images/ic_check.svg"
+                src="/assets/images/ic_check.svg"
                 alt=""
               />
             </span>
@@ -101,14 +101,16 @@ function LoginInput(params) {
     <>
       <Form className="mt-2">
         <AuthInput
+          type="email"
           placeholder="test@email"
-          url="/public/assets/images/ic_email.svg"
+          url="/assets/images/ic_email.svg"
           handleInputChange={params.handleInputEmailChange}
           activity={params.emailActivity}
         />
         <AuthInput
+          type="password"
           placeholder="password"
-          url="/public/assets/images/ic_block.svg"
+          url="/assets/images/ic_block.svg"
           handleInputChange={params.handleInputPasswordChange}
           activity={params.passwordActivity}
         />
@@ -122,26 +124,30 @@ function SignupInput(params) {
     <>
       <Form className="mt-2">
         <AuthInput
+          type="email"
           placeholder="name"
-          url="/public/assets/images/ic_block.svg"
+          url="/assets/images/ic_block.svg"
           handleInputChange={params.handleInputNameChange}
           activity={params.nameActivity}
         />
         <AuthInput
+          type="text"
           placeholder="email"
-          url="/public/assets/images/ic_email.svg"
+          url="/assets/images/ic_email.svg"
           handleInputChange={params.handleInputEmailChange}
           activity={params.emailActivity}
         />
         <AuthInput
+          type="password"
           placeholder="password"
-          url="/public/assets/images/ic_block.svg"
+          url="/assets/images/ic_block.svg"
           handleInputChange={params.handleInputPasswordChange}
           activity={params.passwordActivity}
         />
         <AuthInput
+          type="password"
           placeholder="confirm password"
-          url="/public/assets/images/ic_block.svg"
+          url="/assets/images/ic_block.svg"
           handleInputChange={params.handleInputConfirmPasswordChange}
           activity={params.confirmPasswordActivity}
         />
