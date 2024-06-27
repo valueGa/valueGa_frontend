@@ -92,14 +92,14 @@ export default function MainHeader(props) {
           </button>
           <button
             className={`mr-5 text-tuatara-50 ${
-              activeButton === "About As" ? "underline" : ""
+              activeButton === "About Us" ? "underline" : ""
             }`}
             onClick={() => {
-              handleClickedButton("About As");
+              handleClickedButton("About Us");
               props.onContentAboutUsClick();
             }}
           >
-            About As
+            About Us
           </button>
           <button
             className={`mr-5 text-tuatara-50 ${
