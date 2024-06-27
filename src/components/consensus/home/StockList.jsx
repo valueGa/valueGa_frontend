@@ -43,7 +43,10 @@ export default function StockList({ data, type }) {
                     <div className={arrowClass} />
                     <div>
                       {Number(
-                        (element.target_price / element.currentPrice).toFixed(2)
+                        (
+                          (element.target_price / element.currentPrice - 1) *
+                          100
+                        ).toFixed(2)
                       ).toLocaleString()}
                       %
                     </div>
