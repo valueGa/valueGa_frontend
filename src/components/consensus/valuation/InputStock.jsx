@@ -12,6 +12,7 @@ export default function InputStock({
   const inputRef = useRef(null);
   const ignoreChange = useRef(false);
   let timer = null; // search debounce를 위한 타이머
+  const accessToken = localStorage.getItem('valueGa_AccessToken');
 
   useEffect(() => {
     if (ignoreChange.current) {
@@ -37,14 +38,16 @@ export default function InputStock({
 
   // 검색 API를 통해 검색 결과 불러오기
   const handleSearch = async () => {
-    try {
-      const res = await getSearchResult(searchWord);
+    if (accessToken) {
+      try {
+        const res = await getSearchResult(searchWord);
 
-      if (res.status === 200) {
-        setSearchResults(res.data.searchList);
+        if (res.status === 200) {
+          setSearchResults(res.data.searchList);
+        }
+      } catch (error) {
+        console.error('Error fetching search results:', error);
       }
-    } catch (error) {
-      console.error('Error fetching search results:', error);
     }
   };
 
