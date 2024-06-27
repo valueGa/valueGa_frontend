@@ -197,7 +197,7 @@ export default function ConsensusDetail() {
   return (
     <div className="px-[180px] mb-20">
       <div>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-2 mt-4">
           <p className="text-subheading text-body1">
             {location.state.companyName.split(" ")[0]}
           </p>
@@ -222,7 +222,7 @@ export default function ConsensusDetail() {
       </div>
 
       <div className="flex justity-center items-center mt-[50px] gap-[50px]">
-        <div className="w-full flex-col">
+        <div className="w-4/5 flex-col">
           <div className="flex justify-between items-end">
             <p className="text-tuatara-200 text-body2">현재 주가</p>
             <div>
