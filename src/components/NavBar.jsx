@@ -15,6 +15,11 @@ export default function NavBar() {
   const signupHandleClose = () => setSignupShow(false);
   const loginHandleClose = () => setLoginShow(false);
 
+  const [activeButton, setActiveButton] = useState("Consensus");
+  const handleClickedButton = (buttonName) => {
+    setActiveButton(buttonName);
+  };
+
   const handleClickedSignupButton = () => {
     setSignupShow(true);
     loginHandleClose();
@@ -66,14 +71,47 @@ export default function NavBar() {
             <img src={logo} alt="logo" className="w-8 h-8" />
           </Link>
         </li>
-        <li>
-          <Link to={`${URI_PATH.consensusPage}`}>Consensus</Link>
+        <li
+          className={`mr-5 text-tuatara-50 ${
+            activeButton === "Consensus" ? "underline" : ""
+          }`}
+        >
+          <Link
+            to={`${URI_PATH.consensusPage}`}
+            onClick={() => {
+              handleClickedButton("Consensus");
+            }}
+          >
+            Consensus
+          </Link>
         </li>
-        <li>
-          <Link to={`${URI_PATH.valuationPage}`}>Valuation</Link>
+        <li
+          className={`mr-5 text-tuatara-50 ${
+            activeButton === "Valuation" ? "underline" : ""
+          }`}
+        >
+          <Link
+            to={`${URI_PATH.valuationPage}`}
+            onClick={() => {
+              handleClickedButton("Valuation");
+            }}
+          >
+            Valuation
+          </Link>
         </li>
-        <li>
-          <Link to={`${URI_PATH.myPage}`}>My Page</Link>
+        <li
+          className={`mr-5 text-tuatara-50 ${
+            activeButton === "My Page" ? "underline" : ""
+          }`}
+        >
+          <Link
+            to={`${URI_PATH.myPage}`}
+            onClick={() => {
+              handleClickedButton("My Page");
+            }}
+          >
+            My Page
+          </Link>
         </li>
       </ul>
       <ul className="flex flex-row text-center items-center space-x-7">

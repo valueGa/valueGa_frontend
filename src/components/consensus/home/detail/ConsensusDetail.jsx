@@ -15,7 +15,7 @@ export default function ConsensusDetail() {
     },
     {
       부채비율: "N/A",
-      ebitda: "N/A",
+      evebitda: "N/A",
       자기자본이익률: "N/A",
       주당순이익: "N/A",
     },
@@ -79,7 +79,7 @@ export default function ConsensusDetail() {
     setFinancialInfo((prevInfo) => {
       // 첫 번째 객체의 매출액 값을 변경
       const updatedInfo = [...prevInfo];
-      updatedInfo[1] = { ...updatedInfo[1], ebitda: value };
+      updatedInfo[1] = { ...updatedInfo[1], evebitda: value };
       return updatedInfo;
     });
   };
@@ -127,6 +127,8 @@ export default function ConsensusDetail() {
     const fetchData = async () => {
       const result = await getConsensusDetail(`${params.id}`);
 
+      console.log(result);
+
       setTargetPrice(result.data.consensusInfo.target_price);
       setClosePriceList(
         result.data.chartInfo.map((element, index) =>
@@ -134,7 +136,7 @@ export default function ConsensusDetail() {
         )
       );
       setRatioList(result.data.ratio);
-
+      console.log(`s ${result.data.valuationList}`);
       setValuationList(result.data.valuationList);
       // 매출액을 업데이트하는 함수
       updateSr(Number(result.data.financeInfos.sr).toLocaleString() + " 원");
@@ -197,7 +199,7 @@ export default function ConsensusDetail() {
   return (
     <div className="px-[180px] mb-20">
       <div>
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-2 mt-4">
           <p className="text-subheading text-body1">
             {location.state.companyName.split(" ")[0]}
           </p>
@@ -222,7 +224,7 @@ export default function ConsensusDetail() {
       </div>
 
       <div className="flex justity-center items-center mt-[50px] gap-[50px]">
-        <div className="w-full flex-col">
+        <div className="w-4/5 flex-col">
           <div className="flex justify-between items-end">
             <p className="text-tuatara-200 text-body2">현재 주가</p>
             <div>
