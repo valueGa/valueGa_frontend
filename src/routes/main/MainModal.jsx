@@ -54,7 +54,7 @@ function AuthInput(params) {
             <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-white">
               <img
                 className="w-4 h-4"
-                src="assets/images/ic_check.svg"
+                src="/public/assets/images/ic_check.svg"
                 alt=""
               />
             </span>
@@ -102,13 +102,13 @@ function LoginInput(params) {
       <Form className="mt-2">
         <AuthInput
           placeholder="test@email"
-          url="assets/images/ic_email.svg"
+          url="/public/assets/images/ic_email.svg"
           handleInputChange={params.handleInputEmailChange}
           activity={params.emailActivity}
         />
         <AuthInput
           placeholder="password"
-          url="assets/images/ic_block.svg"
+          url="/public/assets/images/ic_block.svg"
           handleInputChange={params.handleInputPasswordChange}
           activity={params.passwordActivity}
         />
@@ -123,25 +123,25 @@ function SignupInput(params) {
       <Form className="mt-2">
         <AuthInput
           placeholder="name"
-          url="assets/images/ic_block.svg"
+          url="/public/assets/images/ic_block.svg"
           handleInputChange={params.handleInputNameChange}
           activity={params.nameActivity}
         />
         <AuthInput
           placeholder="email"
-          url="assets/images/ic_email.svg"
+          url="/public/assets/images/ic_email.svg"
           handleInputChange={params.handleInputEmailChange}
           activity={params.emailActivity}
         />
         <AuthInput
           placeholder="password"
-          url="assets/images/ic_block.svg"
+          url="/public/assets/images/ic_block.svg"
           handleInputChange={params.handleInputPasswordChange}
           activity={params.passwordActivity}
         />
         <AuthInput
           placeholder="confirm password"
-          url="assets/images/ic_block.svg"
+          url="/public/assets/images/ic_block.svg"
           handleInputChange={params.handleInputConfirmPasswordChange}
           activity={params.confirmPasswordActivity}
         />
