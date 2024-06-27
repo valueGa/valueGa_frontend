@@ -8,19 +8,22 @@ import { URI_PATH } from '~/routers/main-router';
 import { postTemplate } from '~/apis/template';
 import Modal from 'react-bootstrap/Modal';
 import '~/routes/main/ModalStyle.css';
+import { jwtDecode } from 'jwt-decode';
+
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('valueGa_AccessToken');
+  if (token) {
+    const decodeToken = jwtDecode(token);
+    return decodeToken.user_id;
+  }
+  return null;
+};
 
 export default function ExcelHeader() {
-  const {
-    sheetData = [],
-    targetPrice,
-    valuePotential,
-    setTargetPrice,
-    setValuePotential,
-  } = useExcelContext();
-  const navigate = useNavigate();
+  const { sheetData = [], targetPrice, valuePotential, setTargetPrice, setValuePotential } = useExcelContext();
   const [templateName, setTemplateName] = useState('');
   const [show, setShow] = useState(false);
-
+  const navigate = useNavigate();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -28,11 +31,7 @@ export default function ExcelHeader() {
     // 템플릿화 API 연결
     const newTemplate = sheetData.map((rowArr, i) =>
       rowArr.map((cell, j) => {
-        if (
-          i === 0 ||
-          j === 0 ||
-          (cell.value.length > 0 && cell.value.charAt(0) === '=')
-        ) {
+        if (i === 0 || j === 0 || (cell.value.length > 0 && cell.value.charAt(0) === '=')) {
           // 1행 1열인 경우
           return cell;
         } else {
@@ -44,23 +43,23 @@ export default function ExcelHeader() {
     try {
       const res = await postTemplate({
         templateName: templateName,
-        userId: 1, // TODO : userId 가져오기 수정
+        userId: getUserIdFromToken(),
         excelData: newTemplate,
       });
 
       if (res.status === 200) {
+        //여기서 저장 -> edit 페이지 이동
         alert('템플릿으로 저장되었습니다.');
+        navigate(`${URI_PATH.templateEditPage}/?id=${res.data}`, { replace: true });
       }
     } catch (error) {
       console.error('Error saving template:', error);
     }
   };
 
-  useEffect(() => {
-    console.log(templateName);
-  }, [templateName]);
+  useEffect(() => {}, [templateName]);
 
-  const handleExportExcel = () => {};
+  // const handleExportExcel = () => {};
 
   return (
     <>
@@ -98,28 +97,20 @@ export default function ExcelHeader() {
             <CgLoadbarDoc size={20} />
             템플릿화
           </Button>
-          <Button className="flex items-center gap-2 bg-blue-400 border-none">
+          {/* <Button className="flex items-center gap-2 bg-blue-400 border-none">
             <BsArrowUpCircle size={18} onClick={handleExportExcel} />
             엑셀 추출
-          </Button>
+          </Button> */}
         </div>
       </section>
       <Modal show={show} onHide={handleClose} dialogClassName="rounded-modal">
         <div className="bg-tuatara-900 text-white rounded-2xl overflow-hidden">
-          <Modal.Header
-            closeButton
-            className="w-full grid grid-cols-3 border-tuatara-600 custom-close-button"
-          >
+          <Modal.Header closeButton className="w-full grid grid-cols-3 border-tuatara-600 custom-close-button">
             <div></div>
-            <Modal.Title className="text-center text-caption">
-              템플릿화
-            </Modal.Title>
+            <Modal.Title className="text-center text-caption">템플릿화</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group
-              className="mb-3 mr-14 ml-14"
-              controlId="templateNameControlInput"
-            >
+            <Form.Group className="mb-3 mr-14 ml-14" controlId="templateNameControlInput">
               <Form.Control
                 type="text"
                 onChange={(e) => setTemplateName(e.target.value)}

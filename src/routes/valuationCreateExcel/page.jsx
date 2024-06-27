@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Spreadsheet from 'react-spreadsheet';
 import ExcelHeader from '~/components/consensus/valuation/ExcelHeader';
@@ -16,6 +9,8 @@ import { getTemplateById } from '~/apis/template';
 import { getValuation } from '../../apis/valuation';
 import { GLOSSARY } from '~/constants/valuation';
 import { jwtDecode } from 'jwt-decode';
+import { URI_PATH } from '~/routers/main-router';
+import { useNavigate } from 'react-router-dom';
 
 const ExcelContext = createContext();
 export const useExcelContext = () => useContext(ExcelContext);
@@ -38,6 +33,7 @@ export default function ValuationCreateExcel() {
   const [valuePotential, setValuePotential] = useState('');
   const [userId, setUserId] = useState(null);
   const spreadRef = useRef(null);
+  const navigate = useNavigate();
 
   const [selectedCell, setSelectedCell] = useState({
     row: 0,
@@ -426,11 +422,13 @@ export default function ValuationCreateExcel() {
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
+      stock_id: stockId,
     };
 
     try {
       const result = await saveValuation(searchParams.get('id'), requestBody);
       alert('저장 완료');
+      navigate(`${URI_PATH.valuationEditPage}/?id=${result.data}`, { replace: true });
     } catch (error) {
       console.error('저장 중 에러: ', error);
       alert('저장 중 에러');
@@ -450,14 +448,13 @@ export default function ValuationCreateExcel() {
       target_price: targetPrice,
       value_potential: valuePotential,
       excel_data: excelData,
+      stock_id: stockId,
     };
 
     try {
-      const result = await temporarySaveValuation(
-        searchParams.get('id'),
-        requestBody
-      );
+      const result = await temporarySaveValuation(searchParams.get('id'), requestBody);
       alert('임시저장 완료');
+      navigate(`${URI_PATH.valuationEditPage}/?id=${result.data}`, { replace: true });
     } catch (error) {
       console.error('임시저장 중 에러: ', error);
       alert('임시저장 중 에러');
@@ -503,10 +500,7 @@ export default function ValuationCreateExcel() {
           onActivate={handleSelectedCell}
           className="spreadsheet-container w-full h-[500px] overflow-scroll pl-0 pr-0 rounded-lg"
         />
-        <ExcelFooter
-          onSave={handleSave}
-          onTemporarySave={handleTemporarySave}
-        />
+        <ExcelFooter onSave={handleSave} onTemporarySave={handleTemporarySave} />
       </ExcelContext.Provider>
     </div>
   );

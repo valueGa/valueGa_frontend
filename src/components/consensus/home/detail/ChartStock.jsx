@@ -5,7 +5,6 @@ import { colors } from "/tailwind.config.js"; // 실제 경로로 수정하세�
 
 const ApexChart = ({ closePriceList }) => {
   if (!closePriceList || closePriceList.length === 0) {
-    console.log("closePriceList is empty or undefined");
     return null; // Return null or a placeholder if the list is empty
   }
   const [series] = useState([
@@ -165,6 +164,9 @@ const ApexChart = ({ closePriceList }) => {
   return (
     <div>
       <div id="chart">
+        <p className="mb-1 text-tuatara-400 text-mini">
+          * 금일 기준 30일 일별 차트입니다.
+        </p>
         <ReactApexChart
           options={options}
           series={series}

@@ -5,7 +5,8 @@ import { CgLoadbarDoc } from 'react-icons/cg';
 import { BsArrowUpCircle } from 'react-icons/bs';
 
 export default function TemplateEditHeader() {
-  const { targetPrice, valuePotential, setTargetPrice, setValuePotential } = useExcelContext();
+  const { targetPrice, valuePotential, setTargetPrice, setValuePotential } =
+    useExcelContext();
 
   return (
     <>
@@ -39,10 +40,10 @@ export default function TemplateEditHeader() {
             <CgLoadbarDoc size={20} />
             템플릿화
           </Button>
-          <Button className="flex items-center gap-2 bg-blue-400 border-none">
+          {/* <Button className="flex items-center gap-2 bg-blue-400 border-none">
             <BsArrowUpCircle size={18} />
             엑셀 추출
-          </Button>
+          </Button> */}
         </div>
       </section>
     </>

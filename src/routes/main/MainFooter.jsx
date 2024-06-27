@@ -2,15 +2,15 @@ export default function MainFooter() {
   return (
     <div className="bg-tuatara-900 p-8 flex items-center justify-between bg-gray-200">
       <div>
-        <div className="flex items-center">
-          <img className="w-10 h-10" src="/assets/images/img_3d.svg" alt="" />
+        <div className="flex items-center gap-2">
+          <img className="w-7 h-7" src="/src/assets/icons/logo.svg" alt="" />
           <p className="text-body2 text-tuatara-50 font-abril">ValueGa</p>
         </div>
         <p className="text-[#9198A0] mt-2">
           신한투자증권 프로디지털 아카데미 4기 5조
         </p>
       </div>
-      <div className="w-2/6 ">
+      <div className="w-[360px]">
         <div className="flex items-center justify-between">
           <p className="text-caption text-tuatara-50 font-abril">Contact</p>
           <p className="text-caption text-tuatara-50 font-apple">
