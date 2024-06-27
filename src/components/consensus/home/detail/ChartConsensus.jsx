@@ -60,7 +60,7 @@ const ApexChart = ({ ratioList }) => {
 
     plotOptions: {
       bar: {
-        borderRadius: 20,
+        borderRadius: 0,
         borderRadiusApplication: "around",
         borderRadiusWhenStacked: "all",
         horizontal: true,
