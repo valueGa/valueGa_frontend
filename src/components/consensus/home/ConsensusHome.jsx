@@ -27,8 +27,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.undervaluedList.top1.company_name +
               ` ${(
-                result.data.undervaluedList.top1.target_price /
-                result.data.undervaluedList.top1.currentPrice
+                (result.data.undervaluedList.top1.target_price /
+                  result.data.undervaluedList.top1.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top1.stock_code,
             value_potential: result.data.undervaluedList.top1.value_potential,
@@ -39,8 +41,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.undervaluedList.top2.company_name +
               ` ${(
-                result.data.undervaluedList.top2.target_price /
-                result.data.undervaluedList.top2.currentPrice
+                (result.data.undervaluedList.top2.target_price /
+                  result.data.undervaluedList.top2.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top2.stock_code,
             value_potential: result.data.undervaluedList.top2.value_potential,
@@ -51,8 +55,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.undervaluedList.top3.company_name +
               ` ${(
-                result.data.undervaluedList.top3.target_price /
-                result.data.undervaluedList.top3.currentPrice
+                (result.data.undervaluedList.top3.target_price /
+                  result.data.undervaluedList.top3.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top3.stock_code,
             value_potential: result.data.undervaluedList.top3.value_potential,
@@ -63,8 +69,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.undervaluedList.top4.company_name +
               ` ${(
-                result.data.undervaluedList.top4.target_price /
-                result.data.undervaluedList.top4.currentPrice
+                (result.data.undervaluedList.top4.target_price /
+                  result.data.undervaluedList.top4.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top4.stock_code,
             value_potential: result.data.undervaluedList.top4.value_potential,
@@ -75,8 +83,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.undervaluedList.top5.company_name +
               ` ${(
-                result.data.undervaluedList.top5.target_price /
-                result.data.undervaluedList.top5.currentPrice
+                (result.data.undervaluedList.top5.target_price /
+                  result.data.undervaluedList.top5.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.undervaluedList.top5.stock_code,
             value_potential: result.data.undervaluedList.top5.value_potential,
@@ -90,8 +100,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.overvaluedList.top1.company_name +
               ` ${(
-                result.data.overvaluedList.top1.target_price /
-                result.data.overvaluedList.top1.currentPrice
+                (result.data.overvaluedList.top1.target_price /
+                  result.data.overvaluedList.top1.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top1.stock_code,
             value_potential: result.data.overvaluedList.top1.value_potential,
@@ -102,8 +114,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.overvaluedList.top2.company_name +
               ` ${(
-                result.data.overvaluedList.top2.target_price /
-                result.data.overvaluedList.top2.currentPrice
+                (result.data.overvaluedList.top2.target_price /
+                  result.data.overvaluedList.top2.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top2.stock_code,
             value_potential: result.data.overvaluedList.top2.value_potential,
@@ -114,8 +128,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.overvaluedList.top3.company_name +
               ` ${(
-                result.data.overvaluedList.top3.target_price /
-                result.data.overvaluedList.top3.currentPrice
+                (result.data.overvaluedList.top3.target_price /
+                  result.data.overvaluedList.top3.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top3.stock_code,
             value_potential: result.data.overvaluedList.top3.value_potential,
@@ -126,8 +142,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.overvaluedList.top4.company_name +
               ` ${(
-                result.data.overvaluedList.top4.target_price /
-                result.data.overvaluedList.top4.currentPrice
+                (result.data.overvaluedList.top4.target_price /
+                  result.data.overvaluedList.top4.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top4.stock_code,
             value_potential: result.data.overvaluedList.top4.value_potential,
@@ -138,8 +156,10 @@ export default function ConsensusHome() {
             company_name:
               result.data.overvaluedList.top5.company_name +
               ` ${(
-                result.data.overvaluedList.top5.target_price /
-                result.data.overvaluedList.top5.currentPrice
+                (result.data.overvaluedList.top5.target_price /
+                  result.data.overvaluedList.top5.currentPrice -
+                  1) *
+                100
               ).toFixed(2)}%`,
             stock_code: result.data.overvaluedList.top5.stock_code,
             value_potential: result.data.overvaluedList.top5.value_potential,
