@@ -5,11 +5,14 @@ import { getCreateTemplate } from '~/apis/template';
 export default function InputTemplate({ setValue }) {
   const [templateName, setTemplateName] = useState('템플릿 선택');
   const [templateList, setTemplateList] = useState([]);
+  const accessToken = localStorage.getItem('valueGa_AccessToken');
 
   useEffect(() => {
-    getCreateTemplate().then((result) => {
-      setTemplateList(result.data);
-    });
+    if (accessToken) {
+      getCreateTemplate().then((result) => {
+        setTemplateList(result.data);
+      });
+    }
   }, []);
 
   return (
