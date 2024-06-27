@@ -37,7 +37,9 @@ export default function StockPredictionList({ data, currentPrice }) {
                   {element.valuation_date.slice(0, 10)}
                 </div>
                 <div className="basis-1/5 flex flex-row space-x-6 items-center justify-center">
-                  <div>{element.user_target_price}원</div>
+                  <div>
+                    {Number(element.user_target_price).toLocaleString()} 원
+                  </div>
                 </div>
               </div>
             </div>

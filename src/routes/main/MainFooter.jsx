@@ -1,9 +1,11 @@
+import logo from "~/assets/icons/logo.svg";
+
 export default function MainFooter() {
   return (
     <div className="bg-tuatara-900 p-8 flex items-center justify-between bg-gray-200">
       <div>
         <div className="flex items-center gap-2">
-          <img className="w-7 h-7" src="/src/assets/icons/logo.svg" alt="" />
+          <img src={logo} alt="logo" className="w-8 h-8" />
           <p className="text-body2 text-tuatara-50 font-abril">ValueGa</p>
         </div>
         <p className="text-[#9198A0] mt-2">

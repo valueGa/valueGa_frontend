@@ -134,21 +134,22 @@ export default function ConsensusDetail() {
         )
       );
       setRatioList(result.data.ratio);
+
       setValuationList(result.data.valuationList);
       // 매출액을 업데이트하는 함수
-      updateSr(result.data.financeInfos.sr);
-      updateOi(result.data.financeInfos.oi);
+      updateSr(Number(result.data.financeInfos.sr).toLocaleString() + " 원");
+      updateOi(Number(result.data.financeInfos.oi).toLocaleString() + " 원");
       updateYear(
         result.data.financeInfos.year.toString().slice(0, 4) +
           "-" +
           result.data.financeInfos.year.toString().slice(4, 6)
       );
-      updateRr(result.data.financeInfos.rr);
-      updateDr(result.data.financeInfos.dr);
-      updateEvebitda(result.data.financeInfos.evebitda);
-      updateRoe(result.data.financeInfos.roe);
-      updateBps(result.data.financeInfos.bps);
-      updateTs(result.data.financeInfos.ts);
+      updateRr(result.data.financeInfos.rr + " %");
+      updateDr(result.data.financeInfos.dr + " %");
+      updateEvebitda(result.data.financeInfos.evebitda + " %");
+      updateRoe(result.data.financeInfos.roe + " %");
+      updateBps(Number(result.data.financeInfos.bps).toLocaleString() + " 원");
+      updateTs(result.data.financeInfos.ts + " 주");
       setCurrentPrice(result.data.currentPrice);
     };
 
@@ -235,7 +236,7 @@ export default function ConsensusDetail() {
               </div>
 
               <p className="text-spray-350 text-heading3 font-bold">
-                {currentPrice}
+                {Number(currentPrice).toLocaleString()}
               </p>
             </div>
           </div>
@@ -252,7 +253,7 @@ export default function ConsensusDetail() {
               </div>
 
               <p className="text-pink-100 text-heading3 font-bold">
-                {targetPrice}
+                {Number(targetPrice).toLocaleString()}
               </p>
             </div>
           </div>
