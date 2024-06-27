@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import InputStock from './InputStock';
 import InputTemplate from './InputTemplate';
@@ -12,25 +12,43 @@ export default function ValuationCreate() {
   const [selectedTemplate, setSelectedTemplate] = useState('템플릿 선택');
   const [isSelectedStock, setIsSelectedStock] = useState(false);
   const accessToken = localStorage.getItem('valueGa_AccessToken');
+  const [signupShow, setSignupShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
+  const signupHandleClose = () => setSignupShow(false);
   const loginHandleClose = () => setLoginShow(false);
   const navigate = useNavigate();
 
   const handleClickedSignupButton = () => {
+    setLoginShow(false);
     setSignupShow(true);
   };
 
   const handleClickedModalLoginButton = async (email, password) => {
     try {
       const result = await postLogin(`${email}`, `${password}`);
+
       if (result.data.token != null) {
         localStorage.setItem(
           'valueGa_AccessToken',
           `Bearer ${result.data.token}`
         );
       }
+
+      signupHandleClose();
       loginHandleClose();
       navigate(0);
+    } catch (error) {
+      console.log(`${error}`);
+    }
+  };
+
+  const handleClickedModalSignupButton = async (name, email, password) => {
+    console.log(`${name}`, `${email}`, `${password}`);
+    try {
+      const result = await postSignup(`${name}`, `${email}`, `${password}`);
+
+      loginHandleClose();
+      signupHandleClose();
     } catch (error) {
       console.log(`${error}`);
     }
@@ -69,6 +87,11 @@ export default function ValuationCreate() {
         >
           생성하기
         </Button>
+        <Signup
+          show={signupShow}
+          handleClose={signupHandleClose}
+          handleClickedModalSignupButton={handleClickedModalSignupButton}
+        />
         <Login
           show={loginShow}
           handleClose={loginHandleClose}

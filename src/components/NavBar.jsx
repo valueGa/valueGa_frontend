@@ -16,18 +16,15 @@ export default function NavBar() {
   const loginHandleClose = () => setLoginShow(false);
 
   const handleClickedSignupButton = () => {
-    console.log('handleClickedSignupButton');
     setSignupShow(true);
   };
   const handleClickedLoginButton = () => {
-    console.log('handleClickedLoginButton');
     setLoginShow(true);
   };
 
   const handleClickedModalLoginButton = async (email, password) => {
     try {
       const result = await postLogin(`${email}`, `${password}`);
-      console.log(`${result.data.token}`);
       if (result.data.token != null) {
         localStorage.setItem(
           'valueGa_AccessToken',
@@ -43,10 +40,8 @@ export default function NavBar() {
   };
 
   const handleClickedModalSignupButton = async (name, email, password) => {
-    console.log(`${name}`, `${email}`, `${password}`);
     try {
       const result = await postSignup(`${name}`, `${email}`, `${password}`);
-      console.log(`${result.data.user_id}, ${result.data.user_email}`);
       signupHandleClose();
       loginHandleClose();
       navigate(`${URI_PATH.consensusPage}`);
