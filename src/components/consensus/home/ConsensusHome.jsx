@@ -160,6 +160,7 @@ export default function ConsensusHome() {
     };
 
     fetchData();
+    window.scrollTo({ top: 0 });
   }, []); // 빈 배열을 사용하여 컴포넌트가 마운트될 때 한 번만 실행되도록 설정
   const fetchMoreData = async (params) => {
     const { activeIndex, index } = params;

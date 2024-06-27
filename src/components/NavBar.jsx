@@ -1,36 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { URI_PATH } from '~/routers/main-router';
-import logo from '~/assets/icons/logo.svg';
-import search from '~/assets/icons/search.svg';
-import { useNavigate } from 'react-router-dom';
-import { postLogin, postSignup } from '/src/apis/user';
-import { Login, Signup } from '~/routes/main/MainModal';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { URI_PATH } from "~/routers/main-router";
+import logo from "~/assets/icons/logo.svg";
+import search from "~/assets/icons/search.svg";
+import { useNavigate } from "react-router-dom";
+import { postLogin, postSignup } from "/src/apis/user";
+import { Login, Signup } from "~/routes/main/MainModal";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('valueGa_AccessToken');
+  const accessToken = localStorage.getItem("valueGa_AccessToken");
   const [signupShow, setSignupShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const signupHandleClose = () => setSignupShow(false);
   const loginHandleClose = () => setLoginShow(false);
 
   const handleClickedSignupButton = () => {
-    console.log('handleClickedSignupButton');
     setSignupShow(true);
+    loginHandleClose();
   };
   const handleClickedLoginButton = () => {
-    console.log('handleClickedLoginButton');
     setLoginShow(true);
   };
 
   const handleClickedModalLoginButton = async (email, password) => {
     try {
       const result = await postLogin(`${email}`, `${password}`);
-      console.log(`${result.data.token}`);
       if (result.data.token != null) {
         localStorage.setItem(
-          'valueGa_AccessToken',
+          "valueGa_AccessToken",
           `Bearer ${result.data.token}`
         );
       }
@@ -43,10 +41,8 @@ export default function NavBar() {
   };
 
   const handleClickedModalSignupButton = async (name, email, password) => {
-    console.log(`${name}`, `${email}`, `${password}`);
     try {
       const result = await postSignup(`${name}`, `${email}`, `${password}`);
-      console.log(`${result.data.user_id}, ${result.data.user_email}`);
       signupHandleClose();
       loginHandleClose();
       navigate(`${URI_PATH.consensusPage}`);
@@ -56,7 +52,7 @@ export default function NavBar() {
   };
   const handleClick = () => {
     if (accessToken) {
-      localStorage.removeItem('valueGa_AccessToken');
+      localStorage.removeItem("valueGa_AccessToken");
       navigate(`${URI_PATH.mainPage}`);
     } else {
       handleClickedLoginButton();
@@ -71,7 +67,7 @@ export default function NavBar() {
           </Link>
         </li>
         <li>
-          <Link to={`${URI_PATH.consensusPage}`}>Home</Link>
+          <Link to={`${URI_PATH.consensusPage}`}>Consensus</Link>
         </li>
         <li>
           <Link to={`${URI_PATH.valuationPage}`}>Valuation</Link>
@@ -83,7 +79,7 @@ export default function NavBar() {
       <ul className="flex flex-row text-center items-center space-x-7">
         <li>
           <button onClick={handleClick}>
-            {accessToken ? 'Logout' : 'Login'}
+            {accessToken ? "Logout" : "Login"}
           </button>
         </li>
       </ul>

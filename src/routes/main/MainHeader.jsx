@@ -1,14 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import Login from "./MainModal";
 import { Login, Signup } from "./MainModal";
 import { postLogin, postSignup } from "/src/apis/user";
 import { useNavigate } from "react-router-dom";
 
 import { URI_PATH } from "~/routers/main-router";
+import logo from "~/assets/icons/logo.svg";
 
 export default function MainHeader(props) {
-  const accessToken = localStorage.getItem("valueGa_AccessToken");
+  const [accessToken, setAccessToken] = useState("");
+  useEffect(() => {
+    setAccessToken(localStorage.getItem("valueGa_AccessToken"));
+  }, [localStorage.getItem("valueGa_AccessToken")]);
 
   const [activeButton, setActiveButton] = useState("Home");
   const [signupShow, setSignupShow] = useState(false);
@@ -23,6 +27,7 @@ export default function MainHeader(props) {
 
   const handleClickedSignupButton = () => {
     setSignupShow(true);
+    loginHandleClose();
   };
   const handleClickedLoginButton = () => {
     setLoginShow(true);
@@ -39,6 +44,7 @@ export default function MainHeader(props) {
       }
       signupHandleClose();
       loginHandleClose();
+
       // navigate(`${URI_PATH.consensusPage}`);
     } catch (error) {
       console.log(`${error}`);
@@ -70,8 +76,8 @@ export default function MainHeader(props) {
     <div className="w-full mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
       <nav className="w-full flex flex-wrap items-center justify-between">
         <div className="flex flex-wrap items-center text-base justify-center">
-          <div className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-            <span className="text-xl text-indigo-500 mr-4">ValueGa</span>
+          <div className="flex title-font font-medium items-center text-gray-900 mr-6">
+            <img src={logo} alt="logo" className="w-8 h-8" />
           </div>
           <button
             className={`mr-5 text-tuatara-50 ${
@@ -124,7 +130,7 @@ export default function MainHeader(props) {
             <button
               onClick={() => {
                 localStorage.removeItem("valueGa_AccessToken");
-                accessToken = null;
+                setAccessToken(null);
               }}
               className="text-tuatara-50"
             >

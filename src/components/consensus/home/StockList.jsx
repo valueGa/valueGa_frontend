@@ -33,31 +33,29 @@ export default function StockList({ data, type }) {
                 type: type,
               }}
             >
-
               <div className="flex justify-between items-center text-tuatara-50 text-caption flex-row text-center rounded-lg h-16 m-2 bg-tuatara-950">
                 <div className="flex flex-row w-full items-center justify-between">
                   <div className="flex-1 text-center">
-                    {element.company_name}
-
+                    {element.company_name.split(" ")[0]}
                   </div>
 
                   <div className="flex-1 flex flex-row space-x-2 items-center justify-center">
                     <div className={arrowClass} />
                     <div>
-                      {(element.target_price / element.currentPrice).toFixed(2)}
+                      {Number(
+                        (element.target_price / element.currentPrice).toFixed(2)
+                      ).toLocaleString()}
                       %
                     </div>
                   </div>
 
-
                   <div className="flex-1 text-center">
-                    {element.currentPrice}원
+                    {Number(element.currentPrice).toLocaleString()} 원
                   </div>
 
                   <div className="flex-1 flex flex-row space-x-2 items-center justify-center">
-
-                    <img src={arrowClass} className="w-3 h-3" />
-                    <div>{element.target_price}원</div>
+                    <div src={arrowClass} />
+                    <div>{Number(element.target_price).toLocaleString()}원</div>
                   </div>
                 </div>
               </div>

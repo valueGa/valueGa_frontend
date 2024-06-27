@@ -33,9 +33,9 @@ const ApexChart = ({ closePriceList }) => {
       zoom: {
         enabled: false,
       },
-    },
-    dataLabels: {
-      enabled: false,
+      toolbar: {
+        show: false,
+      },
     },
 
     title: {
@@ -77,17 +77,7 @@ const ApexChart = ({ closePriceList }) => {
     xaxis: {
       type: "category",
 
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
+      categories: closePriceList,
       tickAmount: undefined,
       tickPlacement: "between",
       min: undefined,
@@ -98,34 +88,7 @@ const ApexChart = ({ closePriceList }) => {
       decimalsInFloat: undefined,
       overwriteCategories: undefined,
       position: "bottom",
-      labels: {
-        show: true,
-        rotate: -45,
-        rotateAlways: false,
-        hideOverlappingLabels: true,
-        showDuplicates: false,
-        trim: false,
-        minHeight: undefined,
-        maxHeight: 120,
-        style: {
-          colors: [],
-          fontSize: "12px",
-          fontFamily: "Helvetica, Arial, sans-serif",
-          fontWeight: 400,
-          cssClass: "apexcharts-xaxis-label",
-        },
-        offsetX: 0,
-        offsetY: 0,
-        format: undefined,
-        formatter: undefined,
-        datetimeUTC: true,
-        datetimeFormatter: {
-          year: "yyyy",
-          month: "MMM 'yy",
-          day: "dd MMM",
-          hour: "HH:mm",
-        },
-      },
+
       group: {
         groups: [],
         style: {
@@ -138,26 +101,56 @@ const ApexChart = ({ closePriceList }) => {
       },
       axisBorder: {
         show: false,
-        color: "#78909C",
-        height: 1,
-        width: "100%",
-        offsetX: 0,
-        offsetY: 0,
       },
       axisTicks: {
         show: false,
-        borderType: "solid",
-        color: "#78909C",
-        height: 6,
-        offsetX: 0,
-        offsetY: 0,
       },
       crosshairs: {
         show: false,
       },
-      tooltip: {
-        enabled: false,
+    },
+    tooltip: {
+      enabled: true,
+      enabledOnSeries: undefined,
+      shared: false,
+      followCursor: false,
+      intersect: false,
+      inverseOrder: false,
+      custom: undefined,
+      hideEmptySeries: true,
+      fillSeriesColor: false,
+      theme: false,
+      style: {
+        fontSize: "12px",
+        fontFamily: undefined,
       },
+      onDatasetHover: {
+        highlightDataSeries: false,
+      },
+      x: {
+        show: false,
+      },
+      y: {
+        show: false,
+        formatter: undefined,
+        title: {
+          formatter: (seriesName) => "종가:",
+        },
+      },
+      z: {
+        formatter: undefined,
+        title: "Size: ",
+      },
+
+      fixed: {
+        enabled: false,
+        position: "topRight",
+        offsetX: 0,
+        offsetY: 0,
+      },
+    },
+    dataLabels: {
+      enabled: false,
     },
   });
 
