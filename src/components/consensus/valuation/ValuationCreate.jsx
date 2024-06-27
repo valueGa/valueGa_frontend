@@ -38,10 +38,10 @@ export default function ValuationCreate() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="p-2 text-heading2">목표 주가 계산표</div>
+      <div className="p-2 text-heading2 mb-10">목표 주가 계산표</div>
       <div className="flex flex-col justify-center items-center gap-8 my-4">
         <div
-          className="flex gap-2"
+          className="flex gap-2 pb-4"
           onClick={() => {
             if (!accessToken) {
               // login 모달 띄우기
@@ -59,8 +59,7 @@ export default function ValuationCreate() {
           />
         </div>
         <Button
-          variant="dark"
-          className="w-32"
+          className="bg-blue-500 border-none px-10 "
           onClick={() => {
             navigate(
               `${URI_PATH.valuationCreatePage}/?id=${selectedStock.id}&template=${selectedTemplate}`
