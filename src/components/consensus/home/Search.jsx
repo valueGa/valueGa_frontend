@@ -75,7 +75,6 @@ export default function Search() {
 
     setIsSelectedStock(true);
     ignoreChange.current = true;
-    console.log(`${name}, ${id}`);
 
     navigate(`${URI_PATH.consensusPage}/${id}`, {
       state: {
