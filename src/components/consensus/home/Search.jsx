@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
-import { getSearchResult } from '~/apis/search';
-import { URI_PATH } from '~/routers/main-router';
+import React, { useEffect, useRef, useState } from "react";
+import { BiSearch } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { getSearchResult } from "~/apis/search";
+import { URI_PATH } from "~/routers/main-router";
 
 export default function Search() {
-  const [searchWord, setSearchWord] = useState('');
+  const [searchWord, setSearchWord] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -46,7 +46,7 @@ export default function Search() {
         setSearchResults(res.data.searchList);
       }
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.error("Error fetching search results:", error);
     }
   };
 
@@ -61,7 +61,7 @@ export default function Search() {
       if (searchResults.length === 1) {
         stock = searchResults[0];
       } else {
-        alert('해당 기업을 찾을 수 없습니다');
+        alert("해당 기업을 찾을 수 없습니다");
         return;
       }
     }
@@ -75,18 +75,24 @@ export default function Search() {
 
     setIsSelectedStock(true);
     ignoreChange.current = true;
+    console.log(`${name}, ${id}`);
 
-    navigate(`${URI_PATH.consensusPage}/${id}`);
+    navigate(`${URI_PATH.consensusPage}/${id}`, {
+      state: {
+        companyName: name,
+        type: id,
+      },
+    });
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSelect(searchResults[selectedIndex]);
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === "ArrowDown") {
       setSelectedIndex((prevIndex) =>
         prevIndex < searchResults.length - 1 ? prevIndex + 1 : 0
       );
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       setSelectedIndex((prevIndex) =>
         prevIndex > 0 ? prevIndex - 1 : searchResults.length - 1
       );
@@ -132,7 +138,7 @@ export default function Search() {
                     handleSelect(stock);
                   }}
                   className={` bg-opacity-90  w-full flex gap-2 items-center p-2 px-3 text-tuatara-100 bg-tuatara-900 hover:bg-tuatara-950 ${
-                    selectedIndex === index ? 'bg-tuatara-950' : ''
+                    selectedIndex === index ? "bg-tuatara-950" : ""
                   }`}
                 >
                   <p> {stock[0]}</p>
