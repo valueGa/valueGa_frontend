@@ -5,12 +5,13 @@ import Valuation from '~/components/consensus/myPage/Valuation';
 import Profile from '~/components/consensus/myPage/Profile';
 import { jwtDecode } from 'jwt-decode';
 import { getUserInfo } from '../../../apis/mypage';
+import { Login, Signup } from '~/routes/main/MainModal';
+import { postLogin, postSignup } from '/src/apis/user';
 
 const getUserIdFromToken = () => {
   const token = localStorage.getItem('valueGa_AccessToken');
   if (token) {
     const decodeToken = jwtDecode(token);
-    console.log(decodeToken);
     return decodeToken.user_id;
   }
   return null;
@@ -23,8 +24,17 @@ export default function MyPage() {
     name: '',
     email: '',
   });
+  const accessToken = localStorage.getItem('valueGa_AccessToken');
+  const [signupShow, setSignupShow] = useState(false);
+  const [loginShow, setLoginShow] = useState(false);
+  const signupHandleClose = () => setSignupShow(false);
+  const loginHandleClose = () => setLoginShow(false);
 
   useEffect(() => {
+    if (!accessToken) {
+      setLoginShow(true);
+      return;
+    }
     const userId = getUserIdFromToken();
     setUserId(userId);
     if (userId) {
@@ -74,21 +84,75 @@ export default function MyPage() {
       ),
     },
   ];
+
   const tabClickHandler = (index) => {
     setActiveIndex(index);
   };
 
+  const handleClickedSignupButton = () => {
+    setLoginShow(false);
+    setSignupShow(true);
+  };
+
+  const handleClickedModalLoginButton = async (email, password) => {
+    try {
+      const result = await postLogin(email, password);
+
+      if (result.data.token != null) {
+        localStorage.setItem(
+          'valueGa_AccessToken',
+          `Bearer ${result.data.token}`
+        );
+      }
+
+      signupHandleClose();
+      loginHandleClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(`${error}`);
+    }
+  };
+
+  const handleClickedModalSignupButton = async (name, email, password) => {
+    try {
+      await postSignup(name, email, password);
+      loginHandleClose();
+      signupHandleClose();
+      window.location.reload();
+    } catch (error) {
+      console.log(`${error}`);
+    }
+  };
+
   return (
-    <div className="text-tuatara-50">
-      <Profile name={user.name} email={user.email} />
-      <div className="font-apple mx-16">
-        <ul className="text-body2 columns-2 text-center flex flex-row">
-          {tabContArr.map((element, index) => {
-            return element.tabTitle;
-          })}
-        </ul>
-        <div>{activeIndex == 0 ? <Template /> : <Valuation />}</div>
-      </div>
-    </div>
+    <>
+      {accessToken ? (
+        <div className="text-tuatara-50">
+          <Profile name={user.name} email={user.email} />
+          <div className="font-apple mx-16">
+            <ul className="text-body2 columns-2 text-center flex flex-row">
+              {tabContArr.map((element, index) => {
+                return element.tabTitle;
+              })}
+            </ul>
+            <div>{activeIndex == 0 ? <Template /> : <Valuation />}</div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <Signup
+            show={signupShow}
+            handleClose={signupHandleClose}
+            handleClickedModalSignupButton={handleClickedModalSignupButton}
+          />
+          <Login
+            show={loginShow}
+            handleClose={loginHandleClose}
+            handleClickedSignupButton={handleClickedSignupButton}
+            handleClickedModalLoginButton={handleClickedModalLoginButton}
+          />
+        </div>
+      )}
+    </>
   );
 }
