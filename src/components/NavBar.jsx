@@ -26,7 +26,6 @@ export default function NavBar() {
   const handleClickedModalLoginButton = async (email, password) => {
     try {
       const result = await postLogin(`${email}`, `${password}`);
-
       if (result.data.token != null) {
         localStorage.setItem(
           "valueGa_AccessToken",
@@ -44,7 +43,6 @@ export default function NavBar() {
   const handleClickedModalSignupButton = async (name, email, password) => {
     try {
       const result = await postSignup(`${name}`, `${email}`, `${password}`);
-
       signupHandleClose();
       loginHandleClose();
       navigate(`${URI_PATH.consensusPage}`);
